@@ -1,0 +1,10 @@
+/* TEAM */
+  Designer & Developer: Dennis Ramara
+  GitHub: https://github.com/dennis-mmachoene
+  LinkedIn: https://www.linkedin.com/in/dennis-mmachoene-ramara
+  Instagram: @dennismachoene
+
+/* SITE */
+  Name: Open Air — a living gallery of color
+  Standards: Next.js, React, TypeScript, Tailwind CSS
+  Components: culori, Drizzle ORM, Auth.js, Stripe
