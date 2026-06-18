@@ -19,7 +19,7 @@ export default function AboutPage() {
 
       <div className="mt-8 flex flex-col gap-5 text-lg leading-relaxed text-text-soft">
         <p>
-          {site.name} is a premium color exploration platform — a living gallery
+          {site.name} is a premium color exploration platform a living gallery
           of color. It is the destination where designers, developers, and
           creatives come to discover beautiful palettes, understand why colors
           work together, visualize them across real interfaces, and confidently
@@ -29,7 +29,7 @@ export default function AboutPage() {
           Two ideas define it. First, the gallery is the product: color is the
           content, and the interface stays quiet and neutral so every saturated
           pixel on screen belongs to a palette. Second, a palette becomes a UI
-          library — select any palette in the Showroom and watch it dress a
+          library select any palette in the Showroom and watch it dress a
           complete component library and real screens in real time.
         </p>
         <p>
@@ -40,7 +40,7 @@ export default function AboutPage() {
 
       <hr className="my-10 border-border" />
 
-      <section aria-labelledby="creator">
+      {/* <section aria-labelledby="creator">
         <h2
           id="creator"
           className="font-display text-2xl font-medium tracking-tight text-text"
@@ -66,7 +66,7 @@ export default function AboutPage() {
             </li>
           ))}
         </ul>
-      </section>
+      </section> */}
 
       <p className="mt-12 text-sm text-text-muted">
         <Link href="/" className="underline-offset-4 hover:underline">

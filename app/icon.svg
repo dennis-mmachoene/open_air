@@ -1,0 +1,22 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="bg-round">
+      <rect width="512" height="512" rx="112" ry="112"/>
+    </clipPath>
+    <clipPath id="chip-round">
+      <rect x="72" y="72" width="368" height="368" rx="52" ry="52"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#bg-round)">
+    <!-- quiet ground: the gallery's neutral wall -->
+    <rect width="512" height="512" fill="#15141A"/>
+
+    <!-- the swatch, divided like a tiny interface: gallery becomes UI -->
+    <g clip-path="url(#chip-round)">
+      <rect x="72" y="72" width="368" height="368" fill="#F25B6C"/>
+      <rect x="256" y="72" width="184" height="368" fill="#F2B45B"/>
+      <rect x="72" y="256" width="184" height="184" fill="#5B6CF2"/>
+    </g>
+  </g>
+</svg>
