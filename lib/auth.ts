@@ -12,7 +12,13 @@ const db = env.DATABASE_URL ? getDb() : undefined;
 const providers: Provider[] = [];
 if (env.AUTH_GOOGLE_ID && env.AUTH_GOOGLE_SECRET) {
   providers.push(
-    Google({ clientId: env.AUTH_GOOGLE_ID, clientSecret: env.AUTH_GOOGLE_SECRET }),
+    Google({
+      clientId: env.AUTH_GOOGLE_ID,
+      clientSecret: env.AUTH_GOOGLE_SECRET,
+      // Google verifies emails, so it's safe to link to an existing account
+      // that used the same address via the email magic link.
+      allowDangerousEmailAccountLinking: true,
+    }),
   );
 }
 if (env.AUTH_EMAIL_SERVER && env.AUTH_EMAIL_FROM) {

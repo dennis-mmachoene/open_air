@@ -28,6 +28,22 @@ const EnvSchema = z.object({
   GEMINI_API_KEY: z.string().min(1).optional(),
   GEMINI_MODEL: z.string().min(1).optional(),
 
+  // Stripe (Phase 5). Optional until configured; billing is disabled without them.
+  STRIPE_SECRET_KEY: z.string().min(1).optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
+  STRIPE_PRICE_PRO_MONTHLY: z.string().min(1).optional(),
+  STRIPE_PRICE_PRO_YEARLY: z.string().min(1).optional(),
+  STRIPE_PRICE_STUDIO_MONTHLY: z.string().min(1).optional(),
+  STRIPE_PRICE_STUDIO_YEARLY: z.string().min(1).optional(),
+
+  // Upstash Redis (rate limiting for the public API). Optional — skipped if unset.
+  UPSTASH_REDIS_REST_URL: z.string().url().optional(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().min(1).optional(),
+
+  // PostHog product analytics (optional). Pageviews are captured client-side.
+  NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
+  NEXT_PUBLIC_POSTHOG_HOST: z.string().url().optional(),
+
   // Sentry — optional; error reporting is a no-op until a DSN is provided.
   SENTRY_DSN: z.string().url().optional(),
   NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),

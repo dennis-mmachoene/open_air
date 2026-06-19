@@ -12,7 +12,7 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
-import type { Palette } from "../palettes/types";
+import type { Palette, Roles, Swatch, Why } from "../palettes/types";
 
 /** Postgres full-text search vector. */
 const tsvector = customType<{ data: string; driverData: string }>({
@@ -234,3 +234,25 @@ export const verificationTokens = pgTable(
   },
   (t) => [primaryKey({ columns: [t.identifier, t.token] })],
 );
+
+/** Stripe webhook idempotency — one row per processed event id. */
+export const webhookEvents = pgTable("webhook_events", {
+  id: text("id").primaryKey(),
+  type: text("type").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+/** Palettes a user generated with the Pro generator. */
+export const userPalettes = pgTable("user_palettes", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  baseHue: integer("base_hue").notNull(),
+  harmony: text("harmony").notNull(),
+  swatches: jsonb("swatches").$type<Swatch[]>().notNull(),
+  roles: jsonb("roles").$type<{ light: Roles; dark: Roles }>().notNull(),
+  why: jsonb("why").$type<Why>().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Showroom } from "@/components/showroom/Showroom";
 import { ALL_PALETTES } from "@/lib/palettes/snapshot";
 import { requireUser } from "@/lib/auth-guard";
+import { getEntitlements } from "@/lib/entitlements";
 
 export const metadata: Metadata = {
   title: "Studio",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default async function StudioPage() {
-  await requireUser();
+  const user = await requireUser();
+  const entitlements = await getEntitlements(user.id);
   const palettes = ALL_PALETTES.map((p) => ({
     slug: p.slug,
     name: p.name,
@@ -29,7 +31,7 @@ export default async function StudioPage() {
           components, data viz, and full screens — recoloured instantly.
         </p>
       </header>
-      <Showroom palettes={palettes} />
+      <Showroom palettes={palettes} preview={!entitlements.fullShowroom} />
     </div>
   );
 }

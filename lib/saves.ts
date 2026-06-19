@@ -1,6 +1,7 @@
 import { and, count, eq } from "drizzle-orm";
 import { getDb } from "./db";
 import { palettes, savedPalettes, users } from "./db/schema";
+import { normalizePlan, PLAN_FEATURES } from "./plans";
 
 export const FREE_SAVE_LIMIT = 5;
 
@@ -72,7 +73,8 @@ export async function toggleSave(userId: string, slug: string): Promise<ToggleRe
     .where(eq(users.id, userId))
     .limit(1);
   const current = await countSaves(userId);
-  if (user?.plan === "free" && current >= FREE_SAVE_LIMIT) {
+  const limit = PLAN_FEATURES[normalizePlan(user?.plan)].savedLimit;
+  if (limit !== null && current >= limit) {
     return { saved: false, count: current, limitReached: true };
   }
 

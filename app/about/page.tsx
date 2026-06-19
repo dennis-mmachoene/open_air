@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "About",
   description: `The story behind ${site.name}, designed and built by ${author.name}.`,
 };
+export const revalidate = 86400;
 
 export default function AboutPage() {
   return (

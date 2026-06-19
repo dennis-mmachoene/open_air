@@ -15,6 +15,20 @@
       "when": 1781857745218,
       "tag": "0001_phase4_auth",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1781899866596,
+      "tag": "0002_phase5_webhook_events",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1781901268156,
+      "tag": "0003_phase6_user_palettes",
+      "breakpoints": true
     }
   ]
 }

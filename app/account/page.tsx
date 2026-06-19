@@ -4,6 +4,8 @@ import { eq } from "drizzle-orm";
 import { auth, signOut } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import { users } from "@/lib/db/schema";
+import { ManageBillingButton } from "@/components/billing/ManageBillingButton";
+import { DeleteAccount } from "@/components/account/DeleteAccount";
 
 export const metadata: Metadata = { title: "Account" };
 
@@ -57,11 +59,21 @@ export default async function AccountPage() {
       </dl>
 
       <div className="flex flex-wrap gap-3">
+        {plan === "free" ? (
+          <a
+            href="/pricing"
+            className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+          >
+            Upgrade plan
+          </a>
+        ) : (
+          <ManageBillingButton />
+        )}
         <a
-          href="/pricing"
+          href="/account/api"
           className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
         >
-          {plan === "free" ? "Upgrade plan" : "Manage subscription"}
+          API keys
         </a>
         <form action={doSignOut}>
           <button className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">
@@ -70,9 +82,22 @@ export default async function AccountPage() {
         </form>
       </div>
 
-      <p className="text-xs text-text-muted">
-        Billing management and data export/delete arrive in later phases.
-      </p>
+      <section className="flex flex-col gap-3 border-t border-border pt-6">
+        <h2 className="font-display text-xl text-text">Your data</h2>
+        <div className="flex flex-wrap items-center gap-4">
+          <a
+            href="/api/account/export"
+            className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+          >
+            Export my data
+          </a>
+          <DeleteAccount />
+        </div>
+        <p className="text-xs text-text-muted">
+          Export a JSON copy of everything, or permanently delete your account
+          (GDPR / POPIA).
+        </p>
+      </section>
     </div>
   );
 }

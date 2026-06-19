@@ -6,6 +6,7 @@ import { relatedPalettes } from "@/lib/palettes/query";
 import { CopyHex } from "@/components/palette/CopyHex";
 import { WhyDiagram } from "@/components/palette/WhyDiagram";
 import { AccessibilityReport } from "@/components/palette/AccessibilityReport";
+import { AccessibilityCenter } from "@/components/palette/AccessibilityCenter";
 import { ExportPanel } from "@/components/palette/ExportPanel";
 import { PaletteCard } from "@/components/gallery/PaletteCard";
 import { Showroom } from "@/components/showroom/Showroom";
@@ -13,6 +14,7 @@ import { SaveButton } from "@/components/palette/SaveButton";
 import { CollectionPicker } from "@/components/palette/CollectionPicker";
 import { RecordView } from "@/components/palette/RecordView";
 import { requireUser } from "@/lib/auth-guard";
+import { getEntitlements } from "@/lib/entitlements";
 
 export async function generateMetadata({
   params,
@@ -45,7 +47,8 @@ export default async function PalettePage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  await requireUser();
+  const user = await requireUser();
+  const entitlements = await getEntitlements(user.id);
   const { slug } = await params;
   const palette = getPalette(slug);
   if (!palette) notFound();
@@ -96,24 +99,36 @@ export default async function PalettePage({
         <Showroom
           palettes={[{ slug: palette.slug, name: palette.name, roles: palette.roles }]}
           lockedSlug={palette.slug}
-          preview
+          preview={!entitlements.fullShowroom}
         />
       </section>
 
       {/* Accessibility */}
       <section className="flex flex-col gap-4">
         <h2 className="font-display text-2xl text-text">Accessibility</h2>
-        <AccessibilityReport pairings={palette.why.contrast} />
-        <p className="text-sm text-text-muted">
-          The full accessibility center — every pairing, large vs normal text, and
-          colour-blind simulation — arrives with Pro.
-        </p>
+        {entitlements.accessibilityCenter ? (
+          <AccessibilityCenter roles={palette.roles.light} swatches={palette.swatches} />
+        ) : (
+          <>
+            <AccessibilityReport pairings={palette.why.contrast} />
+            <p className="text-sm text-text-muted">
+              The full accessibility center — every pairing, large vs normal text,
+              and colour-blind simulation — comes with Pro.
+            </p>
+          </>
+        )}
       </section>
 
       {/* Export */}
       <section className="flex flex-col gap-4">
         <h2 className="font-display text-2xl text-text">Export</h2>
-        <ExportPanel roles={palette.roles.light} />
+        <ExportPanel
+          roles={palette.roles.light}
+          swatches={palette.swatches}
+          name={palette.name}
+          slug={palette.slug}
+          pro={entitlements.allExports}
+        />
       </section>
 
       {/* Categories */}

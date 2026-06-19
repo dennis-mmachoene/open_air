@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/chrome/SiteHeader";
 import { SiteFooter } from "@/components/chrome/SiteFooter";
 import { Providers } from "@/components/auth/Providers";
 import { Assistant } from "@/components/assistant/Assistant";
+import { Analytics } from "@/components/analytics/Analytics";
 import { author, site } from "@/lib/site";
 
 /** Characterful display serif, used with restraint for palette names + headings. */
@@ -74,10 +75,17 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <Providers>
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-text focus:px-4 focus:py-2 focus:text-sm focus:text-canvas"
+          >
+            Skip to content
+          </a>
           <SiteHeader />
-          <main className="flex flex-1 flex-col">{children}</main>
+          <main id="main" className="flex flex-1 flex-col">{children}</main>
           <SiteFooter />
           <Assistant />
+          <Analytics />
         </Providers>
       </body>
     </html>

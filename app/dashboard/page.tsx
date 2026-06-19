@@ -5,6 +5,8 @@ import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { getSavedSlugs } from "@/lib/saves";
+import { listUserPalettes } from "@/lib/user-palettes";
+import { Strata } from "@/components/palette/Strata";
 import {
   createUserCollection,
   deleteUserCollection,
@@ -37,9 +39,10 @@ export default async function DashboardPage() {
   const session = await auth();
   if (!session?.user) redirect("/signin");
 
-  const [savedSlugs, collections] = await Promise.all([
+  const [savedSlugs, collections, generated] = await Promise.all([
     getSavedSlugs(session.user.id),
     listUserCollections(session.user.id),
+    listUserPalettes(session.user.id),
   ]);
   const saved = savedSlugs.map(getPalette).filter((p) => p !== undefined);
 
@@ -113,6 +116,24 @@ export default async function DashboardPage() {
           </ul>
         )}
       </section>
+
+      {/* Generated */}
+      {generated.length > 0 ? (
+        <section className="flex flex-col gap-4">
+          <h2 className="font-display text-2xl text-text">Generated palettes</h2>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {generated.map((g) => (
+              <div key={g.id} className="overflow-hidden rounded-2xl border border-border">
+                <Strata hexes={g.swatches.map((s) => s.hex)} className="h-28 rounded-b-none" />
+                <div className="p-3">
+                  <p className="truncate font-display text-text">{g.name}</p>
+                  <p className="text-xs text-text-muted">{g.harmony}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {/* Recently viewed */}
       {recent.length > 0 ? (

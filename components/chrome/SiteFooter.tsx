@@ -25,6 +25,10 @@ export function SiteFooter() {
               </Link>
             ))}
           </nav>
+          <div className="flex flex-wrap gap-x-4 gap-y-1">
+            <Link href="/terms" className="text-xs text-text-muted transition-colors hover:text-text">Terms</Link>
+            <Link href="/privacy" className="text-xs text-text-muted transition-colors hover:text-text">Privacy</Link>
+          </div>
         </div>
 
         <div className="flex flex-col gap-2 md:items-end">

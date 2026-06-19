@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = site.url.replace(/\/$/, "");
-  return ["", "/pricing", "/about"].map((path) => ({
+  return ["", "/pricing", "/about", "/terms", "/privacy"].map((path) => ({
     url: `${base}${path}`,
     changeFrequency: "weekly" as const,
     priority: path === "" ? 1 : 0.6,
