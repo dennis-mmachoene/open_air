@@ -13,6 +13,10 @@ const EnvSchema = z.object({
   // Public site URL (used for metadataBase, OG, canonical links)
   NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
 
+  // Postgres (Neon). Optional until the DB is provisioned; the public catalog
+  // is served from the static snapshot, so the app builds without it.
+  DATABASE_URL: z.string().min(1).optional(),
+
   // Sentry — optional; error reporting is a no-op until a DSN is provided.
   SENTRY_DSN: z.string().url().optional(),
   NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { author, site, social } from "@/lib/site";
+import { author, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
