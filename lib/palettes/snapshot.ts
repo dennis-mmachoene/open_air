@@ -44,3 +44,39 @@ export function categoryValues(kind: CategoryKind): string[] {
   for (const p of ALL_PALETTES) for (const v of p.categories[kind]) set.add(v);
   return [...set].sort();
 }
+
+function slug(s: string): string {
+  return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+export interface CategoryRef {
+  slug: string;
+  kind: CategoryKind;
+  value: string;
+  count: number;
+}
+
+const KIND_LIST: CategoryKind[] = ["mood", "family", "industry", "style", "season"];
+
+export function allCategories(): CategoryRef[] {
+  const out: CategoryRef[] = [];
+  for (const kind of KIND_LIST) {
+    for (const value of categoryValues(kind)) {
+      out.push({
+        slug: slug(`${kind}-${value}`),
+        kind,
+        value,
+        count: ALL_PALETTES.filter((p) => p.categories[kind].includes(value)).length,
+      });
+    }
+  }
+  return out;
+}
+
+export function categoryBySlug(s: string): CategoryRef | null {
+  return allCategories().find((c) => c.slug === s) ?? null;
+}
+
+export function categorySlug(kind: CategoryKind, value: string): string {
+  return slug(`${kind}-${value}`);
+}
