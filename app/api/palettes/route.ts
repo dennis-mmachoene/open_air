@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { queryPalettes, type PaletteFilter } from "@/lib/palettes/query";
+import { auth } from "@/lib/auth";
 
-export const dynamic = "force-static";
-
-export function GET(request: Request) {
+export async function GET(request: Request) {
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({ error: "unauthenticated" }, { status: 401 });
+  }
   const sp = new URL(request.url).searchParams;
   const filter: PaletteFilter = {
     mood: sp.get("mood") ?? undefined,

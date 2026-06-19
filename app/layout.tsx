@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/chrome/SiteHeader";
 import { SiteFooter } from "@/components/chrome/SiteFooter";
 import { Providers } from "@/components/auth/Providers";
+import { Assistant } from "@/components/assistant/Assistant";
 import { author, site } from "@/lib/site";
 
 /** Characterful display serif, used with restraint for palette names + headings. */
@@ -76,6 +77,7 @@ export default function RootLayout({
           <SiteHeader />
           <main className="flex flex-1 flex-col">{children}</main>
           <SiteFooter />
+          <Assistant />
         </Providers>
       </body>
     </html>

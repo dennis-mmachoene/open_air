@@ -1,21 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PaletteCard } from "@/components/gallery/PaletteCard";
+import { requireUser } from "@/lib/auth-guard";
 import {
-  ALL_COLLECTIONS,
-  allCategories,
   categoryBySlug,
   getCollection,
   palettesByCategory,
   palettesInCollection,
 } from "@/lib/palettes/snapshot";
-
-export function generateStaticParams() {
-  return [
-    ...ALL_COLLECTIONS.map((c) => ({ slug: c.slug })),
-    ...allCategories().map((c) => ({ slug: c.slug })),
-  ];
-}
 
 function resolve(slug: string) {
   const collection = getCollection(slug);
@@ -61,6 +53,7 @@ export default async function CollectionOrCategoryPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  await requireUser();
   const { slug } = await params;
   const data = resolve(slug);
   if (!data) notFound();

@@ -61,8 +61,8 @@ const FAQ = [
     a: "Yes — the entire gallery, every palette page, and the “why it works” explanation are free forever. Pro unlocks the professional workflow: unlimited saves, all export formats, the full Showroom and the generator.",
   },
   {
-    q: "Do I need an account to browse?",
-    a: "No. Browsing and copying colors is open to everyone. An account lets you save palettes and build personal collections.",
+    q: "Do I need an account?",
+    a: "A free account unlocks the full gallery, the Showroom and exports. Creating one takes a few seconds with Google or an email link.",
   },
   {
     q: "Are the palettes accessible?",
@@ -93,10 +93,10 @@ export function Landing() {
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
-            href="/gallery"
+            href="/signin"
             className="rounded-full bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
           >
-            Explore the gallery
+            Start exploring — free
           </Link>
           <Link
             href="/pricing"
@@ -108,7 +108,7 @@ export function Landing() {
 
         <div className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {heroStrata.map((p) => (
-            <Link key={p.slug} href={`/p/${p.slug}`} className="group">
+            <Link key={p.slug} href="/signin" className="group">
               <Strata
                 hexes={p.swatches.map((s) => s.hex)}
                 vertical
@@ -158,10 +158,10 @@ export function Landing() {
             your product, accessibly, before committing.
           </p>
           <Link
-            href="/studio"
+            href="/signin"
             className="mt-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-2"
           >
-            Open the Studio
+            Try the Showroom
           </Link>
         </div>
       </section>
@@ -213,16 +213,16 @@ export function Landing() {
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
-              href="/gallery"
+              href="/signin"
               className="rounded-full bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
             >
-              Browse the gallery
+              Create your free account
             </Link>
             <Link
-              href="/signin"
+              href="/pricing"
               className="rounded-full border border-border px-6 py-3 text-sm font-medium text-text transition-colors hover:bg-surface-2"
             >
-              Create an account
+              See pricing
             </Link>
           </div>
         </div>

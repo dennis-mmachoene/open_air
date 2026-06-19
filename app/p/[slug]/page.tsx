@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPalette, categorySlug } from "@/lib/palettes/snapshot";
-import { ALL_PALETTES } from "@/lib/palettes/snapshot";
 import { relatedPalettes } from "@/lib/palettes/query";
 import { CopyHex } from "@/components/palette/CopyHex";
 import { WhyDiagram } from "@/components/palette/WhyDiagram";
@@ -13,10 +12,7 @@ import { Showroom } from "@/components/showroom/Showroom";
 import { SaveButton } from "@/components/palette/SaveButton";
 import { CollectionPicker } from "@/components/palette/CollectionPicker";
 import { RecordView } from "@/components/palette/RecordView";
-
-export function generateStaticParams() {
-  return ALL_PALETTES.map((p) => ({ slug: p.slug }));
-}
+import { requireUser } from "@/lib/auth-guard";
 
 export async function generateMetadata({
   params,
@@ -49,6 +45,7 @@ export default async function PalettePage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  await requireUser();
   const { slug } = await params;
   const palette = getPalette(slug);
   if (!palette) notFound();

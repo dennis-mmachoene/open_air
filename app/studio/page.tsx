@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Showroom } from "@/components/showroom/Showroom";
 import { ALL_PALETTES } from "@/lib/palettes/snapshot";
+import { requireUser } from "@/lib/auth-guard";
 
 export const metadata: Metadata = {
   title: "Studio",
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
     "Pick any palette and watch it dress a complete UI library in real time — buttons, forms, charts, and full screens.",
 };
 
-export default function StudioPage() {
+export default async function StudioPage() {
+  await requireUser();
   const palettes = ALL_PALETTES.map((p) => ({
     slug: p.slug,
     name: p.name,

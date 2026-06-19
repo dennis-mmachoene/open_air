@@ -24,6 +24,10 @@ const EnvSchema = z.object({
   AUTH_EMAIL_SERVER: z.string().min(1).optional(),
   AUTH_EMAIL_FROM: z.string().min(1).optional(),
 
+  // Google Gemini (AI color concierge). Optional — falls back to local matching.
+  GEMINI_API_KEY: z.string().min(1).optional(),
+  GEMINI_MODEL: z.string().min(1).optional(),
+
   // Sentry — optional; error reporting is a no-op until a DSN is provided.
   SENTRY_DSN: z.string().url().optional(),
   NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),

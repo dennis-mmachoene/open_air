@@ -1,13 +1,9 @@
 import { ImageResponse } from "next/og";
-import { ALL_PALETTES, getPalette } from "@/lib/palettes/snapshot";
+import { getPalette } from "@/lib/palettes/snapshot";
 
 export const alt = "Open Air palette";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-
-export function generateStaticParams() {
-  return ALL_PALETTES.map((p) => ({ slug: p.slug }));
-}
 
 export default async function OgImage({
   params,

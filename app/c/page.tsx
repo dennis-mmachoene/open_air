@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ALL_COLLECTIONS, palettesInCollection } from "@/lib/palettes/snapshot";
 import { Strata } from "@/components/palette/Strata";
+import { requireUser } from "@/lib/auth-guard";
 
 export const metadata: Metadata = {
   title: "Collections",
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
     "Curated editorial collections of color palettes — Coastal Mornings, Golden Hour, Jewel Box and more.",
 };
 
-export default function CollectionsIndexPage() {
+export default async function CollectionsIndexPage() {
+  await requireUser();
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-5 py-12 sm:px-8">
       <header className="flex flex-col gap-3">
