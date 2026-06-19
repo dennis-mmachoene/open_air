@@ -1,19 +1,18 @@
-import type { Metadata } from "next";
+import { auth } from "@/lib/auth";
 import { GalleryHome } from "@/components/gallery/GalleryHome";
-import { requireUser } from "@/lib/auth-guard";
+import { Landing } from "@/components/marketing/Landing";
 
-export const metadata: Metadata = {
-  title: "Gallery — browse 100+ color palettes",
-  description:
-    "Browse Open Air's living gallery of curated color palettes. Filter by mood, color family, season and harmony.",
-};
-
-export default async function GalleryPage({
+/**
+ * Smart home: signed-out visitors get the marketing landing; signed-in users
+ * land straight in the gallery. (This makes / dynamic, by design.)
+ */
+export default async function Home({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  await requireUser();
+  const session = await auth();
+  if (!session?.user) return <Landing />;
   const sp = await searchParams;
   return <GalleryHome searchParams={sp} />;
 }
