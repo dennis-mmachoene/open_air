@@ -11,6 +11,7 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
+import type { AdapterAccountType } from "next-auth/adapters";
 import type { Palette } from "../palettes/types";
 
 /** Postgres full-text search vector. */
@@ -126,6 +127,7 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   name: text("name"),
   image: text("image"),
+  emailVerified: timestamp("email_verified", { mode: "date" }),
   stripeCustomerId: text("stripe_customer_id"),
   plan: text("plan").notNull().default("free"),
   createdAt: createdAt(),
@@ -190,3 +192,45 @@ export const apiKeys = pgTable("api_keys", {
   lastUsedAt: timestamp("last_used_at", { withTimezone: true }),
   createdAt: createdAt(),
 });
+
+// ---------------------------------------------------------------------------
+// Auth.js (Drizzle adapter) — accounts, sessions, verification tokens
+// ---------------------------------------------------------------------------
+
+export const accounts = pgTable(
+  "accounts",
+  {
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").$type<AdapterAccountType>().notNull(),
+    provider: text("provider").notNull(),
+    providerAccountId: text("provider_account_id").notNull(),
+    refresh_token: text("refresh_token"),
+    access_token: text("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: text("token_type"),
+    scope: text("scope"),
+    id_token: text("id_token"),
+    session_state: text("session_state"),
+  },
+  (t) => [primaryKey({ columns: [t.provider, t.providerAccountId] })],
+);
+
+export const sessions = pgTable("sessions", {
+  sessionToken: text("session_token").primaryKey(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  expires: timestamp("expires", { mode: "date" }).notNull(),
+});
+
+export const verificationTokens = pgTable(
+  "verification_tokens",
+  {
+    identifier: text("identifier").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.identifier, t.token] })],
+);

@@ -17,6 +17,13 @@ const EnvSchema = z.object({
   // is served from the static snapshot, so the app builds without it.
   DATABASE_URL: z.string().min(1).optional(),
 
+  // Auth.js (Phase 4). Optional until configured; sign-in is disabled without them.
+  AUTH_SECRET: z.string().min(1).optional(),
+  AUTH_GOOGLE_ID: z.string().min(1).optional(),
+  AUTH_GOOGLE_SECRET: z.string().min(1).optional(),
+  AUTH_EMAIL_SERVER: z.string().min(1).optional(),
+  AUTH_EMAIL_FROM: z.string().min(1).optional(),
+
   // Sentry — optional; error reporting is a no-op until a DSN is provided.
   SENTRY_DSN: z.string().url().optional(),
   NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),

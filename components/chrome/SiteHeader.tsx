@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { nav, site } from "@/lib/site";
+import { AuthNav } from "@/components/auth/AuthNav";
 
 /**
  * Quiet, near-neutral top bar. Contributes no loud color of its own so every
@@ -30,12 +31,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/studio"
-            className="hidden rounded-full px-3 py-1.5 text-sm text-text-soft transition-colors hover:text-text sm:inline-flex"
-          >
-            Sign in
-          </Link>
+          <AuthNav />
           <Link
             href="/pricing"
             className="rounded-full bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"

@@ -10,6 +10,9 @@ import { AccessibilityReport } from "@/components/palette/AccessibilityReport";
 import { ExportPanel } from "@/components/palette/ExportPanel";
 import { PaletteCard } from "@/components/gallery/PaletteCard";
 import { Showroom } from "@/components/showroom/Showroom";
+import { SaveButton } from "@/components/palette/SaveButton";
+import { CollectionPicker } from "@/components/palette/CollectionPicker";
+import { RecordView } from "@/components/palette/RecordView";
 
 export function generateStaticParams() {
   return ALL_PALETTES.map((p) => ({ slug: p.slug }));
@@ -64,8 +67,13 @@ export default async function PalettePage({
           <h1 className="font-display text-4xl text-text sm:text-5xl">{palette.name}</h1>
           <p className="max-w-2xl text-lg text-text-soft">{palette.story}</p>
         </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <SaveButton slug={palette.slug} />
+          <CollectionPicker slug={palette.slug} />
+        </div>
         <CopyHex swatches={palette.swatches} />
         <p className="text-sm text-text-muted">Click any band to copy its hex.</p>
+        <RecordView slug={palette.slug} />
       </header>
 
       {/* Why */}
