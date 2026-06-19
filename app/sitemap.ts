@@ -4,7 +4,7 @@ import { ALL_COLLECTIONS, ALL_PALETTES, allCategories } from "@/lib/palettes/sna
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = site.url.replace(/\/$/, "");
-  const staticRoutes = ["", "/about"].map((path) => ({
+  const staticRoutes = ["", "/gallery", "/c", "/about", "/pricing"].map((path) => ({
     url: `${base}${path}`,
     changeFrequency: "weekly" as const,
     priority: path === "" ? 1 : 0.5,

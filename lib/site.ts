@@ -30,7 +30,7 @@ export const social = [
 
 /** Primary navigation. Some destinations land in later phases. */
 export const nav = [
-  { label: "Gallery", href: "/" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Collections", href: "/c" },
   { label: "Studio", href: "/studio" },
   { label: "Pricing", href: "/pricing" },
