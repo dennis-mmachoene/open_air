@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { nav, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import { AuthNav } from "@/components/auth/AuthNav";
+import { PrimaryNav } from "@/components/chrome/PrimaryNav";
 import { Logo } from "@/components/chrome/Logo";
 
 /**
@@ -15,17 +16,7 @@ export function SiteHeader() {
           <Logo />
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-full px-3 py-1.5 text-sm text-text-soft transition-colors hover:bg-surface-2 hover:text-text"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <PrimaryNav />
 
         <div className="flex items-center gap-2">
           <AuthNav />

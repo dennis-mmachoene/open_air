@@ -7,7 +7,7 @@
     "name": "Dennis Ramara",
     "url": "https://github.com/dennis-mmachoene"
   },
-  "description": "Open Air \u2014 a living gallery of color. Designed & built by Dennis Ramara.",
+  "description": "Open Air — a living gallery of color. Designed & built by Dennis Ramara.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -34,6 +34,7 @@
     "culori": "^4.0.2",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
+    "marked": "^18.0.5",
     "next": "16.2.9",
     "next-auth": "^5.0.0-beta.31",
     "nodemailer": "^7.0.13",

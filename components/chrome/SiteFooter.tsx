@@ -25,8 +25,10 @@ export function SiteFooter() {
             ))}
           </nav>
           <div className="flex flex-wrap gap-x-4 gap-y-1">
-            <Link href="/terms" className="text-xs text-text-muted transition-colors hover:text-text">Terms</Link>
-            <Link href="/privacy" className="text-xs text-text-muted transition-colors hover:text-text">Privacy</Link>
+            <Link href="/legal/terms" className="text-xs text-text-muted transition-colors hover:text-text">Terms</Link>
+            <Link href="/legal/privacy" className="text-xs text-text-muted transition-colors hover:text-text">Privacy</Link>
+            <Link href="/legal/cookies" className="text-xs text-text-muted transition-colors hover:text-text">Cookies</Link>
+            <Link href="/legal" className="text-xs text-text-muted transition-colors hover:text-text">Legal</Link>
           </div>
         </div>
 
