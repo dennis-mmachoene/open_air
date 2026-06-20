@@ -70,7 +70,7 @@ export function MobileNav() {
   };
 
   return (
-    <div className="md:hidden">
+    <div className="shrink-0 md:hidden">
       <button
         ref={triggerRef}
         type="button"
@@ -78,7 +78,7 @@ export function MobileNav() {
         aria-label="Open menu"
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="flex h-9 w-9 items-center justify-center rounded-full text-text transition-colors hover:bg-surface-2"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-text transition-colors hover:bg-surface-2"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
           <path d="M4 7h16M4 12h16M4 17h16" />

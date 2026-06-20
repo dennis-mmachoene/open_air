@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 
 const TOOLS = [
   { href: "/studio/scales", label: "Tonal scales", blurb: "One color → a 50–950 system" },
+  { href: "/studio/tokens", label: "Semantic tokens", blurb: "A full token system + matrix" },
   { href: "/studio/generate", label: "Generator", blurb: "Build a palette from scratch" },
   { href: "/studio/extract", label: "Extract from image", blurb: "Pull colors from a photo" },
   { href: "/studio/gradients", label: "Gradients", blurb: "Perceptual gradient studio" },
