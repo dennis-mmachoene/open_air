@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { getSavedSlugs } from "@/lib/saves";
@@ -10,33 +9,13 @@ import { UsageMeter } from "@/components/billing/UsageMeter";
 import { needsOnboarding } from "@/lib/onboarding";
 import { listUserPalettes } from "@/lib/user-palettes";
 import { Strata } from "@/components/palette/Strata";
-import {
-  createUserCollection,
-  deleteUserCollection,
-  listUserCollections,
-} from "@/lib/user-collections";
+import { listUserCollections } from "@/lib/user-collections";
+import { CollectionsManager } from "@/components/dashboard/CollectionsManager";
 import { getPalette } from "@/lib/palettes/snapshot";
 import { PaletteCard } from "@/components/gallery/PaletteCard";
 import { Rail } from "@/components/gallery/Rail";
 
 export const metadata: Metadata = { title: "Dashboard" };
-
-async function createCollection(formData: FormData) {
-  "use server";
-  const session = await auth();
-  if (!session?.user) return;
-  const name = String(formData.get("name") ?? "").trim();
-  if (name) await createUserCollection(session.user.id, name);
-  revalidatePath("/dashboard");
-}
-
-async function removeCollection(formData: FormData) {
-  "use server";
-  const session = await auth();
-  if (!session?.user) return;
-  await deleteUserCollection(session.user.id, String(formData.get("id") ?? ""));
-  revalidatePath("/dashboard");
-}
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -93,38 +72,9 @@ export default async function DashboardPage() {
       {/* Collections */}
       <section className="flex flex-col gap-4">
         <h2 className="font-display text-2xl text-text">Collections</h2>
-        <form action={createCollection} className="flex max-w-sm gap-2">
-          <input
-            name="name"
-            placeholder="e.g. Client X, My brand"
-            className="min-w-0 flex-1 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
-          />
-          <button className="rounded-lg bg-text px-4 py-2 text-sm font-medium text-canvas">
-            Create
-          </button>
-        </form>
-        {collections.length === 0 ? (
-          <p className="text-text-soft">No collections yet.</p>
-        ) : (
-          <ul className="flex flex-col divide-y divide-border rounded-xl border border-border">
-            {collections.map((c) => (
-              <li key={c.id} className="flex items-center justify-between px-4 py-3">
-                <span className="text-text">
-                  {c.name}{" "}
-                  <span className="text-sm text-text-muted">
-                    · {c.itemCount} {c.itemCount === 1 ? "palette" : "palettes"}
-                  </span>
-                </span>
-                <form action={removeCollection}>
-                  <input type="hidden" name="id" value={c.id} />
-                  <button className="text-sm text-text-muted transition-colors hover:text-text">
-                    Delete
-                  </button>
-                </form>
-              </li>
-            ))}
-          </ul>
-        )}
+        <CollectionsManager
+          initial={collections.map((c) => ({ id: c.id, name: c.name, itemCount: c.itemCount }))}
+        />
       </section>
 
       {/* Generated */}
