@@ -1,3 +1,11 @@
+import { config } from "dotenv";
+
+// CLI scripts (seed, drizzle-kit) don't get Next's automatic .env.local loading,
+// so load it here. Imported for its side effect BEFORE anything reads env.
+// dotenv does not override already-set vars, so .env.local wins over .env.
+config({ path: ".env.local" });
+config({ path: ".env" });
+
 import { z } from "zod";
 
 /**
@@ -7,66 +15,73 @@ import { z } from "zod";
  * as each subsystem lands. Add new vars to the schema, never read process.env
  * directly elsewhere.
  */
-const EnvSchema = z.object({
-  NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+const EnvSchema = z
+  .object({
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development"),
 
-  // Public site URL (used for metadataBase, OG, canonical links)
-  NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
+    // Public site URL (used for metadataBase, OG, canonical links)
+    NEXT_PUBLIC_SITE_URL: z.string().url().optional(),
 
-  // Postgres (Neon). Optional until the DB is provisioned; the public catalog
-  // is served from the static snapshot, so the app builds without it.
-  DATABASE_URL: z.string().min(1).optional(),
+    // Postgres (Neon). Optional until the DB is provisioned; the public catalog
+    // is served from the static snapshot, so the app builds without it.
+    DATABASE_URL: z.string().min(1).optional(),
 
-  // Auth.js (Phase 4). Optional until configured; sign-in is disabled without them.
-  AUTH_SECRET: z.string().min(1).optional(),
-  AUTH_GOOGLE_ID: z.string().min(1).optional(),
-  AUTH_GOOGLE_SECRET: z.string().min(1).optional(),
-  AUTH_EMAIL_SERVER: z.string().min(1).optional(),
-  AUTH_EMAIL_FROM: z.string().min(1).optional(),
+    // Auth.js (Phase 4). Optional until configured; sign-in is disabled without them.
+    AUTH_SECRET: z.string().min(1).optional(),
+    AUTH_GOOGLE_ID: z.string().min(1).optional(),
+    AUTH_GOOGLE_SECRET: z.string().min(1).optional(),
+    AUTH_EMAIL_SERVER: z.string().min(1).optional(),
+    AUTH_EMAIL_FROM: z.string().min(1).optional(),
 
-  // Google Gemini (AI color concierge). Optional — falls back to local matching.
-  GEMINI_API_KEY: z.string().min(1).optional(),
-  GEMINI_MODEL: z.string().min(1).optional(),
+    // Google Gemini (AI color concierge). Optional — falls back to local matching.
+    GEMINI_API_KEY: z.string().min(1).optional(),
+    GEMINI_MODEL: z.string().min(1).optional(),
 
-  // Stripe (Phase 5). Optional until configured; billing is disabled without them.
-  STRIPE_SECRET_KEY: z.string().min(1).optional(),
-  STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
-  STRIPE_PRICE_PRO_MONTHLY: z.string().min(1).optional(),
-  STRIPE_PRICE_PRO_YEARLY: z.string().min(1).optional(),
-  STRIPE_PRICE_STUDIO_MONTHLY: z.string().min(1).optional(),
-  STRIPE_PRICE_STUDIO_YEARLY: z.string().min(1).optional(),
+    // Stripe (Phase 5). Optional until configured; billing is disabled without them.
+    STRIPE_SECRET_KEY: z.string().min(1).optional(),
+    STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
+    STRIPE_PRICE_PRO_MONTHLY: z.string().min(1).optional(),
+    STRIPE_PRICE_PRO_YEARLY: z.string().min(1).optional(),
+    STRIPE_PRICE_STUDIO_MONTHLY: z.string().min(1).optional(),
+    STRIPE_PRICE_STUDIO_YEARLY: z.string().min(1).optional(),
 
-  // Upstash Redis (rate limiting for the public API). Optional — skipped if unset.
-  UPSTASH_REDIS_REST_URL: z.string().url().optional(),
-  UPSTASH_REDIS_REST_TOKEN: z.string().min(1).optional(),
+    // Upstash Redis (rate limiting for the public API). Optional — skipped if unset.
+    UPSTASH_REDIS_REST_URL: z.string().url().optional(),
+    UPSTASH_REDIS_REST_TOKEN: z.string().min(1).optional(),
 
-  // PostHog product analytics (optional). Pageviews are captured client-side.
-  NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
-  NEXT_PUBLIC_POSTHOG_HOST: z.string().url().optional(),
+    // PostHog product analytics (optional). Pageviews are captured client-side.
+    NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
+    NEXT_PUBLIC_POSTHOG_HOST: z.string().url().optional(),
 
-  // Sentry — optional; error reporting is a no-op until a DSN is provided.
-  SENTRY_DSN: z.string().url().optional(),
-  NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
-}).superRefine((value, ctx) => {
-  // Fail the deploy (not the user) if required production config is missing.
-  if (value.NODE_ENV === "production") {
-    for (const key of ["DATABASE_URL", "AUTH_SECRET"] as const) {
-      if (!value[key]) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: [key],
-          message: `${key} is required in production`,
-        });
+    // Sentry — optional; error reporting is a no-op until a DSN is provided.
+    SENTRY_DSN: z.string().url().optional(),
+    NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
+
+    // Admin allow-list. Comma-separated email addresses, e.g. "a@x.com,b@x.com".
+    // Granting / revoking admin is a one-line env change — no migration needed.
+    ADMIN_EMAILS: z.string().min(1).optional(),
+  })
+  .superRefine((value, ctx) => {
+    // Fail the deploy (not the user) if required production config is missing.
+    if (value.NODE_ENV === "production") {
+      for (const key of ["DATABASE_URL", "AUTH_SECRET"] as const) {
+        if (!value[key]) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: [key],
+            message: `${key} is required in production`,
+          });
+        }
       }
     }
-  }
-});
+  });
 
 export type Env = z.infer<typeof EnvSchema>;
 
 function loadEnv(): Env {
   const parsed = EnvSchema.safeParse(process.env);
-
   if (!parsed.success) {
     const issues = parsed.error.issues
       .map((i) => `  • ${i.path.join(".") || "(root)"}: ${i.message}`)
@@ -76,8 +91,28 @@ function loadEnv(): Env {
         "Check your .env file against .env.example.",
     );
   }
-
   return parsed.data;
 }
 
 export const env = loadEnv();
+
+/**
+ * Admin allow-list — sourced from the ADMIN_EMAILS env var.
+ * Set a comma-separated list in your .env.local:
+ *   ADMIN_EMAILS="alice@example.com,bob@example.com"
+ * Granting or revoking admin is a one-line env change; no code edit or
+ * migration needed. Falls back to an empty set when the var is unset,
+ * meaning no one gets admin access by default.
+ *
+ * This module stays free of server-only imports so the nav can use isAdminEmail.
+ */
+export const ADMIN_EMAILS: ReadonlySet<string> = new Set(
+  (env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean),
+);
+
+export function isAdminEmail(email: string | null | undefined): boolean {
+  return Boolean(email) && ADMIN_EMAILS.has(email!.toLowerCase());
+}

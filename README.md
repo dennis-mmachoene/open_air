@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Open Air
 
-## Getting Started
+**A living gallery of color.** Open Air is a premium color-exploration platform — a museum of palettes you can put to work. Browse 108 hand-tuned, AA-gated OKLCH palettes, understand *why* each one works, then watch any palette dress a complete component library and real screens in real time in the **Showroom**.
 
-First, run the development server:
+Designed & built by [Dennis Ramara](https://github.com/dennis-mmachoene).
+
+---
+
+## What it does
+
+- **Gallery** — a quiet, near-neutral shell so every saturated pixel on screen belongs to a palette. Browse, filter by mood / industry / family / style / season, and open any palette to see its ramp, harmony, contrast pairings, and rationale.
+- **Showroom** — select a palette and it re-themes an entire UI specimen library (primitives, components, data-viz, full screens) at once, driven purely by `--p-*` role tokens.
+- **Studio** — generate palettes client-side (instant), extract a palette from an image, build gradients, and repair any palette for WCAG AA contrast.
+- **Accounts** — save palettes, organize collections, and revisit recently viewed. A two-step onboarding seeds new accounts with picks for their use-case.
+- **Billing** — Free, Pro, and Studio tiers via Stripe, with entitlements derived server-side from the user's plan.
+- **Public API** — `GET /api/v1/palettes` with API keys and rate limiting.
+- **Admin** — an allow-listed control room: overview KPIs, user management, content insights, and a health dashboard.
+
+## Tech stack
+
+| Area | Choice |
+|------|--------|
+| Framework | Next.js 16 (App Router), React 19, TypeScript (strict) |
+| Styling | Tailwind v4 (`@theme inline`, CSS role tokens) |
+| Color | OKLCH via `culori`; WCAG AA contrast gating |
+| Data | Drizzle ORM + Neon Postgres |
+| Auth | Auth.js v5 (Google OAuth + email magic links, database sessions) |
+| Billing | Stripe (Checkout, Billing Portal, webhooks) |
+| AI | Google Gemini color concierge (REST, with local fallback) |
+| Rate limiting | Upstash Redis |
+| Email | Nodemailer (SMTP) |
+| Analytics / errors | PostHog (CDN), Sentry (optional) |
+| Tests / CI | Vitest + GitHub Actions (lint → typecheck → test → build) |
+
+The public catalog is served from a static `snapshot.json` (108 palettes), so reads work even without a database connection.
+
+## Getting started
+
+**Prerequisites:** Node 22+ and npm.
 
 ```bash
+npm install
+cp .env.example .env.local   # then fill in the values you need
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>. The app boots without any environment variables — the public gallery runs off the static snapshot. Configure the vars below to unlock accounts, billing, and AI.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All variables are validated by `lib/env.ts` (Zod) — never read `process.env` directly elsewhere. In production, `DATABASE_URL` and `AUTH_SECRET` are required (the deploy fails closed if missing). Everything else is optional and degrades gracefully.
 
-## Learn More
+| Variable | Purpose |
+|----------|---------|
+| `NEXT_PUBLIC_SITE_URL` | Base URL for metadata, OG images, canonical links |
+| `DATABASE_URL` | Neon Postgres pooled connection string |
+| `AUTH_SECRET` | Auth.js session secret (`npx auth secret`) |
+| `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET` | Google OAuth credentials |
+| `AUTH_EMAIL_SERVER` / `AUTH_EMAIL_FROM` | SMTP for magic-link + transactional email |
+| `GEMINI_API_KEY` / `GEMINI_MODEL` | AI color concierge (falls back to local matching) |
+| `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` | Stripe API + webhook signing |
+| `STRIPE_PRICE_*` | Price IDs for Pro/Studio monthly/yearly |
+| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | Public-API rate limiting |
+| `NEXT_PUBLIC_POSTHOG_KEY` / `NEXT_PUBLIC_POSTHOG_HOST` | Product analytics |
+| `SENTRY_DSN` / `NEXT_PUBLIC_SENTRY_DSN` | Error reporting (no-op until set) |
 
-To learn more about Next.js, take a look at the following resources:
+## Database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run db:generate   # generate a migration from schema changes
+npm run db:migrate    # apply migrations
+npm run db:seed       # seed the catalog from the snapshot
+npm run db:studio     # open Drizzle Studio
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Migrations live in `drizzle/` (currently `0000`–`0004`). After pulling changes that touch the schema, run `npm run db:migrate`.
 
-## Deploy on Vercel
+## Stripe
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run stripe:setup  # creates products/prices, prints the price IDs to paste into .env.local
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The webhook lives at `/api/stripe/webhook` (idempotent via a `webhook_events` table). Plan is derived server-side from the Stripe price — never trusted from the client.
+
+## Admin
+
+The admin area at `/admin` is gated by an email allow-list in `lib/admin.ts`:
+
+```ts
+export const ADMIN_EMAILS = new Set(["dennism.ramara@gmail.com"].map(e => e.toLowerCase()));
+```
+
+Add or change addresses there (no migration needed). Non-admins receive a 404 rather than a 403, so the area's existence isn't advertised. Tabs: **Overview** (KPIs), **Users** (searchable), **Content** (most-saved palettes, popular use-cases, generator harmonies), and **Health**.
+
+A public uptime probe is exposed at **`/api/health`** — it returns boolean checks only (no secrets) and responds `503` when a critical dependency is degraded.
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start the dev server |
+| `npm run build` / `npm start` | Production build / serve |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm test` / `npm run test:watch` | Vitest |
+| `npm run palettes:snapshot` | Rebuild `snapshot.json` from source |
+
+## Project structure
+
+```
+app/            App Router routes (gallery, studio, dashboard, admin, api/*)
+components/     UI — chrome, gallery, studio, showroom, billing, auth, admin
+lib/            Domain logic — color, db, auth, plans, saves, admin, health, env
+drizzle/        SQL migrations + meta
+scripts/        build-snapshot, stripe-setup
+tests/          Vitest suites
+types/          Ambient type declarations
+```
+
+## Testing & CI
+
+```bash
+npm run lint && npm run typecheck && npm test
+```
+
+GitHub Actions runs the same gate on every push and PR: **lint → typecheck → test → build**.
+
+## License
+
+© Dennis Ramara. All rights reserved.

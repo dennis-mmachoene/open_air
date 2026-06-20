@@ -4,7 +4,7 @@
  * This module stays free of server-only imports so the nav can use isAdminEmail.
  */
 export const ADMIN_EMAILS: ReadonlySet<string> = new Set(
-  ["dennism.ramara@gmail.com"].map((e) => e.toLowerCase()),
+  ["dennism.ramara@gmail.com", "openair.mailer@gmail.com"].map((e) => e.toLowerCase()),
 );
 
 export function isAdminEmail(email: string | null | undefined): boolean {
