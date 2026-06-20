@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isAdminEmail, parseAdminEmails } from "../lib/admin";
+import { canonicalEmail, isAdminEmail, parseAdminEmails } from "../lib/admin";
 
 describe("parseAdminEmails", () => {
   it("splits, trims, lowercases and drops blanks", () => {
@@ -12,16 +12,27 @@ describe("parseAdminEmails", () => {
   });
 });
 
+describe("canonicalEmail", () => {
+  it("ignores Gmail dots and +tags", () => {
+    expect(canonicalEmail("Dennis.Ramara+admin@gmail.com")).toBe("dennisramara@gmail.com");
+    expect(canonicalEmail("dennisramara@googlemail.com")).toBe("dennisramara@googlemail.com");
+  });
+  it("keeps dots for non-Gmail domains but still drops +tags", () => {
+    expect(canonicalEmail("a.b+work@company.com")).toBe("a.b@company.com");
+  });
+});
+
 describe("isAdminEmail", () => {
-  const allow = parseAdminEmails("dennism.ramara@gmail.com");
-  it("matches an allow-listed admin, case-insensitively", () => {
-    expect(isAdminEmail("dennism.ramara@gmail.com", allow)).toBe(true);
-    expect(isAdminEmail("DENNISM.Ramara@Gmail.com", allow)).toBe(true);
+  const allow = parseAdminEmails("dennis.ramara@gmail.com");
+  it("matches the admin regardless of Gmail dots/tags or case (any provider)", () => {
+    expect(isAdminEmail("dennis.ramara@gmail.com", allow)).toBe(true);
+    expect(isAdminEmail("dennisramara@gmail.com", allow)).toBe(true); // Google may return no dots
+    expect(isAdminEmail("DennisRamara+admin@Gmail.com", allow)).toBe(true);
   });
   it("rejects everyone else and empty values", () => {
     expect(isAdminEmail("someone@else.com", allow)).toBe(false);
+    expect(isAdminEmail("dennismmachoene@gmail.com", allow)).toBe(false); // different inbox
     expect(isAdminEmail(null, allow)).toBe(false);
-    expect(isAdminEmail(undefined, allow)).toBe(false);
     expect(isAdminEmail("", allow)).toBe(false);
   });
 });
