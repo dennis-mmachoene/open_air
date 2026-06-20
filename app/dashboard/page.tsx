@@ -5,6 +5,8 @@ import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { getSavedSlugs } from "@/lib/saves";
+import { normalizePlan, PLAN_FEATURES } from "@/lib/plans";
+import { UsageMeter } from "@/components/billing/UsageMeter";
 import { needsOnboarding } from "@/lib/onboarding";
 import { listUserPalettes } from "@/lib/user-palettes";
 import { Strata } from "@/components/palette/Strata";
@@ -63,6 +65,12 @@ export default async function DashboardPage() {
           Welcome back{session.user.name ? `, ${session.user.name}` : ""}.
         </p>
       </header>
+
+      <UsageMeter
+        used={savedSlugs.length}
+        limit={PLAN_FEATURES[normalizePlan(session.user.plan)].savedLimit}
+        plan={normalizePlan(session.user.plan)}
+      />
 
       {/* Saved */}
       <section className="flex flex-col gap-4">
