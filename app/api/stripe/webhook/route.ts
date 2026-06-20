@@ -5,9 +5,8 @@ import { getDb } from "@/lib/db";
 import { subscriptions, users, webhookEvents } from "@/lib/db/schema";
 import { env } from "@/lib/env";
 import { planForPrice, stripe } from "@/lib/stripe";
+import { effectivePlan } from "@/lib/billing";
 import { paymentFailedEmail, receiptEmail, sendEmail } from "@/lib/email";
-
-const ACTIVE = new Set(["active", "trialing", "past_due"]);
 
 async function userForCustomer(customerId: string) {
   const db = getDb();
@@ -22,7 +21,8 @@ async function userForCustomer(customerId: string) {
 /** Mirror a Stripe subscription into our DB and update the user's plan. */
 async function syncSubscription(sub: Stripe.Subscription) {
   const db = getDb();
-  const customerId = typeof sub.customer === "string" ? sub.customer : sub.customer.id;
+  const customerId =
+    typeof sub.customer === "string" ? sub.customer : sub.customer.id;
 
   let userId = sub.metadata?.userId;
   if (!userId) {
@@ -60,13 +60,16 @@ async function syncSubscription(sub: Stripe.Subscription) {
       },
     });
 
-  const effectivePlan = ACTIVE.has(sub.status) ? plan : "free";
-  await db.update(users).set({ plan: effectivePlan }).where(eq(users.id, userId));
+  const nextPlan = effectivePlan(sub.status, plan);
+  await db.update(users).set({ plan: nextPlan }).where(eq(users.id, userId));
 }
 
 export async function POST(request: Request) {
   if (!stripe || !env.STRIPE_WEBHOOK_SECRET) {
-    return NextResponse.json({ error: "billing not configured" }, { status: 503 });
+    return NextResponse.json(
+      { error: "billing not configured" },
+      { status: 503 },
+    );
   }
 
   const body = await request.text();
@@ -74,79 +77,99 @@ export async function POST(request: Request) {
 
   let event: Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(body, signature, env.STRIPE_WEBHOOK_SECRET);
+    event = stripe.webhooks.constructEvent(
+      body,
+      signature,
+      env.STRIPE_WEBHOOK_SECRET,
+    );
   } catch {
     return new NextResponse("invalid signature", { status: 400 });
   }
 
-  // Idempotency — skip events we've already processed.
+  // Idempotency — atomically *claim* the event by inserting its id. The unique
+  // constraint means only one of two concurrent duplicate deliveries wins the
+  // insert; the loser sees zero rows and bows out. If processing then fails we
+  // release the claim (delete the row) so Stripe's retry can reprocess.
   const db = getDb();
-  const [seen] = await db
-    .select({ id: webhookEvents.id })
-    .from(webhookEvents)
-    .where(eq(webhookEvents.id, event.id))
-    .limit(1);
-  if (seen) {
+  const claimed = await db
+    .insert(webhookEvents)
+    .values({ id: event.id, type: event.type })
+    .onConflictDoNothing()
+    .returning({ id: webhookEvents.id });
+  if (claimed.length === 0) {
     return NextResponse.json({ received: true, duplicate: true });
   }
 
-  switch (event.type) {
-    case "checkout.session.completed": {
-      const s = event.data.object as Stripe.Checkout.Session;
-      if (s.subscription) {
-        const id = typeof s.subscription === "string" ? s.subscription : s.subscription.id;
-        const sub = await stripe.subscriptions.retrieve(id);
-        await syncSubscription(sub);
-      }
-      break;
-    }
-    case "customer.subscription.created":
-    case "customer.subscription.updated":
-    case "customer.subscription.deleted": {
-      await syncSubscription(event.data.object as Stripe.Subscription);
-      break;
-    }
-    case "invoice.paid": {
-      const invoice = event.data.object as Stripe.Invoice;
-      const customerId =
-        typeof invoice.customer === "string" ? invoice.customer : invoice.customer?.id;
-      if (customerId && invoice.amount_paid > 0) {
-        const u = await userForCustomer(customerId);
-        if (u?.email) {
-          await sendEmail(
-            receiptEmail(u.email, {
-              amount: invoice.amount_paid,
-              currency: invoice.currency,
-              plan: u.plan === "studio" ? "Studio" : "Pro",
-              invoiceUrl: invoice.hosted_invoice_url,
-              pdfUrl: invoice.invoice_pdf,
-            }),
-          );
+  try {
+    switch (event.type) {
+      case "checkout.session.completed": {
+        const s = event.data.object as Stripe.Checkout.Session;
+        if (s.subscription) {
+          const id =
+            typeof s.subscription === "string"
+              ? s.subscription
+              : s.subscription.id;
+          const sub = await stripe.subscriptions.retrieve(id);
+          await syncSubscription(sub);
         }
+        break;
       }
-      break;
-    }
-    case "invoice.payment_failed": {
-      const invoice = event.data.object as Stripe.Invoice;
-      const customerId =
-        typeof invoice.customer === "string" ? invoice.customer : invoice.customer?.id;
-      if (customerId) {
-        const u = await userForCustomer(customerId);
-        if (u?.email) {
-          await sendEmail(paymentFailedEmail(u.email, u.plan === "studio" ? "Studio" : "Pro"));
+      case "customer.subscription.created":
+      case "customer.subscription.updated":
+      case "customer.subscription.deleted": {
+        await syncSubscription(event.data.object as Stripe.Subscription);
+        break;
+      }
+      case "invoice.paid": {
+        const invoice = event.data.object as Stripe.Invoice;
+        const customerId =
+          typeof invoice.customer === "string"
+            ? invoice.customer
+            : invoice.customer?.id;
+        if (customerId && invoice.amount_paid > 0) {
+          const u = await userForCustomer(customerId);
+          if (u?.email) {
+            await sendEmail(
+              receiptEmail(u.email, {
+                amount: invoice.amount_paid,
+                currency: invoice.currency,
+                plan: u.plan === "studio" ? "Studio" : "Pro",
+                invoiceUrl: invoice.hosted_invoice_url,
+                pdfUrl: invoice.invoice_pdf,
+              }),
+            );
+          }
         }
+        break;
       }
-      break;
+      case "invoice.payment_failed": {
+        const invoice = event.data.object as Stripe.Invoice;
+        const customerId =
+          typeof invoice.customer === "string"
+            ? invoice.customer
+            : invoice.customer?.id;
+        if (customerId) {
+          const u = await userForCustomer(customerId);
+          if (u?.email) {
+            await sendEmail(
+              paymentFailedEmail(
+                u.email,
+                u.plan === "studio" ? "Studio" : "Pro",
+              ),
+            );
+          }
+        }
+        break;
+      }
+      default:
+        break;
     }
-    default:
-      break;
+  } catch (err) {
+    // Release the claim so the event isn't permanently marked processed.
+    await db.delete(webhookEvents).where(eq(webhookEvents.id, event.id));
+    console.error(`webhook ${event.type} (${event.id}) failed:`, err);
+    return NextResponse.json({ error: "processing failed" }, { status: 500 });
   }
-
-  // Mark processed only after success, so transient failures get retried.
-  await db
-    .insert(webhookEvents)
-    .values({ id: event.id, type: event.type })
-    .onConflictDoNothing();
 
   return NextResponse.json({ received: true });
 }

@@ -79,6 +79,36 @@ const EnvSchema = z
           });
         }
       }
+
+      // Subsystem completeness: a partially-configured subsystem fails closed
+      // rather than silently behaving as if it were off. Configure all of a
+      // group's keys, or none — half-set credentials are almost always a
+      // misconfiguration (and a silent fail-open risk).
+      const groups: Record<string, readonly (keyof typeof value)[]> = {
+        "Stripe billing": [
+          "STRIPE_SECRET_KEY",
+          "STRIPE_WEBHOOK_SECRET",
+          "STRIPE_PRICE_PRO_MONTHLY",
+          "STRIPE_PRICE_PRO_YEARLY",
+          "STRIPE_PRICE_STUDIO_MONTHLY",
+          "STRIPE_PRICE_STUDIO_YEARLY",
+        ],
+        "Google OAuth": ["AUTH_GOOGLE_ID", "AUTH_GOOGLE_SECRET"],
+        "Email (SMTP)": ["AUTH_EMAIL_SERVER", "AUTH_EMAIL_FROM"],
+        "Upstash rate limiting": ["UPSTASH_REDIS_REST_URL", "UPSTASH_REDIS_REST_TOKEN"],
+        "Sentry": ["SENTRY_DSN", "NEXT_PUBLIC_SENTRY_DSN"],
+      };
+      for (const [name, keys] of Object.entries(groups)) {
+        const set = keys.filter((k) => value[k]);
+        if (set.length > 0 && set.length < keys.length) {
+          const missing = keys.filter((k) => !value[k]);
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: [missing[0]],
+            message: `${name} is partially configured — also set: ${missing.join(", ")}`,
+          });
+        }
+      }
     }
   });
 
