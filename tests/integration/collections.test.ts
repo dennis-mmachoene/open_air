@@ -31,6 +31,24 @@ describe("user collections", () => {
     expect(list[0].itemCount).toBe(0);
   });
 
+  it("lists an existing collection as a save target, then accepts the palette", async () => {
+    const user = await seedUser(ctx.db, { plan: "pro" });
+    await seedPalette(ctx.db, "p1");
+    const col = await createUserCollection(user, "Brand");
+
+    let forSlug = await collectionsForSlug(user, "p1");
+    expect(forSlug).toHaveLength(1);
+    expect(forSlug[0].id).toBe(col.id);
+    expect(forSlug[0].inCollection).toBe(false);
+
+    const added = await toggleCollectionItem(user, col.id, "p1");
+    expect(added.inCollection).toBe(true);
+
+    forSlug = await collectionsForSlug(user, "p1");
+    expect(forSlug[0].inCollection).toBe(true);
+    expect((await listUserCollections(user))[0].itemCount).toBe(1);
+  });
+
   it("won't let a user touch a collection they don't own", async () => {
     const owner = await seedUser(ctx.db, { plan: "pro" });
     const intruder = await seedUser(ctx.db, { plan: "pro" });

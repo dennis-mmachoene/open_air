@@ -12,15 +12,11 @@ export function CollectionPicker({ slug }: { slug: string }) {
   const [open, setOpen] = useState(false);
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
   const [collections, setCollections] = useState<Coll[]>([]);
+  const [pending, setPending] = useState<Set<string>>(new Set());
   const [name, setName] = useState("");
+  const [creating, setCreating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
-
-  async function refresh() {
-    const r = await fetch(`/api/collections?slug=${encodeURIComponent(slug)}`);
-    const d: { authenticated: boolean; collections: Coll[] } = await r.json();
-    setAuthenticated(d.authenticated);
-    setCollections(d.collections);
-  }
 
   useEffect(() => {
     let active = true;
@@ -50,24 +46,77 @@ export function CollectionPicker({ slug }: { slug: string }) {
 
   if (authenticated === false) return null;
 
-  async function toggle(id: string) {
-    await fetch("/api/collections", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ collectionId: id, slug }),
+  const inCount = collections.filter((c) => c.inCollection).length;
+
+  function setPendingFor(id: string, on: boolean) {
+    setPending((prev) => {
+      const next = new Set(prev);
+      if (on) next.add(id);
+      else next.delete(id);
+      return next;
     });
-    await refresh();
+  }
+
+  async function toggle(id: string) {
+    if (pending.has(id)) return;
+    setError(null);
+    // Optimistic flip so the checkbox responds instantly.
+    setCollections((cs) =>
+      cs.map((c) => (c.id === id ? { ...c, inCollection: !c.inCollection } : c)),
+    );
+    setPendingFor(id, true);
+    try {
+      const res = await fetch("/api/collections", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ collectionId: id, slug }),
+      });
+      if (!res.ok) throw new Error();
+      const data: { inCollection?: boolean } = await res.json();
+      // Reconcile with the authoritative server result.
+      if (typeof data.inCollection === "boolean") {
+        setCollections((cs) =>
+          cs.map((c) => (c.id === id ? { ...c, inCollection: data.inCollection! } : c)),
+        );
+      }
+    } catch {
+      // Revert the optimistic change on failure.
+      setCollections((cs) =>
+        cs.map((c) => (c.id === id ? { ...c, inCollection: !c.inCollection } : c)),
+      );
+      setError("Couldn't update that collection. Try again.");
+    } finally {
+      setPendingFor(id, false);
+    }
   }
 
   async function create() {
-    if (!name.trim()) return;
-    await fetch("/api/collections", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name }),
-    });
-    setName("");
-    await refresh();
+    const trimmed = name.trim();
+    if (!trimmed || creating) return;
+    setCreating(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/collections", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: trimmed }),
+      });
+      if (!res.ok) throw new Error();
+      const data: { collection?: { id: string; name: string } } = await res.json();
+      setName("");
+      if (data.collection) {
+        // Add it to the list, then immediately add this palette to it.
+        setCollections((cs) => [
+          ...cs,
+          { id: data.collection!.id, name: data.collection!.name, inCollection: false },
+        ]);
+        await toggle(data.collection.id);
+      }
+    } catch {
+      setError("Couldn't create the collection. Try again.");
+    } finally {
+      setCreating(false);
+    }
   }
 
   return (
@@ -75,15 +124,23 @@ export function CollectionPicker({ slug }: { slug: string }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
         className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
       >
         Add to collection
+        {inCount > 0 ? (
+          <span className="rounded-full bg-text px-1.5 text-xs font-medium text-canvas">
+            {inCount}
+          </span>
+        ) : null}
       </button>
       {open ? (
         <div className="absolute z-20 mt-2 w-64 rounded-xl border border-border bg-surface p-2 shadow-lg">
           <div className="max-h-48 overflow-auto">
             {collections.length === 0 ? (
-              <p className="px-2 py-3 text-sm text-text-muted">No collections yet.</p>
+              <p className="px-2 py-3 text-sm text-text-muted">
+                No collections yet — create one below.
+              </p>
             ) : (
               collections.map((c) => (
                 <label
@@ -93,26 +150,42 @@ export function CollectionPicker({ slug }: { slug: string }) {
                   <input
                     type="checkbox"
                     checked={c.inCollection}
+                    disabled={pending.has(c.id)}
                     onChange={() => toggle(c.id)}
                   />
-                  {c.name}
+                  <span className="flex-1 truncate">{c.name}</span>
+                  {pending.has(c.id) ? (
+                    <span className="text-xs text-text-muted">…</span>
+                  ) : c.inCollection ? (
+                    <span className="text-xs text-text-muted">✓</span>
+                  ) : null}
                 </label>
               ))
             )}
           </div>
+          {error ? <p className="px-2 py-1 text-xs text-p-danger">{error}</p> : null}
           <div className="mt-2 flex gap-1 border-t border-border pt-2">
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  create();
+                }
+              }}
+              maxLength={60}
               placeholder="New collection"
+              aria-label="New collection name"
               className="min-w-0 flex-1 rounded-lg border border-border bg-bg px-2 py-1 text-sm text-text outline-none"
             />
             <button
               type="button"
               onClick={create}
-              className="rounded-lg bg-text px-2.5 py-1 text-sm text-canvas"
+              disabled={!name.trim() || creating}
+              className="rounded-lg bg-text px-2.5 py-1 text-sm text-canvas disabled:opacity-40"
             >
-              Add
+              {creating ? "…" : "Add"}
             </button>
           </div>
         </div>
