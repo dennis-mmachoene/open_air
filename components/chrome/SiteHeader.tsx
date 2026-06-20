@@ -2,6 +2,7 @@ import Link from "next/link";
 import { site } from "@/lib/site";
 import { AuthNav } from "@/components/auth/AuthNav";
 import { PrimaryNav } from "@/components/chrome/PrimaryNav";
+import { MobileNav } from "@/components/chrome/MobileNav";
 import { Logo } from "@/components/chrome/Logo";
 
 /**
@@ -20,6 +21,7 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <AuthNav />
+          <MobileNav />
         </div>
       </div>
     </header>

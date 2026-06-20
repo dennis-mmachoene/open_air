@@ -7,7 +7,7 @@
     "name": "Dennis Ramara",
     "url": "https://github.com/dennis-mmachoene"
   },
-  "description": "Open Air — a living gallery of color. Designed & built by Dennis Ramara.",
+  "description": "Open Air \u2014 a living gallery of color. Designed & built by Dennis Ramara.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -23,7 +23,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:integration": "vitest run --config vitest.integration.config.ts",
-    "test:all": "vitest run && vitest run --config vitest.integration.config.ts"
+    "test:all": "vitest run && vitest run --config vitest.integration.config.ts",
+    "verify:lockfile": "npm install --package-lock-only --ignore-scripts && git diff --exit-code package-lock.json"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.2",

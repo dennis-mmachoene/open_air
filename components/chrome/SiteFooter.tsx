@@ -29,6 +29,7 @@ export function SiteFooter() {
             <Link href="/legal/privacy" className="text-xs text-text-muted transition-colors hover:text-text">Privacy</Link>
             <Link href="/legal/cookies" className="text-xs text-text-muted transition-colors hover:text-text">Cookies</Link>
             <Link href="/legal" className="text-xs text-text-muted transition-colors hover:text-text">Legal</Link>
+            <Link href="/status" className="text-xs text-text-muted transition-colors hover:text-text">Status</Link>
           </div>
         </div>
 

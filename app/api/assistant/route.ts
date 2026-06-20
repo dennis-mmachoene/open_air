@@ -8,6 +8,10 @@ import { rateLimit, consumeDailyBudget } from "@/lib/rate-limit";
 // the public API and a global daily ceiling as a hard spend cap.
 const ASSISTANT_PER_MIN = 20;
 const ASSISTANT_DAILY_CAP = 2000;
+// Bound the payload so each allowed call can't carry an oversized prompt
+// (a softer denial-of-wallet vector: more tokens = more cost/latency).
+const MAX_MESSAGE_CHARS = 2000;
+const MAX_TURN_CHARS = 1000;
 
 export async function POST(request: Request) {
   const session = await auth();
@@ -15,10 +19,11 @@ export async function POST(request: Request) {
     message?: unknown;
     history?: unknown;
   } | null;
-  const message = typeof body?.message === "string" ? body.message.trim() : "";
-  if (!message) {
+  const rawMessage = typeof body?.message === "string" ? body.message.trim() : "";
+  if (!rawMessage) {
     return NextResponse.json({ error: "bad request" }, { status: 400 });
   }
+  const message = rawMessage.slice(0, MAX_MESSAGE_CHARS);
 
   // Validate the conversation history the client sends back for context.
   const history = Array.isArray(body?.history)
@@ -33,6 +38,7 @@ export async function POST(request: Request) {
             typeof (t as { text?: unknown }).text === "string",
         )
         .slice(-10)
+        .map((t) => ({ role: t.role, text: t.text.slice(0, MAX_TURN_CHARS) }))
     : [];
 
   const who =

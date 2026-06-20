@@ -33,9 +33,15 @@ const securityHeaders = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
   },
-  // Report-only: observe violations without breaking anything. Once the report
-  // stream is clean in production, rename to "Content-Security-Policy".
-  { key: "Content-Security-Policy-Report-Only", value: csp },
+  // CSP defaults to report-only (observe, don't break). Once the report stream
+  // is clean in production, set CSP_ENFORCE=true to enforce it.
+  {
+    key:
+      process.env.CSP_ENFORCE === "true"
+        ? "Content-Security-Policy"
+        : "Content-Security-Policy-Report-Only",
+    value: csp,
+  },
 ];
 
 const nextConfig: NextConfig = {

@@ -4,28 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { clsx } from "@/lib/cn";
-
-/** Marketing nav for signed-out visitors (the storefront). */
-const MARKETING = [
-  { label: "Gallery", href: "/gallery" },
-  { label: "Collections", href: "/c" },
-  { label: "Studio", href: "/studio" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "About", href: "/about" },
-];
-
-/** App nav for signed-in users (their working surfaces). */
-const APP = [
-  { label: "Gallery", href: "/gallery" },
-  { label: "Collections", href: "/c" },
-  { label: "Studio", href: "/studio" },
-  { label: "Dashboard", href: "/dashboard" },
-];
+import { APP_NAV, MARKETING_NAV } from "@/lib/nav";
 
 export function PrimaryNav() {
   const { data: session } = useSession();
   const pathname = usePathname();
-  const items = session?.user ? APP : MARKETING;
+  const items = session?.user ? APP_NAV : MARKETING_NAV;
 
   return (
     <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">

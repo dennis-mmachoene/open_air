@@ -10,7 +10,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lockfile:
+    name: Lockfile in sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify package-lock.json matches package.json
+        run: |
+          npm install --package-lock-only --ignore-scripts
+          git diff --exit-code package-lock.json \
+            || { echo "::error::package-lock.json is out of sync. Run 'npm install' and commit the updated lockfile."; exit 1; }
+
   quality:
+    needs: lockfile
     name: Lint · Typecheck · Build
     runs-on: ubuntu-latest
     steps:
