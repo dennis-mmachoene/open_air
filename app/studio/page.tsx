@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Showroom } from "@/components/showroom/Showroom";
 import { ALL_PALETTES } from "@/lib/palettes/snapshot";
 import { auth } from "@/lib/auth";
@@ -9,6 +10,14 @@ export const metadata: Metadata = {
   description:
     "Pick any palette and watch it dress a complete UI library in real time — buttons, forms, charts, and full screens.",
 };
+
+const TOOLS = [
+  { href: "/studio/scales", label: "Tonal scales", blurb: "One color → a 50–950 system" },
+  { href: "/studio/generate", label: "Generator", blurb: "Build a palette from scratch" },
+  { href: "/studio/extract", label: "Extract from image", blurb: "Pull colors from a photo" },
+  { href: "/studio/gradients", label: "Gradients", blurb: "Perceptual gradient studio" },
+  { href: "/studio/accessible", label: "Make accessible", blurb: "Repair any palette for AA" },
+];
 
 export default async function StudioPage() {
   const session = await auth();
@@ -32,6 +41,20 @@ export default async function StudioPage() {
           components, data viz, and full screens — recoloured instantly.
         </p>
       </header>
+
+      <nav aria-label="Studio tools" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {TOOLS.map((t) => (
+          <Link
+            key={t.href}
+            href={t.href}
+            className="flex flex-col gap-1 rounded-2xl border border-border bg-surface p-4 transition-colors hover:border-text"
+          >
+            <span className="font-medium text-text">{t.label}</span>
+            <span className="text-xs text-text-soft">{t.blurb}</span>
+          </Link>
+        ))}
+      </nav>
+
       <Showroom
         palettes={palettes}
         lockedSlug={authed ? undefined : palettes[0]?.slug}
