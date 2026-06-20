@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
+import { generatePalette } from "@/lib/palettes/generate";
 import type { Palette } from "@/lib/palettes/types";
 import { HARMONY_OPTIONS } from "@/lib/user-palettes";
 import { Strata } from "@/components/palette/Strata";
 import { ExportPanel } from "@/components/palette/ExportPanel";
+
+const EMPTY_CATS = { mood: [], family: [], industry: [], style: [], season: [] };
 
 const ROLE_KEYS: [string, keyof Palette["roles"]["light"]][] = [
   ["Primary", "primary"],
@@ -16,45 +20,41 @@ const ROLE_KEYS: [string, keyof Palette["roles"]["light"]][] = [
 ];
 
 export function GeneratorTool() {
+  const { data: session, status } = useSession();
+  const isPro = session?.user?.plan === "pro" || session?.user?.plan === "studio";
+
   const [name, setName] = useState("My palette");
   const [baseHue, setBaseHue] = useState(220);
   const [harmony, setHarmony] = useState<(typeof HARMONY_OPTIONS)[number]>("Analogous");
   const [chroma, setChroma] = useState(0.12);
-  const [palette, setPalette] = useState<Palette | null>(null);
-  const [saved, setSaved] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [saveMsg, setSaveMsg] = useState<string | null>(null);
 
-  async function generate(spec: { name: string; baseHue: number; harmony: string; chroma: number }) {
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(spec),
-    });
-    const data: { palette?: Palette } = await res.json();
-    if (data.palette) {
-      setPalette(data.palette);
-      setSaved(false);
+  // Generation is pure, isomorphic math — run it instantly in the browser.
+  const palette = useMemo<Palette | null>(() => {
+    try {
+      return generatePalette(
+        { name: name.trim() || "My palette", story: "A generated palette.", baseHue, harmony, chroma },
+        EMPTY_CATS,
+      );
+    } catch {
+      return null;
     }
-  }
-
-  // initial + debounced regeneration
-  useEffect(() => {
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      void generate({ name, baseHue, harmony, chroma });
-    }, 200);
-    return () => {
-      if (timer.current) clearTimeout(timer.current);
-    };
   }, [name, baseHue, harmony, chroma]);
 
   async function save() {
+    setSaveMsg(null);
+    if (status !== "authenticated") {
+      setSaveMsg("Sign in to save this palette.");
+      return;
+    }
     const res = await fetch("/api/generate/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, baseHue, harmony, chroma }),
     });
-    if (res.ok) setSaved(true);
+    if (res.ok) setSaveMsg("Saved to your palettes ✓");
+    else if (res.status === 403) setSaveMsg("Saving generated palettes is a Pro feature.");
+    else setSaveMsg("Couldn't save.");
   }
 
   return (
@@ -81,9 +81,7 @@ export function GeneratorTool() {
             max={360}
             value={baseHue}
             onChange={(e) => setBaseHue(Number(e.target.value))}
-            style={{
-              accentColor: `oklch(0.6 0.18 ${baseHue})`,
-            }}
+            style={{ accentColor: `oklch(0.6 0.18 ${baseHue})` }}
           />
         </label>
 
@@ -120,8 +118,9 @@ export function GeneratorTool() {
           onClick={save}
           className="rounded-full bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
         >
-          {saved ? "Saved ✓" : "Save palette"}
+          Save palette
         </button>
+        {saveMsg ? <span className="text-sm text-text-soft">{saveMsg}</span> : null}
       </div>
 
       {/* Preview */}
@@ -148,12 +147,12 @@ export function GeneratorTool() {
                 swatches={palette.swatches}
                 name={palette.name}
                 slug={palette.slug}
-                pro
+                pro={isPro}
               />
             </div>
           </>
         ) : (
-          <p className="text-text-muted">Generating…</p>
+          <p className="text-text-muted">Adjust the controls to generate a palette.</p>
         )}
       </div>
     </div>

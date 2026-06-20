@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { author, nav, site, social } from "@/lib/site";
+import { author, nav, social } from "@/lib/site";
+import { Logo } from "@/components/chrome/Logo";
 
 /**
  * Global footer. Carries the hard-requirement attribution to Dennis Ramara as
@@ -11,9 +12,7 @@ export function SiteFooter() {
     <footer className="mt-auto border-t border-border bg-canvas">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-5 py-10 sm:px-8 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-col gap-2">
-          <Link href="/" className="font-display text-lg text-text">
-            {site.name}
-          </Link>
+          <Link href="/"><Logo /></Link>
           <nav aria-label="Footer" className="flex flex-wrap gap-x-4 gap-y-1">
             {nav.map((item) => (
               <Link

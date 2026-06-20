@@ -118,6 +118,8 @@ export async function POST(request: Request) {
               amount: invoice.amount_paid,
               currency: invoice.currency,
               plan: u.plan === "studio" ? "Studio" : "Pro",
+              invoiceUrl: invoice.hosted_invoice_url,
+              pdfUrl: invoice.invoice_pdf,
             }),
           );
         }
