@@ -62,7 +62,7 @@ const TIERS: Tier[] = [
       "Priority palette requests",
       "Team workspaces & brand kits — coming soon",
     ],
-    cta: "Start a team",
+    cta: "Get Studio",
   },
 ];
 

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import { isAdminEmail } from "@/lib/admin";
 
 const PLAN_LABEL: Record<string, string> = { pro: "Pro", studio: "Studio" };
 
@@ -42,7 +41,7 @@ export function AuthNav() {
 
   return (
     <div className="flex items-center gap-2">
-      {isAdminEmail(session.user.email) ? (
+      {session.user.isAdmin ? (
         <Link
           href="/admin"
           className="hidden rounded-full border border-border px-3 py-1.5 text-sm text-text transition-colors hover:bg-surface-2 sm:inline-flex"

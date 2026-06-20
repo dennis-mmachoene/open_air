@@ -1,6 +1,8 @@
 import { runHealthChecks } from "@/lib/health";
+import { requireAdmin } from "../_guard";
 
 export default async function AdminHealthPage() {
+  await requireAdmin();
   const report = await runHealthChecks();
   return (
     <div className="flex flex-col gap-5">

@@ -2,8 +2,10 @@ import Link from "next/link";
 import { contentInsights } from "@/lib/admin-data";
 import { Strata } from "@/components/palette/Strata";
 import { Bar } from "../_components";
+import { requireAdmin } from "../_guard";
 
 export default async function AdminContentPage() {
+  await requireAdmin();
   const { topSaved, byHarmony, byIndustry } = await contentInsights();
   const maxInd = byIndustry[0]?.weight ?? 0;
   const maxHarm = byHarmony[0]?.n ?? 0;

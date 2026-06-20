@@ -1,7 +1,9 @@
 import { adminOverview } from "@/lib/admin-data";
 import { Stat, PlanBadge } from "./_components";
+import { requireAdmin } from "./_guard";
 
 export default async function AdminOverviewPage() {
+  await requireAdmin();
   const o = await adminOverview();
   const fmtDate = (d: Date) =>
     new Date(d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });

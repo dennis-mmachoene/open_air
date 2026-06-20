@@ -65,7 +65,11 @@ const EnvSchema = z
   })
   .superRefine((value, ctx) => {
     // Fail the deploy (not the user) if required production config is missing.
-    if (value.NODE_ENV === "production") {
+    // Skipped during `next build` (which sets NODE_ENV=production before the
+    // runtime secrets are injected) so build-time isn't coupled to runtime
+    // secrets — the check still runs when the server actually boots.
+    const isBuildPhase = process.env.NEXT_PHASE === "phase-production-build";
+    if (value.NODE_ENV === "production" && !isBuildPhase) {
       for (const key of ["DATABASE_URL", "AUTH_SECRET"] as const) {
         if (!value[key]) {
           ctx.addIssue({
@@ -95,24 +99,3 @@ function loadEnv(): Env {
 }
 
 export const env = loadEnv();
-
-/**
- * Admin allow-list — sourced from the ADMIN_EMAILS env var.
- * Set a comma-separated list in your .env.local:
- *   ADMIN_EMAILS="alice@example.com,bob@example.com"
- * Granting or revoking admin is a one-line env change; no code edit or
- * migration needed. Falls back to an empty set when the var is unset,
- * meaning no one gets admin access by default.
- *
- * This module stays free of server-only imports so the nav can use isAdminEmail.
- */
-export const ADMIN_EMAILS: ReadonlySet<string> = new Set(
-  (env.ADMIN_EMAILS ?? "")
-    .split(",")
-    .map((e) => e.trim().toLowerCase())
-    .filter(Boolean),
-);
-
-export function isAdminEmail(email: string | null | undefined): boolean {
-  return Boolean(email) && ADMIN_EMAILS.has(email!.toLowerCase());
-}

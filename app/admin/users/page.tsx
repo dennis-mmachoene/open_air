@@ -1,11 +1,13 @@
 import { adminUsers } from "@/lib/admin-data";
 import { PlanBadge } from "../_components";
+import { requireAdmin } from "../_guard";
 
 export default async function AdminUsersPage({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string }>;
 }) {
+  await requireAdmin();
   const { q = "" } = await searchParams;
   const rows = await adminUsers(q);
   const fmtDate = (d: Date) =>

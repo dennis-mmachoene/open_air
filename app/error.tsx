@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import * as Sentry from "@sentry/nextjs";
 
 export default function Error({
   error,
@@ -10,8 +11,9 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Surfaced to the console in dev; wire to Sentry once a DSN is set.
-    console.error(error);
+    // Reported to Sentry when a DSN is configured (no-op otherwise).
+    Sentry.captureException(error);
+    if (process.env.NODE_ENV !== "production") console.error(error);
   }, [error]);
 
   return (
