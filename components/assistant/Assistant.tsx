@@ -42,13 +42,14 @@ export function Assistant() {
     const message = text.trim();
     if (!message || busy) return;
     setInput("");
+    const history = messages.slice(-8).map((m) => ({ role: m.role, text: m.text }));
     setMessages((m) => [...m, { role: "user", text: message }]);
     setBusy(true);
     try {
       const res = await fetch("/api/assistant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message, history }),
       });
       const data: { reply: string; palettes: Rec[] } = await res.json();
       setMessages((m) => [...m, { role: "aura", text: data.reply, palettes: data.palettes }]);

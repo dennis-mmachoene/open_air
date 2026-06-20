@@ -13,11 +13,27 @@ export async function POST(request: Request) {
   const session = await auth();
   const body = (await request.json().catch(() => null)) as {
     message?: unknown;
+    history?: unknown;
   } | null;
   const message = typeof body?.message === "string" ? body.message.trim() : "";
   if (!message) {
     return NextResponse.json({ error: "bad request" }, { status: 400 });
   }
+
+  // Validate the conversation history the client sends back for context.
+  const history = Array.isArray(body?.history)
+    ? body.history
+        .filter(
+          (t): t is { role: "user" | "aura"; text: string } =>
+            !!t &&
+            typeof t === "object" &&
+            (t as { role?: unknown }).role !== undefined &&
+            ((t as { role: unknown }).role === "user" ||
+              (t as { role: unknown }).role === "aura") &&
+            typeof (t as { text?: unknown }).text === "string",
+        )
+        .slice(-10)
+    : [];
 
   const who =
     session?.user?.id ??
@@ -39,7 +55,12 @@ export async function POST(request: Request) {
     );
   }
 
-  const result = await askAssistant(message, session?.user?.name ?? undefined);
+  const result = await askAssistant(message, {
+    name: session?.user?.name ?? null,
+    authenticated: Boolean(session?.user),
+    plan: session?.user?.plan ?? null,
+    history,
+  });
   const palettes = result.slugs
     .map(getPalette)
     .filter((p) => p !== undefined)
