@@ -4,6 +4,7 @@ import { getEntitlements } from "@/lib/entitlements";
 import { generateFromSpec, HARMONY_OPTIONS } from "@/lib/user-palettes";
 import { PaletteGateError } from "@/lib/palettes/generate";
 import type { Harmony } from "@/lib/color/harmony";
+import { rateLimit } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
   const session = await auth();
@@ -13,6 +14,10 @@ export async function POST(request: Request) {
   const entitlements = await getEntitlements(session.user.id);
   if (!entitlements.generator) {
     return NextResponse.json({ error: "upgrade required" }, { status: 403 });
+  }
+  const rl = await rateLimit(`generate:${session.user.id}`);
+  if (!rl.success) {
+    return NextResponse.json({ error: "rate limit exceeded" }, { status: 429 });
   }
 
   const body = (await request.json().catch(() => null)) as {

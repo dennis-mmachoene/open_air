@@ -32,12 +32,6 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <AuthNav />
-          <Link
-            href="/pricing"
-            className="rounded-full bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
-          >
-            Go Pro
-          </Link>
         </div>
       </div>
     </header>

@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server";
 import { queryPalettes, type PaletteFilter } from "@/lib/palettes/query";
-import { auth } from "@/lib/auth";
+import { rateLimit } from "@/lib/rate-limit";
 
+/** Public catalog read used by the gallery's infinite scroll. Rate-limited by
+ *  IP as defense-in-depth (no-op without Upstash). */
 export async function GET(request: Request) {
-  const session = await auth();
-  if (!session?.user) {
-    return NextResponse.json({ error: "unauthenticated" }, { status: 401 });
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "anon";
+  const rl = await rateLimit(`palettes:${ip}`);
+  if (!rl.success) {
+    return NextResponse.json({ error: "rate limit exceeded" }, { status: 429 });
   }
+
   const sp = new URL(request.url).searchParams;
   const filter: PaletteFilter = {
     mood: sp.get("mood") ?? undefined,
@@ -22,6 +27,5 @@ export async function GET(request: Request) {
   const limit = Number(sp.get("limit") ?? 24);
   const cursor = sp.get("cursor");
 
-  const result = queryPalettes(filter, { limit, cursor });
-  return NextResponse.json(result);
+  return NextResponse.json(queryPalettes(filter, { limit, cursor }));
 }

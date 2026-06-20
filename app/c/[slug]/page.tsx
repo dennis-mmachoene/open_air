@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PaletteCard } from "@/components/gallery/PaletteCard";
-import { requireUser } from "@/lib/auth-guard";
 import {
   categoryBySlug,
   getCollection,
@@ -53,7 +52,6 @@ export default async function CollectionOrCategoryPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  await requireUser();
   const { slug } = await params;
   const data = resolve(slug);
   if (!data) notFound();

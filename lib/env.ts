@@ -47,6 +47,19 @@ const EnvSchema = z.object({
   // Sentry — optional; error reporting is a no-op until a DSN is provided.
   SENTRY_DSN: z.string().url().optional(),
   NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
+}).superRefine((value, ctx) => {
+  // Fail the deploy (not the user) if required production config is missing.
+  if (value.NODE_ENV === "production") {
+    for (const key of ["DATABASE_URL", "AUTH_SECRET"] as const) {
+      if (!value[key]) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [key],
+          message: `${key} is required in production`,
+        });
+      }
+    }
+  }
 });
 
 export type Env = z.infer<typeof EnvSchema>;

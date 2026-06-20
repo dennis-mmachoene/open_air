@@ -44,7 +44,7 @@ export const PLAN_FEATURES: Record<Plan, PlanFeatures> = {
     generator: true,
     gradientStudio: true,
     accessibilityCenter: true,
-    teams: true,
+    teams: false, // team workspaces not built yet — see roadmap
     api: true,
   },
 };

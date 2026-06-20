@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ALL_PALETTES } from "@/lib/palettes/snapshot";
 import { Strata } from "@/components/palette/Strata";
+import { NowShowing } from "@/components/gallery/NowShowing";
 
 const FEATURES = [
   {
@@ -52,7 +53,7 @@ const FEATURES = [
 const TIERS = [
   { name: "Free", price: "$0", note: "Browse, understand, export basics" },
   { name: "Pro", price: "$8/mo", note: "Full Showroom, all exports, generator", featured: true },
-  { name: "Studio", price: "$24/mo", note: "Teams, brand kits, API" },
+  { name: "Studio", price: "$24/mo", note: "Public API + priority requests" },
 ];
 
 const FAQ = [
@@ -61,8 +62,8 @@ const FAQ = [
     a: "Yes — the entire gallery, every palette page, and the “why it works” explanation are free forever. Pro unlocks the professional workflow: unlimited saves, all export formats, the full Showroom and the generator.",
   },
   {
-    q: "Do I need an account?",
-    a: "A free account unlocks the full gallery, the Showroom and exports. Creating one takes a few seconds with Google or an email link.",
+    q: "Do I need an account to browse?",
+    a: "No — browsing the gallery, every palette page and the “why” is open to everyone. An account lets you save palettes, build collections and export.",
   },
   {
     q: "Are the palettes accessible?",
@@ -76,9 +77,13 @@ const FAQ = [
 
 export function Landing() {
   const heroStrata = ALL_PALETTES.slice(0, 4);
+  const featured = ALL_PALETTES.slice(0, 5);
 
   return (
     <div className="flex flex-col">
+      {/* Now Showing — the living gallery, visible to everyone */}
+      <NowShowing palettes={featured} />
+
       {/* Hero */}
       <section className="mx-auto w-full max-w-5xl px-5 pb-12 pt-20 text-center sm:px-8">
         <p className="text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
@@ -93,10 +98,10 @@ export function Landing() {
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
-            href="/signin"
+            href="/gallery"
             className="rounded-full bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
           >
-            Start exploring — free
+            Explore the gallery
           </Link>
           <Link
             href="/pricing"
@@ -105,10 +110,16 @@ export function Landing() {
             See pricing
           </Link>
         </div>
+        <p className="mt-4 text-sm text-text-muted">
+          New ·{" "}
+          <Link href="/studio/extract" className="text-text underline underline-offset-4">
+            Extract an accessible palette from any image →
+          </Link>
+        </p>
 
         <div className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {heroStrata.map((p) => (
-            <Link key={p.slug} href="/signin" className="group">
+            <Link key={p.slug} href={`/p/${p.slug}`} className="group">
               <Strata
                 hexes={p.swatches.map((s) => s.hex)}
                 vertical
@@ -158,10 +169,10 @@ export function Landing() {
             your product, accessibly, before committing.
           </p>
           <Link
-            href="/signin"
+            href="/studio"
             className="mt-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-2"
           >
-            Try the Showroom
+            Open the Showroom
           </Link>
         </div>
       </section>
@@ -213,10 +224,10 @@ export function Landing() {
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
-              href="/signin"
+              href="/gallery"
               className="rounded-full bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
             >
-              Create your free account
+              Browse the gallery
             </Link>
             <Link
               href="/pricing"

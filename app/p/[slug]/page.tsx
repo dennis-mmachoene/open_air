@@ -13,7 +13,7 @@ import { Showroom } from "@/components/showroom/Showroom";
 import { SaveButton } from "@/components/palette/SaveButton";
 import { CollectionPicker } from "@/components/palette/CollectionPicker";
 import { RecordView } from "@/components/palette/RecordView";
-import { requireUser } from "@/lib/auth-guard";
+import { auth } from "@/lib/auth";
 import { getEntitlements } from "@/lib/entitlements";
 
 export async function generateMetadata({
@@ -47,8 +47,8 @@ export default async function PalettePage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const user = await requireUser();
-  const entitlements = await getEntitlements(user.id);
+  const session = await auth();
+  const entitlements = session?.user ? await getEntitlements(session.user.id) : null;
   const { slug } = await params;
   const palette = getPalette(slug);
   if (!palette) notFound();
@@ -99,14 +99,14 @@ export default async function PalettePage({
         <Showroom
           palettes={[{ slug: palette.slug, name: palette.name, roles: palette.roles }]}
           lockedSlug={palette.slug}
-          preview={!entitlements.fullShowroom}
+          preview={!entitlements?.fullShowroom}
         />
       </section>
 
       {/* Accessibility */}
       <section className="flex flex-col gap-4">
         <h2 className="font-display text-2xl text-text">Accessibility</h2>
-        {entitlements.accessibilityCenter ? (
+        {entitlements?.accessibilityCenter ? (
           <AccessibilityCenter roles={palette.roles.light} swatches={palette.swatches} />
         ) : (
           <>
@@ -127,7 +127,7 @@ export default async function PalettePage({
           swatches={palette.swatches}
           name={palette.name}
           slug={palette.slug}
-          pro={entitlements.allExports}
+          pro={entitlements?.allExports ?? false}
         />
       </section>
 

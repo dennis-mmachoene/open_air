@@ -24,7 +24,7 @@ const TIERS: Tier[] = [
     plan: "free",
     monthly: "$0",
     yearly: "$0",
-    blurb: "The whole gallery, open to members.",
+    blurb: "The whole gallery, open to everyone.",
     features: [
       "Browse the full library + every palette page",
       "The “why it works” explanation",
@@ -55,32 +55,31 @@ const TIERS: Tier[] = [
     plan: "studio",
     monthly: "$24",
     yearly: "$20",
-    blurb: "For teams building a shared system.",
+    blurb: "For power users who build on the API.",
     features: [
       "Everything in Pro",
-      "Shared team collections + brand kits",
       "Public API access (key + rate limit)",
       "Priority palette requests",
+      "Team workspaces & brand kits — coming soon",
     ],
     cta: "Start a team",
   },
 ];
 
 export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
+  const plan = session?.user?.plan ?? null;
+  const paid = plan === "pro" || plan === "studio";
+
   const [interval, setInterval] = useState<Interval>("monthly");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  async function choose(tier: Tier) {
+  async function startCheckout(tier: Tier) {
     setError(null);
     if (status !== "authenticated") {
       router.push("/signin");
-      return;
-    }
-    if (tier.plan === "free") {
-      router.push("/gallery");
       return;
     }
     if (!billingEnabled) {
@@ -102,6 +101,42 @@ export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
     } finally {
       setBusy(null);
     }
+  }
+
+  async function manageBilling() {
+    setError(null);
+    setBusy("manage");
+    try {
+      const res = await fetch("/api/stripe/portal", { method: "POST" });
+      const data: { url?: string; error?: string } = await res.json();
+      if (data.url) window.location.assign(data.url);
+      else setError(data.error ?? "Couldn't open billing.");
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  function action(tier: Tier): { label: string; onClick: () => void; disabled: boolean } {
+    const busyNow = busy !== null;
+    if (plan === tier.plan) {
+      return { label: "Current plan", onClick: () => {}, disabled: true };
+    }
+    if (paid) {
+      // Up/downgrades go through the Stripe billing portal.
+      return { label: busy === "manage" ? "Opening…" : "Manage billing", onClick: manageBilling, disabled: busyNow };
+    }
+    if (tier.plan === "free") {
+      return {
+        label: status === "authenticated" ? "Current plan" : "Get started",
+        onClick: () => router.push(status === "authenticated" ? "/gallery" : "/signin"),
+        disabled: status === "authenticated",
+      };
+    }
+    return {
+      label: busy === tier.plan ? "Redirecting…" : tier.cta,
+      onClick: () => startCheckout(tier),
+      disabled: busyNow,
+    };
   }
 
   return (
@@ -127,59 +162,66 @@ export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
       </div>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-        {TIERS.map((tier) => (
-          <div
-            key={tier.plan}
-            className={clsx(
-              "flex flex-col gap-5 rounded-2xl border p-6",
-              tier.featured ? "border-text shadow-lg" : "border-border",
-            )}
-          >
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-xl text-text">{tier.name}</h2>
-                {tier.featured ? (
-                  <span className="rounded-full bg-text px-2.5 py-0.5 text-xs font-medium text-canvas">
-                    Most popular
-                  </span>
-                ) : null}
-              </div>
-              <p className="text-sm text-text-soft">{tier.blurb}</p>
-            </div>
-
-            <div className="flex items-baseline gap-1">
-              <span className="font-display text-4xl text-text">
-                {interval === "monthly" ? tier.monthly : tier.yearly}
-              </span>
-              {tier.plan !== "free" ? (
-                <span className="text-sm text-text-muted">/mo</span>
-              ) : null}
-            </div>
-
-            <ul className="flex flex-1 flex-col gap-2.5 text-sm text-text-soft">
-              {tier.features.map((f) => (
-                <li key={f} className="flex gap-2">
-                  <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-text" />
-                  {f}
-                </li>
-              ))}
-            </ul>
-
-            <button
-              type="button"
-              onClick={() => choose(tier)}
-              disabled={busy === tier.plan}
+        {TIERS.map((tier) => {
+          const a = action(tier);
+          const isCurrent = plan === tier.plan;
+          return (
+            <div
+              key={tier.plan}
               className={clsx(
-                "rounded-full px-4 py-2.5 text-center text-sm font-medium transition-colors disabled:opacity-50",
-                tier.featured
-                  ? "bg-text text-canvas hover:opacity-90"
-                  : "border border-border text-text hover:bg-surface-2",
+                "flex flex-col gap-5 rounded-2xl border p-6",
+                tier.featured ? "border-text shadow-lg" : "border-border",
+                isCurrent && "ring-2 ring-text",
               )}
             >
-              {busy === tier.plan ? "Redirecting…" : tier.cta}
-            </button>
-          </div>
-        ))}
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center justify-between">
+                  <h2 className="font-display text-xl text-text">{tier.name}</h2>
+                  {isCurrent ? (
+                    <span className="rounded-full bg-text px-2.5 py-0.5 text-xs font-medium text-canvas">
+                      Current
+                    </span>
+                  ) : tier.featured ? (
+                    <span className="rounded-full bg-surface-2 px-2.5 py-0.5 text-xs font-medium text-text">
+                      Most popular
+                    </span>
+                  ) : null}
+                </div>
+                <p className="text-sm text-text-soft">{tier.blurb}</p>
+              </div>
+
+              <div className="flex items-baseline gap-1">
+                <span className="font-display text-4xl text-text">
+                  {interval === "monthly" ? tier.monthly : tier.yearly}
+                </span>
+                {tier.plan !== "free" ? <span className="text-sm text-text-muted">/mo</span> : null}
+              </div>
+
+              <ul className="flex flex-1 flex-col gap-2.5 text-sm text-text-soft">
+                {tier.features.map((f) => (
+                  <li key={f} className="flex gap-2">
+                    <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-text" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                type="button"
+                onClick={a.onClick}
+                disabled={a.disabled}
+                className={clsx(
+                  "rounded-full px-4 py-2.5 text-center text-sm font-medium transition-colors disabled:opacity-50",
+                  tier.featured && !a.disabled
+                    ? "bg-text text-canvas hover:opacity-90"
+                    : "border border-border text-text hover:bg-surface-2",
+                )}
+              >
+                {a.label}
+              </button>
+            </div>
+          );
+        })}
       </div>
 
       {error ? <p className="text-center text-sm text-p-danger">{error}</p> : null}

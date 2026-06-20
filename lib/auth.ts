@@ -48,8 +48,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
   callbacks: {
     session({ session, user }) {
-      if (session.user && user) session.user.id = user.id;
+      if (session.user && user) {
+        session.user.id = user.id;
+        const plan = (user as { plan?: string }).plan;
+        session.user.plan = plan === "pro" || plan === "studio" ? plan : "free";
+      }
       return session;
+    },
+  },
+  events: {
+    async createUser({ user }) {
+      if (!user.email) return;
+      const { sendEmail, welcomeEmail } = await import("./email");
+      await sendEmail(welcomeEmail(user.email, user.name));
     },
   },
 });

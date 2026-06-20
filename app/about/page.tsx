@@ -41,34 +41,6 @@ export default function AboutPage() {
 
       <hr className="my-10 border-border" />
 
-      {/* <section aria-labelledby="creator">
-        <h2
-          id="creator"
-          className="font-display text-2xl font-medium tracking-tight text-text"
-        >
-          Designed &amp; built by {author.name}
-        </h2>
-        <p className="mt-3 text-text-soft">
-          {site.name} is created, designed, and engineered by {author.name}. You
-          can follow the work and reach out here:
-        </p>
-        <ul className="mt-5 flex flex-wrap gap-3">
-          {social.map((s) => (
-            <li key={s.href}>
-              <a
-                href={s.href}
-                rel="me noopener"
-                target="_blank"
-                aria-label={s.label}
-                className="inline-flex rounded-full border border-border px-4 py-2 text-sm text-text transition-colors hover:bg-surface-2"
-              >
-                {s.short}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section> */}
-
       <p className="mt-12 text-sm text-text-muted">
         <Link href="/" className="underline-offset-4 hover:underline">
           ← Back to the gallery
