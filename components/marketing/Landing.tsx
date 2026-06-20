@@ -52,8 +52,7 @@ const FEATURES = [
 
 const TIERS = [
   { name: "Free", price: "$0", note: "Browse, understand, export basics" },
-  { name: "Pro", price: "$8/mo", note: "Full Showroom, all exports, generator", featured: true },
-  { name: "Studio", price: "$24/mo", note: "Public API + priority requests" },
+  { name: "Pro", price: "$8/mo", note: "Full Showroom, all exports, generator, public API", featured: true },
 ];
 
 const FAQ = [

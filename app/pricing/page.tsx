@@ -5,7 +5,7 @@ import { billingEnabled } from "@/lib/stripe";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Open Air is free to browse. Upgrade to Pro for the full Showroom, every export format, the generator and accessibility center — or Studio for teams and API access.",
+    "Open Air is free to browse. Upgrade to Pro for the full Showroom, every export format, the generator, the accessibility center, and the public API.",
 };
 export const revalidate = 86400;
 
@@ -18,7 +18,7 @@ export default function PricingPage() {
         </h1>
         <p className="mx-auto max-w-xl text-lg text-text-soft">
           The gallery and the “why” come with every account. Pay only for the
-          professional workflow — saving at scale, dev/design exports, and teams.
+          professional workflow — saving at scale, dev/design exports, and the API.
         </p>
       </header>
       <PricingTable billingEnabled={billingEnabled} />

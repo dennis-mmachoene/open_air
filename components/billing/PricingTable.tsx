@@ -46,23 +46,10 @@ const TIERS: Tier[] = [
       "All export formats (SCSS, JSON, Figma, SVG, PNG, ASE)",
       "Gradient studio · Accessibility center",
       "Palette generator · no upgrade prompts",
+      "Public API access (key + rate limit)",
     ],
     cta: "Go Pro",
     featured: true,
-  },
-  {
-    name: "Studio",
-    plan: "studio",
-    monthly: "$24",
-    yearly: "$20",
-    blurb: "For power users who build on the API.",
-    features: [
-      "Everything in Pro",
-      "Public API access (key + rate limit)",
-      "Priority palette requests",
-      "Team workspaces & brand kits — coming soon",
-    ],
-    cta: "Get Studio",
   },
 ];
 
@@ -161,7 +148,7 @@ export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+      <div className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-5 md:grid-cols-2">
         {TIERS.map((tier) => {
           const a = action(tier);
           const isCurrent = plan === tier.plan;

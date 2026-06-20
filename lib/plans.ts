@@ -34,7 +34,7 @@ export const PLAN_FEATURES: Record<Plan, PlanFeatures> = {
     gradientStudio: true,
     accessibilityCenter: true,
     teams: false,
-    api: false,
+    api: true,
   },
   studio: {
     savedLimit: null,

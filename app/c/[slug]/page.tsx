@@ -2,11 +2,25 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PaletteCard } from "@/components/gallery/PaletteCard";
 import {
+  ALL_COLLECTIONS,
+  allCategories,
   categoryBySlug,
   getCollection,
   palettesByCategory,
   palettesInCollection,
 } from "@/lib/palettes/snapshot";
+
+// Snapshot-driven and public — statically pre-render every collection and
+// category, revalidating daily so a new snapshot deploy refreshes them.
+export const revalidate = 86400;
+export const dynamicParams = true;
+
+export function generateStaticParams(): { slug: string }[] {
+  return [
+    ...ALL_COLLECTIONS.map((c) => ({ slug: c.slug })),
+    ...allCategories().map((c) => ({ slug: c.slug })),
+  ];
+}
 
 function resolve(slug: string) {
   const collection = getCollection(slug);

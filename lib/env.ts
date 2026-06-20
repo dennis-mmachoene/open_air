@@ -85,13 +85,13 @@ const EnvSchema = z
       // group's keys, or none — half-set credentials are almost always a
       // misconfiguration (and a silent fail-open risk).
       const groups: Record<string, readonly (keyof typeof value)[]> = {
+        // Studio is retired (folded into Pro), so only Pro prices are required.
+        // The legacy Studio price vars stay optional for existing subscribers.
         "Stripe billing": [
           "STRIPE_SECRET_KEY",
           "STRIPE_WEBHOOK_SECRET",
           "STRIPE_PRICE_PRO_MONTHLY",
           "STRIPE_PRICE_PRO_YEARLY",
-          "STRIPE_PRICE_STUDIO_MONTHLY",
-          "STRIPE_PRICE_STUDIO_YEARLY",
         ],
         "Google OAuth": ["AUTH_GOOGLE_ID", "AUTH_GOOGLE_SECRET"],
         "Email (SMTP)": ["AUTH_EMAIL_SERVER", "AUTH_EMAIL_FROM"],

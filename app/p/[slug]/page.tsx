@@ -1,20 +1,27 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getPalette, categorySlug } from "@/lib/palettes/snapshot";
+import { ALL_PALETTES, getPalette, categorySlug } from "@/lib/palettes/snapshot";
 import { relatedPalettes } from "@/lib/palettes/query";
 import { CopyHex } from "@/components/palette/CopyHex";
 import { WhyDiagram } from "@/components/palette/WhyDiagram";
-import { AccessibilityReport } from "@/components/palette/AccessibilityReport";
-import { AccessibilityCenter } from "@/components/palette/AccessibilityCenter";
-import { ExportPanel } from "@/components/palette/ExportPanel";
+import { ExportGate } from "@/components/palette/ExportGate";
 import { PaletteCard } from "@/components/gallery/PaletteCard";
-import { Showroom } from "@/components/showroom/Showroom";
+import { ShowroomGate } from "@/components/palette/ShowroomGate";
 import { SaveButton } from "@/components/palette/SaveButton";
 import { CollectionPicker } from "@/components/palette/CollectionPicker";
 import { RecordView } from "@/components/palette/RecordView";
-import { auth } from "@/lib/auth";
-import { getEntitlements } from "@/lib/entitlements";
+import { AccessibilityGate } from "@/components/palette/AccessibilityGate";
+
+// Snapshot-driven content — statically pre-render every palette and revalidate
+// daily. Pro gating resolves on the client (see the *Gate components), so the
+// page no longer needs per-request auth.
+export const revalidate = 86400;
+export const dynamicParams = true;
+
+export function generateStaticParams(): { slug: string }[] {
+  return ALL_PALETTES.map((p) => ({ slug: p.slug }));
+}
 
 export async function generateMetadata({
   params,
@@ -47,8 +54,6 @@ export default async function PalettePage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const session = await auth();
-  const entitlements = session?.user ? await getEntitlements(session.user.id) : null;
   const { slug } = await params;
   const palette = getPalette(slug);
   if (!palette) notFound();
@@ -96,38 +101,30 @@ export default async function PalettePage({
             <a href="/studio" className="underline underline-offset-4">Studio</a> for the full surface.
           </p>
         </div>
-        <Showroom
+        <ShowroomGate
           palettes={[{ slug: palette.slug, name: palette.name, roles: palette.roles }]}
           lockedSlug={palette.slug}
-          preview={!entitlements?.fullShowroom}
         />
       </section>
 
       {/* Accessibility */}
       <section className="flex flex-col gap-4">
         <h2 className="font-display text-2xl text-text">Accessibility</h2>
-        {entitlements?.accessibilityCenter ? (
-          <AccessibilityCenter roles={palette.roles.light} swatches={palette.swatches} />
-        ) : (
-          <>
-            <AccessibilityReport pairings={palette.why.contrast} />
-            <p className="text-sm text-text-muted">
-              The full accessibility center — every pairing, large vs normal text,
-              and colour-blind simulation — comes with Pro.
-            </p>
-          </>
-        )}
+        <AccessibilityGate
+          rolesLight={palette.roles.light}
+          swatches={palette.swatches}
+          pairings={palette.why.contrast}
+        />
       </section>
 
       {/* Export */}
       <section className="flex flex-col gap-4">
         <h2 className="font-display text-2xl text-text">Export</h2>
-        <ExportPanel
+        <ExportGate
           roles={palette.roles.light}
           swatches={palette.swatches}
           name={palette.name}
           slug={palette.slug}
-          pro={entitlements?.allExports ?? false}
         />
       </section>
 

@@ -7,12 +7,12 @@ describe("plan matrix", () => {
     expect(PLAN_FEATURES.free.fullShowroom).toBe(false);
     expect(PLAN_FEATURES.free.allExports).toBe(false);
   });
-  it("pro is unlimited with the tools but no API", () => {
+  it("pro is unlimited with the tools and the API (folded in from Studio)", () => {
     expect(PLAN_FEATURES.pro.savedLimit).toBeNull();
     expect(PLAN_FEATURES.pro.generator).toBe(true);
-    expect(PLAN_FEATURES.pro.api).toBe(false);
+    expect(PLAN_FEATURES.pro.api).toBe(true);
   });
-  it("studio has the API but teams is not built", () => {
+  it("studio (legacy) still grants the API, teams unbuilt", () => {
     expect(PLAN_FEATURES.studio.api).toBe(true);
     expect(PLAN_FEATURES.studio.teams).toBe(false);
   });

@@ -17,19 +17,11 @@ async function main() {
     product: pro.id, currency: "usd", unit_amount: 7200, recurring: { interval: "year" },
   });
 
-  const studio = await stripe.products.create({ name: "Open Air Studio" });
-  const studioMonthly = await stripe.prices.create({
-    product: studio.id, currency: "usd", unit_amount: 2400, recurring: { interval: "month" },
-  });
-  const studioYearly = await stripe.prices.create({
-    product: studio.id, currency: "usd", unit_amount: 24000, recurring: { interval: "year" },
-  });
-
+  // Studio tier is retired (its capabilities folded into Pro). Only Pro
+  // products/prices are created now.
   console.log("\nAdd these to .env.local:\n");
   console.log(`STRIPE_PRICE_PRO_MONTHLY="${proMonthly.id}"`);
   console.log(`STRIPE_PRICE_PRO_YEARLY="${proYearly.id}"`);
-  console.log(`STRIPE_PRICE_STUDIO_MONTHLY="${studioMonthly.id}"`);
-  console.log(`STRIPE_PRICE_STUDIO_YEARLY="${studioYearly.id}"`);
 }
 
 main().catch((err) => {
