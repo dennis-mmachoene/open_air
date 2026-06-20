@@ -130,6 +130,7 @@ export const users = pgTable("users", {
   emailVerified: timestamp("email_verified", { mode: "date" }),
   stripeCustomerId: text("stripe_customer_id"),
   plan: text("plan").notNull().default("free"),
+  onboardedAt: timestamp("onboarded_at", { withTimezone: true }),
   createdAt: createdAt(),
 });
 

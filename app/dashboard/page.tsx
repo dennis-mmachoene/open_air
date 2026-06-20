@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { getSavedSlugs } from "@/lib/saves";
+import { needsOnboarding } from "@/lib/onboarding";
 import { listUserPalettes } from "@/lib/user-palettes";
 import { Strata } from "@/components/palette/Strata";
 import {
@@ -38,6 +39,7 @@ async function removeCollection(formData: FormData) {
 export default async function DashboardPage() {
   const session = await auth();
   if (!session?.user) redirect("/signin");
+  if (await needsOnboarding(session.user.id)) redirect("/onboarding");
 
   const [savedSlugs, collections, generated] = await Promise.all([
     getSavedSlugs(session.user.id),
