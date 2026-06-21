@@ -7,7 +7,7 @@ import { LEGAL_DOCS } from "@/lib/legal";
  *  collection and category, plus the legal pages. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = site.url.replace(/\/$/, "");
-  const staticRoutes = ["", "/gallery", "/c", "/studio", "/studio/scales", "/studio/tokens", "/studio/stress", "/studio/output", "/studio/dataviz", "/studio/gradient-check", "/studio/elevation", "/pricing", "/about", "/legal"].map(
+  const staticRoutes = ["", "/gallery", "/c", "/studio", "/studio/scales", "/studio/tokens", "/studio/stress", "/studio/output", "/studio/dataviz", "/studio/gradient-check", "/studio/elevation", "/studio/viz-repair", "/pricing", "/about", "/legal"].map(
     (path) => ({ url: `${base}${path}`, changeFrequency: "weekly" as const, priority: path === "" ? 1 : 0.6 }),
   );
   const legal = LEGAL_DOCS.map((d) => ({

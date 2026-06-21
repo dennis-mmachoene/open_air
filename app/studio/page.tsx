@@ -19,6 +19,7 @@ const TOOLS = [
   { href: "/studio/dataviz", label: "Data-viz palettes", blurb: "Chart-ready, colorblind-safe" },
   { href: "/studio/gradient-check", label: "Gradient a11y", blurb: "Readable-text regions" },
   { href: "/studio/elevation", label: "Elevation", blurb: "Tinted shadow system" },
+  { href: "/studio/viz-repair", label: "Repair a chart", blurb: "Fix colorblind conflicts" },
   { href: "/studio/generate", label: "Generator", blurb: "Build a palette from scratch" },
   { href: "/studio/extract", label: "Extract from image", blurb: "Pull colors from a photo" },
   { href: "/studio/gradients", label: "Gradients", blurb: "Perceptual gradient studio" },

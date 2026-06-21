@@ -130,6 +130,60 @@ export function diverging(count: number, hueLow = 27, hueHigh = 255, chroma = 0.
   return out;
 }
 
+/** --- Visualization repair ------------------------------------------------ */
+
+export interface RepairChange {
+  index: number;
+  from: string;
+  to: string;
+}
+export interface RepairResult {
+  input: string[];
+  output: string[];
+  changes: RepairChange[];
+  before: CategoricalReport;
+  after: CategoricalReport;
+}
+
+function clamp(n: number, lo: number, hi: number): number {
+  return Math.max(lo, Math.min(hi, n));
+}
+
+/**
+ * Repair an existing categorical palette: nudge only the colors caught in a
+ * color-vision confusion (apart in lightness and hue) until the set is
+ * distinguishable, preserving the rest of the palette's identity and order.
+ */
+export function repairCategorical(input: string[], maxIter = 60): RepairResult {
+  const before = categoricalReport(input);
+  const work = input.map((h) => parseToOklch(h));
+
+  for (let iter = 0; iter < maxIter; iter++) {
+    const hexes = work.map((o) => toHex(o));
+    const rep = categoricalReport(hexes);
+    if (rep.safe) break;
+    // Resolve the single worst (closest) confusion each pass.
+    const worst = [...rep.confusions].sort((a, b) => a.distance - b.distance)[0];
+    const { a: i, b: j } = worst;
+    const dir = work[j].l >= work[i].l ? 1 : -1; // push lightness apart
+    work[j] = oklch(
+      clamp(work[j].l + dir * 0.05, 0.32, 0.84),
+      work[j].c,
+      work[j].h + dir * 7, // and rotate hue a touch
+    );
+  }
+
+  const output = work.map((o) => toHex(o));
+  const changes: RepairChange[] = [];
+  input.forEach((h, k) => {
+    if (h.toLowerCase() !== output[k].toLowerCase()) {
+      changes.push({ index: k, from: h.toLowerCase(), to: output[k] });
+    }
+  });
+
+  return { input, output, changes, before, after: categoricalReport(output) };
+}
+
 /** --- Exports ------------------------------------------------------------- */
 
 export function toCssVars(colors: string[], name = "series"): string {

@@ -3,6 +3,7 @@ import {
   OKABE_ITO,
   categorical,
   categoricalReport,
+  repairCategorical,
   sequential,
   diverging,
   lightnessOf,
@@ -65,5 +66,27 @@ describe("diverging", () => {
 describe("exports", () => {
   it("CSS vars list each color", () => {
     expect(toCssVars(["#000000", "#ffffff"], "chart")).toContain("--chart-1: #000000;");
+  });
+});
+
+describe("repairCategorical", () => {
+  it("leaves an already-safe palette unchanged", () => {
+    const r = repairCategorical(categorical(5));
+    expect(r.changes).toHaveLength(0);
+    expect(r.after.safe).toBe(true);
+  });
+  it("improves a confusable palette and records the changes", () => {
+    // three near-identical blues — confusable everywhere
+    const bad = ["#3a66cc", "#3f69cf", "#4a6fd2"];
+    const r = repairCategorical(bad);
+    expect(r.before.safe).toBe(false);
+    expect(r.after.minDistance).toBeGreaterThan(r.before.minDistance);
+    expect(r.changes.length).toBeGreaterThan(0);
+    expect(r.output.every((x) => /^#[0-9a-f]{6}$/.test(x))).toBe(true);
+  });
+  it("preserves the palette length and order", () => {
+    const bad = ["#3a66cc", "#3f69cf", "#4a6fd2"];
+    const r = repairCategorical(bad);
+    expect(r.output).toHaveLength(bad.length);
   });
 });
