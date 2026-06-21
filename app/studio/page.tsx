@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 };
 
 const TOOLS = [
+  { href: "/studio/ai", label: "AI director", blurb: "Brief → a full system" },
   { href: "/studio/scales", label: "Tonal scales", blurb: "One color → a 50–950 system" },
   { href: "/studio/tokens", label: "Semantic tokens", blurb: "A full token system + matrix" },
   { href: "/studio/stress", label: "Stress test", blurb: "CVD, low-light & glare scorecard" },
