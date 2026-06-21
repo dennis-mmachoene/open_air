@@ -11,7 +11,8 @@ import { listUserPalettes } from "@/lib/user-palettes";
 import { Strata } from "@/components/palette/Strata";
 import { listUserCollections } from "@/lib/user-collections";
 import { CollectionsManager } from "@/components/dashboard/CollectionsManager";
-import { getPalette } from "@/lib/palettes/snapshot";
+import { ALL_PALETTES, getPalette } from "@/lib/palettes/snapshot";
+import { computeTasteProfile, recommendFromTaste, describeTaste } from "@/lib/taste";
 import { PaletteCard } from "@/components/gallery/PaletteCard";
 import { Rail } from "@/components/gallery/Rail";
 
@@ -35,6 +36,12 @@ export default async function DashboardPage() {
     .map(getPalette)
     .filter((p) => p !== undefined)
     .slice(0, 8);
+
+  const taste = computeTasteProfile(saved);
+  const forYou =
+    saved.length > 0
+      ? recommendFromTaste(taste, ALL_PALETTES, new Set([...savedSlugs, ...recentSlugs]), 8)
+      : [];
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-5 py-12 sm:px-8">
@@ -93,6 +100,11 @@ export default async function DashboardPage() {
             ))}
           </div>
         </section>
+      ) : null}
+
+      {/* Picked for you — from your taste profile */}
+      {forYou.length > 0 ? (
+        <Rail title="Picked for you" subtitle={describeTaste(taste)} href="/gallery" palettes={forYou} />
       ) : null}
 
       {/* Recently viewed */}
