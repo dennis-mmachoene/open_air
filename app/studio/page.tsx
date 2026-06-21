@@ -15,6 +15,7 @@ const TOOLS = [
   { href: "/studio/scales", label: "Tonal scales", blurb: "One color → a 50–950 system" },
   { href: "/studio/tokens", label: "Semantic tokens", blurb: "A full token system + matrix" },
   { href: "/studio/stress", label: "Stress test", blurb: "CVD, low-light & glare scorecard" },
+  { href: "/studio/output", label: "Gamut & print", blurb: "P3 headroom + CMYK estimate" },
   { href: "/studio/generate", label: "Generator", blurb: "Build a palette from scratch" },
   { href: "/studio/extract", label: "Extract from image", blurb: "Pull colors from a photo" },
   { href: "/studio/gradients", label: "Gradients", blurb: "Perceptual gradient studio" },
