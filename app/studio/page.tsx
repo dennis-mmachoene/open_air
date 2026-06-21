@@ -17,6 +17,8 @@ const TOOLS = [
   { href: "/studio/stress", label: "Stress test", blurb: "CVD, low-light & glare scorecard" },
   { href: "/studio/output", label: "Gamut & print", blurb: "P3 headroom + CMYK estimate" },
   { href: "/studio/dataviz", label: "Data-viz palettes", blurb: "Chart-ready, colorblind-safe" },
+  { href: "/studio/gradient-check", label: "Gradient a11y", blurb: "Readable-text regions" },
+  { href: "/studio/elevation", label: "Elevation", blurb: "Tinted shadow system" },
   { href: "/studio/generate", label: "Generator", blurb: "Build a palette from scratch" },
   { href: "/studio/extract", label: "Extract from image", blurb: "Pull colors from a photo" },
   { href: "/studio/gradients", label: "Gradients", blurb: "Perceptual gradient studio" },
