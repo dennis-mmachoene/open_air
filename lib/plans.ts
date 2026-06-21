@@ -11,6 +11,7 @@ export interface PlanFeatures {
   accessibilityCenter: boolean;
   teams: boolean;
   api: boolean;
+  publish: boolean;
 }
 
 export const PLAN_FEATURES: Record<Plan, PlanFeatures> = {
@@ -24,6 +25,7 @@ export const PLAN_FEATURES: Record<Plan, PlanFeatures> = {
     accessibilityCenter: false,
     teams: false,
     api: false,
+    publish: false,
   },
   pro: {
     savedLimit: null,
@@ -35,6 +37,7 @@ export const PLAN_FEATURES: Record<Plan, PlanFeatures> = {
     accessibilityCenter: true,
     teams: false,
     api: true,
+    publish: true,
   },
   studio: {
     savedLimit: null,
@@ -46,6 +49,7 @@ export const PLAN_FEATURES: Record<Plan, PlanFeatures> = {
     accessibilityCenter: true,
     teams: false, // team workspaces not built yet — see roadmap
     api: true,
+    publish: true,
   },
 };
 

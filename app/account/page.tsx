@@ -6,6 +6,8 @@ import { getDb } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { ManageBillingButton } from "@/components/billing/ManageBillingButton";
 import { DeleteAccount } from "@/components/account/DeleteAccount";
+import { ProfileForm } from "@/components/community/ProfileForm";
+import { getOwnProfile } from "@/lib/publish";
 
 export const metadata: Metadata = { title: "Account" };
 
@@ -34,6 +36,7 @@ export default async function AccountPage() {
   const session = await auth();
   if (!session?.user) redirect("/signin");
   const plan = await getPlan(session.user.id);
+  const profile = await getOwnProfile(session.user.id);
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-8 px-5 py-12 sm:px-8">
@@ -81,6 +84,14 @@ export default async function AccountPage() {
           </button>
         </form>
       </div>
+
+      <section className="flex flex-col gap-3 border-t border-border pt-6">
+        <h2 className="font-display text-xl text-text">Creator profile</h2>
+        <p className="text-sm text-text-soft">
+          Set a handle to publish palettes and get a public profile at /u/your-handle.
+        </p>
+        <ProfileForm initial={{ handle: profile?.handle ?? null, bio: profile?.bio ?? null, website: profile?.website ?? null }} />
+      </section>
 
       <section className="flex flex-col gap-3 border-t border-border pt-6">
         <h2 className="font-display text-xl text-text">Your data</h2>

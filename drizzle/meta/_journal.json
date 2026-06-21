@@ -36,6 +36,13 @@
       "when": 1781941790692,
       "tag": "0004_phase8_onboarding",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1782031498909,
+      "tag": "0005_wave5_publishing",
+      "breakpoints": true
     }
   ]
 }

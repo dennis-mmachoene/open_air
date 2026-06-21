@@ -131,8 +131,57 @@ export const users = pgTable("users", {
   stripeCustomerId: text("stripe_customer_id"),
   plan: text("plan").notNull().default("free"),
   onboardedAt: timestamp("onboarded_at", { withTimezone: true }),
+  // Creator profile (Wave 5)
+  handle: text("handle").unique(),
+  bio: text("bio"),
+  website: text("website"),
   createdAt: createdAt(),
 });
+
+// ---------------------------------------------------------------------------
+// Community publishing (Wave 5)
+// ---------------------------------------------------------------------------
+
+export const publishedPalettes = pgTable(
+  "published_palettes",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    slug: text("slug").notNull().unique(),
+    name: text("name").notNull(),
+    description: text("description"),
+    rationale: text("rationale"),
+    hexes: jsonb("hexes").$type<string[]>().notNull(),
+    harmony: text("harmony"),
+    a11yScore: integer("a11y_score").notNull().default(0),
+    license: text("license").notNull().default("all-rights-reserved"),
+    tags: jsonb("tags").$type<string[]>().notNull().default([]),
+    visibility: text("visibility").notNull().default("public"),
+    likeCount: integer("like_count").notNull().default(0),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    index("published_user_idx").on(t.userId),
+    index("published_visibility_idx").on(t.visibility),
+  ],
+);
+
+export const paletteLikes = pgTable(
+  "palette_likes",
+  {
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    publishedId: uuid("published_id")
+      .notNull()
+      .references(() => publishedPalettes.id, { onDelete: "cascade" }),
+    createdAt: createdAt(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.publishedId] })],
+);
 
 export const savedPalettes = pgTable(
   "saved_palettes",
