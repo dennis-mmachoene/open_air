@@ -111,7 +111,7 @@ export const screens: Specimen[] = [
     render: () => (
       <div className="flex h-48 overflow-hidden rounded-xl border border-p-border">
         <div className="w-2/5 border-r border-p-border">
-          {["Dennis", "Ada", "Grace"].map((n, i) => (
+          {["Maya", "Ada", "Grace"].map((n, i) => (
             <div key={n} className="border-b border-p-border px-3 py-2" style={i === 0 ? { backgroundColor: "var(--p-surface-2)" } : undefined}>
               <p className="text-sm font-medium text-p-text">{n}</p>
               <p className="truncate text-xs text-p-text-muted">Re: the new palette…</p>

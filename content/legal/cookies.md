@@ -1,4 +1,4 @@
-This Cookie Policy explains how Open Air (operated by Dennis Ramara) uses cookies and similar technologies such as browser local storage. It should be read together with our [Privacy Policy](/legal/privacy).
+This Cookie Policy explains how Open Air (operated by Open Air) uses cookies and similar technologies such as browser local storage. It should be read together with our [Privacy Policy](/legal/privacy).
 
 ## 1. What are cookies?
 
@@ -49,4 +49,4 @@ We may update this Cookie Policy as our use of these technologies evolves. We wi
 
 ## 6. Contact
 
-Questions about cookies can be sent to **dennismmachoene@gmail.com**.
+Questions about cookies can be sent to **openair.mailer@gmail.com**.

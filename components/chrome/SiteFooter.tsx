@@ -1,12 +1,8 @@
 import Link from "next/link";
-import { author, nav, social } from "@/lib/site";
+import { nav, site } from "@/lib/site";
 import { Logo } from "@/components/chrome/Logo";
 
-/**
- * Global footer. Carries the hard-requirement attribution to Dennis Ramara as
- * a single quiet line, with real anchors (rel="me noopener") and accessible
- * labels for each social destination.
- */
+/** Global footer: navigation, legal links, and a single quiet contact line. */
 export function SiteFooter() {
   return (
     <footer className="mt-auto border-t border-border bg-canvas">
@@ -35,32 +31,16 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-2 md:items-end">
-          {/* Attribution — quiet, single line */}
+          {/* Contact — quiet, single line */}
           <p className="text-sm text-text-soft">
-            Designed &amp; built by{" "}
+            Contact{" "}
             <a
-              href={author.links.github}
-              rel="me noopener"
-              target="_blank"
+              href={`mailto:${site.email}`}
               className="font-medium text-text underline-offset-4 hover:underline"
             >
-              {author.name}
+              {site.email}
             </a>
           </p>
-          <div className="flex items-center gap-3">
-            {social.map((s) => (
-              <a
-                key={s.href}
-                href={s.href}
-                rel="me noopener"
-                target="_blank"
-                aria-label={s.label}
-                className="text-sm text-text-muted transition-colors hover:text-text"
-              >
-                {s.short}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

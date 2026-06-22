@@ -1,4 +1,4 @@
-This Disclaimer applies to your use of Open Air (operated by Dennis Ramara) and forms part of our [Terms & Conditions](/legal/terms). It explains important limitations on the information, tools, and output the Service provides.
+This Disclaimer applies to your use of Open Air (operated by Open Air) and forms part of our [Terms & Conditions](/legal/terms). It explains important limitations on the information, tools, and output the Service provides.
 
 ## 1. General information only
 
@@ -34,4 +34,4 @@ Your use of the Service is at your own risk. Our liability is limited as set out
 
 ## 9. Contact
 
-Questions about this Disclaimer can be sent to **dennismmachoene@gmail.com**.
+Questions about this Disclaimer can be sent to **openair.mailer@gmail.com**.

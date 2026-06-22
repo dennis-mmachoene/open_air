@@ -42,7 +42,7 @@ export default async function LegalDocPage({
       <header className="flex flex-col gap-1 border-b border-border pb-6">
         <h1 className="font-display text-4xl text-text">{doc.title}</h1>
         <p className="text-sm text-text-muted">
-          Effective {LEGAL_EFFECTIVE_DATE} · Open Air, operated by Dennis Ramara
+          Effective {LEGAL_EFFECTIVE_DATE} · Open Air
         </p>
       </header>
       <div className="legal-prose" dangerouslySetInnerHTML={{ __html: html }} />

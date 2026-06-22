@@ -20,7 +20,7 @@ You may cancel at any time from the self-service billing portal in your account 
 
 ## 3. Billing errors
 
-If you believe you have been charged incorrectly, contact us within a reasonable time at **dennismmachoene@gmail.com** with the relevant invoice. We will investigate and correct genuine errors, including issuing refunds where appropriate.
+If you believe you have been charged incorrectly, contact us within a reasonable time at **openair.mailer@gmail.com** with the relevant invoice. We will investigate and correct genuine errors, including issuing refunds where appropriate.
 
 ## 4. Chargebacks
 
@@ -32,4 +32,4 @@ Deleting your Account cancels any active subscription and permanently removes yo
 
 ## 6. Contact
 
-Refund and cancellation questions can be sent to **dennismmachoene@gmail.com**.
+Refund and cancellation questions can be sent to **openair.mailer@gmail.com**.

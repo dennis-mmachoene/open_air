@@ -1,24 +1,23 @@
-This page provides Open Air's contact and legal information. Open Air is a colour-exploration platform operated by an individual; please use email as the primary channel for all enquiries.
+This page provides Open Air's contact and legal information. Open Air is a colour-exploration platform operated as an independent service; please use email as the primary channel for all enquiries.
 
 ## 1. Operator
 
 - **Service:** Open Air
-- **Operated by:** Dennis Ramara (individual operator). This may be updated to a registered company in future; this page and the policies will be revised accordingly.
+- **Operated by:** Open Air.
 - **Jurisdiction:** Republic of South Africa
 
 ## 2. How to reach us
 
 | Purpose | Contact |
 |---|---|
-| General support & enquiries | dennismmachoene@gmail.com |
-| Privacy & data-protection requests | dennismmachoene@gmail.com |
-| Legal & terms | dennismmachoene@gmail.com |
-| Billing & refunds | dennismmachoene@gmail.com |
-| Copyright / DMCA notices | dennismmachoene@gmail.com |
-| Security disclosures | dennismmachoene@gmail.com |
-| Accessibility feedback | dennismmachoene@gmail.com |
+| General support & enquiries | openair.mailer@gmail.com |
+| Privacy & data-protection requests | openair.mailer@gmail.com |
+| Legal & terms | openair.mailer@gmail.com |
+| Billing & refunds | openair.mailer@gmail.com |
+| Copyright / DMCA notices | openair.mailer@gmail.com |
+| Security disclosures | openair.mailer@gmail.com |
+| Accessibility feedback | openair.mailer@gmail.com |
 
-Alternate address: **dennism.ramara@gmail.com**.
 
 We aim to respond to enquiries within a reasonable time, and within the timeframes required by applicable law for data-protection requests.
 

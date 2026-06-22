@@ -1,8 +1,8 @@
-Open Air (operated by Dennis Ramara) respects intellectual-property rights and responds to clear notices of alleged copyright infringement. This policy describes how to submit a notice and a counter-notice. While Open Air is based in South Africa, we follow a process modelled on the United States Digital Millennium Copyright Act ("DMCA") as a recognised standard, and we comply with applicable South African and other law.
+Open Air (operated by Open Air) respects intellectual-property rights and responds to clear notices of alleged copyright infringement. This policy describes how to submit a notice and a counter-notice. While Open Air is based in South Africa, we follow a process modelled on the United States Digital Millennium Copyright Act ("DMCA") as a recognised standard, and we comply with applicable South African and other law.
 
 ## 1. Reporting alleged infringement
 
-If you are a rights holder (or authorised to act for one) and believe content available through the Service infringes your copyright, send a written notice to **dennismmachoene@gmail.com** with the subject line "Copyright Notice". Your notice must include:
+If you are a rights holder (or authorised to act for one) and believe content available through the Service infringes your copyright, send a written notice to **openair.mailer@gmail.com** with the subject line "Copyright Notice". Your notice must include:
 
 1. Your physical or electronic signature.
 2. Identification of the copyrighted work you claim has been infringed.
@@ -19,7 +19,7 @@ On receiving a valid notice, we may remove or disable access to the allegedly in
 
 ## 3. Counter-notice
 
-If you believe your content was removed or disabled in error or misidentification, you may send a counter-notice to **dennismmachoene@gmail.com** including:
+If you believe your content was removed or disabled in error or misidentification, you may send a counter-notice to **openair.mailer@gmail.com** including:
 
 1. Your physical or electronic signature.
 2. Identification of the material that was removed and its previous location.
@@ -38,4 +38,4 @@ Submitting a false or bad-faith notice or counter-notice may expose you to liabi
 
 ## 6. Contact
 
-Copyright notices and counter-notices: **dennismmachoene@gmail.com** (alternate: dennism.ramara@gmail.com).
+Copyright notices and counter-notices: **openair.mailer@gmail.com** (alternate: openair.mailer@gmail.com).

@@ -1,4 +1,4 @@
-This Copyright & Intellectual Property Policy explains who owns what on Open Air (operated by Dennis Ramara) and how you may use it. It forms part of our [Terms & Conditions](/legal/terms).
+This Copyright & Intellectual Property Policy explains who owns what on Open Air (operated by Open Air) and how you may use it. It forms part of our [Terms & Conditions](/legal/terms).
 
 ## 1. Open Air's intellectual property
 
@@ -46,8 +46,8 @@ The Service incorporates third-party and open-source software, each licensed und
 
 ## 8. Reporting infringement
 
-If you believe content on the Service infringes your intellectual property, follow the process in our [Copyright Infringement (DMCA) Policy](/legal/dmca) or email **dennismmachoene@gmail.com**.
+If you believe content on the Service infringes your intellectual property, follow the process in our [Copyright Infringement (DMCA) Policy](/legal/dmca) or email **openair.mailer@gmail.com**.
 
 ## 9. Contact
 
-Intellectual-property questions can be sent to **dennismmachoene@gmail.com**.
+Intellectual-property questions can be sent to **openair.mailer@gmail.com**.

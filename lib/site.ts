@@ -1,6 +1,6 @@
 /**
- * Shared site constants — single source of truth for identity, attribution,
- * and primary navigation. Imported by the header, footer, /about and metadata.
+ * Shared site constants — single source of truth for identity, contact, and
+ * primary navigation. Imported by the header, footer, /about and metadata.
  */
 
 export const site = {
@@ -9,26 +9,19 @@ export const site = {
   description:
     "Open Air is a premium color exploration platform — discover beautiful palettes, understand why they work, and watch them dress a complete UI library.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  email: "openair.mailer@gmail.com",
 } as const;
 
-/** Open Air is designed and built by Dennis Ramara. */
+/** Operating identity for attribution and metadata. */
 export const author = {
-  name: "Dennis Ramara",
-  links: {
-    linkedin: "https://www.linkedin.com/in/dennis-mmachoene-ramara",
-    instagram: "https://instagram.com/dennismachoene",
-    instagramHandle: "@dennismachoene",
-    github: "https://github.com/dennis-mmachoene",
-  },
+  name: "Open Air",
+  email: "openair.mailer@gmail.com",
 } as const;
 
-export const social = [
-  { label: "Dennis Ramara on LinkedIn", short: "LinkedIn", href: author.links.linkedin },
-  { label: "Dennis Ramara on Instagram", short: "Instagram", href: author.links.instagram },
-  { label: "Dennis Ramara on GitHub", short: "GitHub", href: author.links.github },
-] as const;
+/** No external social profiles. */
+export const social = [] as const;
 
-/** Primary navigation. Some destinations land in later phases. */
+/** Primary navigation. */
 export const nav = [
   { label: "Gallery", href: "/gallery" },
   { label: "Collections", href: "/c" },

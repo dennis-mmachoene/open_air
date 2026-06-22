@@ -93,7 +93,7 @@ export const components: Specimen[] = [
         </thead>
         <tbody>
           {[
-            ["Dennis R.", "Studio", "success", "Active"],
+            ["Maya R.", "Studio", "success", "Active"],
             ["Ada L.", "Pro", "warning", "Past due"],
             ["Grace H.", "Free", "info", "Trialing"],
           ].map(([name, plan, tone, status]) => (

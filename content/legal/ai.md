@@ -38,4 +38,4 @@ As AI capabilities and providers evolve, we may update this disclaimer and the u
 
 ## 7. Contact
 
-Questions about AI features can be sent to **dennismmachoene@gmail.com**.
+Questions about AI features can be sent to **openair.mailer@gmail.com**.

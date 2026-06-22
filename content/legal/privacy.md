@@ -1,4 +1,4 @@
-This Privacy Policy explains how Dennis Ramara, operating the Open Air platform ("Open Air", "we", "us", "our"), collects, uses, shares, and protects personal information when you use the Open Air website, applications, and public API (the "Service"). It is written to meet the requirements of South Africa's Protection of Personal Information Act, 2013 ("POPIA"), and to give equivalent rights to users protected by the EU General Data Protection Regulation ("GDPR"), the UK GDPR, and the California Consumer Privacy Act as amended by the CPRA ("CCPA/CPRA").
+This Privacy Policy explains how Open Air, operating the Open Air platform ("Open Air", "we", "us", "our"), collects, uses, shares, and protects personal information when you use the Open Air website, applications, and public API (the "Service"). It is written to meet the requirements of South Africa's Protection of Personal Information Act, 2013 ("POPIA"), and to give equivalent rights to users protected by the EU General Data Protection Regulation ("GDPR"), the UK GDPR, and the California Consumer Privacy Act as amended by the CPRA ("CCPA/CPRA").
 
 We are the **responsible party** (POPIA) and **data controller** (GDPR/UK GDPR) for the personal information described here.
 
@@ -86,7 +86,7 @@ Depending on where you live, you have some or all of the following rights:
 - **Withdraw consent** at any time where processing is based on consent.
 - **Lodge a complaint** with a regulator.
 
-You can exercise most of these rights directly: edit your profile, export your data, or delete your Account from your account settings. For anything else, contact **dennismmachoene@gmail.com**. We will respond within the timeframes required by applicable law. We will not discriminate against you for exercising your rights.
+You can exercise most of these rights directly: edit your profile, export your data, or delete your Account from your account settings. For anything else, contact **openair.mailer@gmail.com**. We will respond within the timeframes required by applicable law. We will not discriminate against you for exercising your rights.
 
 ## 9. How to Complain
 
@@ -111,4 +111,4 @@ We may update this Policy. We will revise the "Effective" date and, for material
 
 ## 13. Contact
 
-For privacy questions or to exercise your rights, contact **dennismmachoene@gmail.com** (alternate: dennism.ramara@gmail.com). See [Contact & Legal Information](/legal/contact).
+For privacy questions or to exercise your rights, contact **openair.mailer@gmail.com** (alternate: openair.mailer@gmail.com). See [Contact & Legal Information](/legal/contact).

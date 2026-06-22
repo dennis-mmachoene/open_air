@@ -1,4 +1,4 @@
-These Subscription & Billing Terms govern paid plans on Open Air (operated by Dennis Ramara). They form part of, and should be read with, our [Terms & Conditions](/legal/terms) and [Refund & Cancellation Policy](/legal/refunds).
+These Subscription & Billing Terms govern paid plans on Open Air (operated by Open Air). They form part of, and should be read with, our [Terms & Conditions](/legal/terms) and [Refund & Cancellation Policy](/legal/refunds).
 
 ## 1. Plans
 
@@ -47,4 +47,4 @@ A previously offered "Studio" plan has been retired and folded into Pro. Existin
 
 ## 10. Contact
 
-Billing questions can be sent to **dennismmachoene@gmail.com**.
+Billing questions can be sent to **openair.mailer@gmail.com**.

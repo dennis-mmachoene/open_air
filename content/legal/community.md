@@ -1,4 +1,4 @@
-These Community & Content Guidelines describe the standards for content you create and store on Open Air (operated by Dennis Ramara). They form part of our [Terms & Conditions](/legal/terms) and complement the [Acceptable Use Policy](/legal/acceptable-use).
+These Community & Content Guidelines describe the standards for content you create and store on Open Air (operated by Open Air). They form part of our [Terms & Conditions](/legal/terms) and complement the [Acceptable Use Policy](/legal/acceptable-use).
 
 ## 1. Scope
 
@@ -30,7 +30,7 @@ Because most content is private, we do not routinely monitor it. However, we may
 
 ## 6. Reporting
 
-If you become aware of content or conduct that violates these Guidelines, email **dennismmachoene@gmail.com**.
+If you become aware of content or conduct that violates these Guidelines, email **openair.mailer@gmail.com**.
 
 ## 7. Changes
 

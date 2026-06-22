@@ -1,4 +1,4 @@
-These Terms & Conditions ("Terms") form a binding agreement between you ("you", "your", or "User") and Dennis Ramara, the individual who operates the Open Air platform ("Open Air", "we", "us", or "our"). They govern your access to and use of the Open Air website, applications, public API, and related services (together, the "Service"). Please read them carefully. By creating an account, accessing, or using the Service, you confirm that you have read, understood, and agree to be bound by these Terms and by the policies referenced in them, including our [Privacy Policy](/legal/privacy), [Acceptable Use Policy](/legal/acceptable-use), [Subscription & Billing Terms](/legal/billing), and [Refund & Cancellation Policy](/legal/refunds).
+These Terms & Conditions ("Terms") form a binding agreement between you ("you", "your", or "User") and Open Air, the operator of the Open Air platform ("Open Air", "we", "us", or "our"). They govern your access to and use of the Open Air website, applications, public API, and related services (together, the "Service"). Please read them carefully. By creating an account, accessing, or using the Service, you confirm that you have read, understood, and agree to be bound by these Terms and by the policies referenced in them, including our [Privacy Policy](/legal/privacy), [Acceptable Use Policy](/legal/acceptable-use), [Subscription & Billing Terms](/legal/billing), and [Refund & Cancellation Policy](/legal/refunds).
 
 If you do not agree with these Terms, you must not use the Service.
 
@@ -21,7 +21,7 @@ You must be at least 18 years old, or the age of majority in your jurisdiction i
 
 3.2 **Accurate information.** You agree to provide accurate information and to keep it current. You may not impersonate another person or misrepresent your affiliation with any person or entity.
 
-3.3 **Account sharing and security.** You are responsible for safeguarding access to your Account. Notify us promptly at dennismmachoene@gmail.com if you suspect unauthorised use.
+3.3 **Account sharing and security.** You are responsible for safeguarding access to your Account. Notify us promptly at openair.mailer@gmail.com if you suspect unauthorised use.
 
 ## 4. The Service
 
@@ -91,7 +91,7 @@ We may update these Terms from time to time. If we make material changes, we wil
 
 ## 16. Governing Law and Disputes
 
-These Terms are governed by the laws of the Republic of South Africa, without regard to conflict-of-laws principles. Subject to any non-waivable rights you have under applicable consumer-protection law, you agree to submit to the jurisdiction of the South African courts. Before commencing formal proceedings, you agree to first contact us at dennismmachoene@gmail.com so that we can attempt to resolve the matter informally and in good faith.
+These Terms are governed by the laws of the Republic of South Africa, without regard to conflict-of-laws principles. Subject to any non-waivable rights you have under applicable consumer-protection law, you agree to submit to the jurisdiction of the South African courts. Before commencing formal proceedings, you agree to first contact us at openair.mailer@gmail.com so that we can attempt to resolve the matter informally and in good faith.
 
 ## 17. General
 
@@ -105,4 +105,4 @@ These Terms are governed by the laws of the Republic of South Africa, without re
 
 ## 18. Contact
 
-Questions about these Terms can be sent to **dennismmachoene@gmail.com** (alternate: dennism.ramara@gmail.com). See [Contact & Legal Information](/legal/contact) for more.
+Questions about these Terms can be sent to **openair.mailer@gmail.com** (alternate: openair.mailer@gmail.com). See [Contact & Legal Information](/legal/contact) for more.

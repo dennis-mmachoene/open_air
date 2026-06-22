@@ -28,7 +28,7 @@ Browse **108** hand-tuned, AA-gated OKLCH palettes, understand *why* each one wo
 
 [**Live Demo**](#) &nbsp;·&nbsp; [**Report Bug**](https://github.com/dennis-mmachoene/open-air/issues) &nbsp;·&nbsp; [**Request Feature**](https://github.com/dennis-mmachoene/open-air/issues)
 
-Designed & built by [**Dennis Ramara**](https://github.com/dennis-mmachoene)
+Designed & built by **Open Air**
 
 </div>
 
@@ -146,7 +146,7 @@ npm run db:seed       # seed the catalog from the snapshot
 npm run db:studio     # open Drizzle Studio
 ```
 
-Migrations live in `drizzle/` (currently `0000`–`0006`). After pulling changes that touch the schema, run `npm run db:migrate`.
+Migrations live in `drizzle/` (currently `0000`–`0004`). After pulling changes that touch the schema, run `npm run db:migrate`.
 
 ---
 
@@ -166,7 +166,7 @@ The admin area at **`/admin`** is gated by an email allow-list in `lib/admin.ts`
 
 ```ts
 export const ADMIN_EMAILS = new Set(
-  ["dennism.ramara@gmail.com"].map((e) => e.toLowerCase())
+  ["openair.mailer@gmail.com"].map((e) => e.toLowerCase())
 );
 ```
 
@@ -217,9 +217,9 @@ GitHub Actions runs the same gate on every push and PR: **lint → typecheck →
 
 ## 📄 License
 
-© Dennis Ramara. All rights reserved.
+© Open Air. All rights reserved.
 
 <div align="center">
 <br />
-<sub>Built with Next.js, Tailwind, and a love for color · by <a href="https://github.com/dennis-mmachoene">Dennis Ramara</a></sub>
+<sub>Built with Next.js, Tailwind, and a love for color · Open Air</sub>
 </div>

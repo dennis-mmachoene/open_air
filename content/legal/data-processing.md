@@ -1,4 +1,4 @@
-This Data Processing & Security Statement describes how Open Air (operated by Dennis Ramara) processes and protects personal information, and lists the sub-processors (operators) we rely on. It supports our [Privacy Policy](/legal/privacy) and is relevant to users and any business customers who need diligence information.
+This Data Processing & Security Statement describes how Open Air (operated by Open Air) processes and protects personal information, and lists the sub-processors (operators) we rely on. It supports our [Privacy Policy](/legal/privacy) and is relevant to users and any business customers who need diligence information.
 
 ## 1. Roles
 
@@ -67,4 +67,4 @@ If a security compromise affecting your personal information occurs, we will not
 
 ## 10. Contact
 
-Data-protection and security enquiries: **dennismmachoene@gmail.com**.
+Data-protection and security enquiries: **openair.mailer@gmail.com**.

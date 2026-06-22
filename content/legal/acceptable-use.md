@@ -1,4 +1,4 @@
-This Acceptable Use Policy ("AUP") sets out what you may and may not do when using Open Air (operated by Dennis Ramara). It forms part of our [Terms & Conditions](/legal/terms). Breaching this AUP may lead to suspension or termination of your Account.
+This Acceptable Use Policy ("AUP") sets out what you may and may not do when using Open Air (operated by Open Air). It forms part of our [Terms & Conditions](/legal/terms). Breaching this AUP may lead to suspension or termination of your Account.
 
 ## 1. General principle
 
@@ -38,7 +38,7 @@ Individual colour values are facts you may freely use in your designs. However, 
 
 ## 4. Security research
 
-We welcome good-faith security research. If you discover a vulnerability, report it privately to **dennismmachoene@gmail.com** and give us a reasonable opportunity to remediate before any disclosure. Do not access or modify other users' data, degrade the Service, or exfiltrate data beyond the minimum needed to demonstrate the issue.
+We welcome good-faith security research. If you discover a vulnerability, report it privately to **openair.mailer@gmail.com** and give us a reasonable opportunity to remediate before any disclosure. Do not access or modify other users' data, degrade the Service, or exfiltrate data beyond the minimum needed to demonstrate the issue.
 
 ## 5. Enforcement
 
@@ -46,4 +46,4 @@ We may investigate suspected violations and may suspend or terminate access, rem
 
 ## 6. Reporting abuse
 
-To report misuse of the Service, email **dennismmachoene@gmail.com**.
+To report misuse of the Service, email **openair.mailer@gmail.com**.

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { author, site } from "@/lib/site";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `The mission, values, and vision behind ${site.name} — a living gallery of accessible color, designed and built by ${author.name}.`,
+  description: `The mission, values, and vision behind ${site.name} — a living gallery of accessible color.`,
 };
 export const revalidate = 86400;
 
@@ -137,10 +137,10 @@ export default function AboutPage() {
           and accessibility reports go straight to a real person and get a real
           reply. Reach us any time at{" "}
           <a
-            href="mailto:dennismmachoene@gmail.com"
+            href={`mailto:${site.email}`}
             className="text-text underline underline-offset-4"
           >
-            dennismmachoene@gmail.com
+            {site.email}
           </a>
           .
         </p>
@@ -160,14 +160,12 @@ export default function AboutPage() {
 
       <footer className="flex flex-col gap-4 text-text-soft">
         <p>
-          {site.name} is designed &amp; built by{" "}
+          Questions or feedback? Reach {site.name} at{" "}
           <a
-            href={author.links.github}
-            rel="me noopener"
-            target="_blank"
+            href={`mailto:${site.email}`}
             className="font-medium text-text underline-offset-4 hover:underline"
           >
-            {author.name}
+            {site.email}
           </a>
           .
         </p>

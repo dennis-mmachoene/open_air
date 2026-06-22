@@ -1,4 +1,4 @@
-Open Air (operated by Dennis Ramara) is built around accessibility. Accessible colour is the core of the product, and we hold our own interface to the same standard. This statement describes our commitment, the standard we target, known limitations, and how to report barriers.
+Open Air (operated by Open Air) is built around accessibility. Accessible colour is the core of the product, and we hold our own interface to the same standard. This statement describes our commitment, the standard we target, known limitations, and how to report barriers.
 
 ## 1. Our commitment
 
@@ -25,7 +25,7 @@ Accessibility is an ongoing effort. Some areas may not yet fully conform — for
 
 ## 5. Feedback and reporting barriers
 
-If you encounter an accessibility barrier, or need content in an alternative format, please contact us at **dennismmachoene@gmail.com** with a description of the issue, the page or feature involved, and the assistive technology you use. We will respond and work to resolve the issue.
+If you encounter an accessibility barrier, or need content in an alternative format, please contact us at **openair.mailer@gmail.com** with a description of the issue, the page or feature involved, and the assistive technology you use. We will respond and work to resolve the issue.
 
 ## 6. Ongoing improvement
 
@@ -33,4 +33,4 @@ We periodically review the Service for accessibility and aim to add automated ac
 
 ## 7. Contact
 
-Accessibility feedback: **dennismmachoene@gmail.com**.
+Accessibility feedback: **openair.mailer@gmail.com**.

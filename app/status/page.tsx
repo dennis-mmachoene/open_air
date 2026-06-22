@@ -64,8 +64,8 @@ export default async function StatusPage() {
       <p className="mt-6 text-sm text-text-muted">
         Components marked &ldquo;not configured&rdquo; are optional integrations that
         aren&rsquo;t enabled in this environment. For incidents or questions, contact{" "}
-        <a href="mailto:dennismmachoene@gmail.com" className="text-text underline underline-offset-4">
-          dennismmachoene@gmail.com
+        <a href="mailto:openair.mailer@gmail.com" className="text-text underline underline-offset-4">
+          openair.mailer@gmail.com
         </a>
         .
       </p>
