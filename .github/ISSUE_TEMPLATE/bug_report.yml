@@ -1,0 +1,53 @@
+name: "🐛 Bug report"
+description: Report a defect so we can reproduce and fix it.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for taking the time to file a report. Please search existing issues first."
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear, concise description of the bug.
+      placeholder: When I…, the app…
+    validations: { required: true }
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1. Go to '…'
+        2. Click '…'
+        3. See error
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations: { required: true }
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [Gallery, Studio, Showroom, Community, Teams, Billing, System Admin (/sys), API, Other]
+    validations: { required: true }
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "Browser + OS, app version/commit, desktop/mobile (width)"
+    validations: { required: true }
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console / network errors
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - { label: "I searched existing issues", required: true }
+        - { label: "I can reproduce this consistently", required: false }
