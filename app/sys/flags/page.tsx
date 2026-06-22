@@ -1,5 +1,6 @@
 import { requirePlatformAdmin } from "@/lib/platform/auth";
 import { SysShell } from "@/components/platform/SysShell";
+import { Input } from "@/components/ui";
 import { SectionCard, ErrorNote } from "@/components/platform/ui";
 import { listFlags } from "@/lib/platform/flags";
 import { upsertFlagAction, deleteFlagAction } from "@/app/sys/_actions";
@@ -54,12 +55,12 @@ export default async function SysFlagsPage({ searchParams }: { searchParams: Pro
         <SectionCard title="Create / update a flag">
           <form action={upsertFlagAction} className="flex flex-col gap-2">
             <div className="flex flex-wrap gap-2">
-              <input name="key" placeholder="flag_key" required className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-              <input name="rolloutPercent" type="number" min="0" max="100" defaultValue={100} className="w-24 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+              <Input name="key" placeholder="flag_key" required className="min-w-0 flex-1"  aria-label="flag_key"/>
+              <Input name="rolloutPercent" type="number" min="0" max="100" defaultValue={100} className="w-24"  aria-label="RolloutPercent"/>
               <input type="hidden" name="enabled" value="1" />
               <button className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas hover:opacity-90">Save (enabled)</button>
             </div>
-            <input name="description" placeholder="Description (optional)" className="rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+            <Input name="description" placeholder="Description (optional)"   aria-label="Description (optional)"/>
           </form>
         </SectionCard>
       </div>

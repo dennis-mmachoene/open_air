@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Input } from "@/components/ui";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth-guard";
 import { getOrgBySlug, getMembership } from "@/lib/orgs";
@@ -75,7 +76,7 @@ export default async function DomainsPage({ params, searchParams }: { params: Pr
         <input type="hidden" name="slug" value={slug} />
         <h2 className="text-sm font-medium text-text">Claim a domain</h2>
         <div className="flex flex-wrap gap-2">
-          <input name="domain" placeholder="acme.com" required className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+          <Input name="domain" placeholder="acme.com" required className="min-w-0 flex-1"  aria-label="acme.com"/>
           <button className="rounded-pill bg-text px-5 py-2 text-sm font-medium text-canvas hover:opacity-90">Add domain</button>
         </div>
         <p className="text-xs text-text-muted">Public providers (gmail.com, outlook.com, …) can&apos;t be claimed.</p>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Input } from "@/components/ui";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth-guard";
 import { getOrgBySlug, getMembership, listMembers } from "@/lib/orgs";
@@ -122,7 +123,7 @@ export default async function KitDetailPage({ params, searchParams }: { params: 
                   </form>
                   <form action={rejectProposalAction} className="flex items-center gap-1">
                     <input type="hidden" name="slug" value={slug} /><input type="hidden" name="kitSlug" value={kit.slug} /><input type="hidden" name="id" value={p.id} />
-                    <input name="note" placeholder="Reason (optional)" className="w-40 rounded-control border border-border bg-surface px-2 py-1 text-xs text-text focus:border-text focus:outline-none" />
+                    <Input name="note" placeholder="Reason (optional)" className="w-40"  aria-label="Reason (optional)"/>
                     <button className="rounded-control border border-border px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2">Reject</button>
                   </form>
                 </div>
@@ -193,7 +194,7 @@ export default async function KitDetailPage({ params, searchParams }: { params: 
               </div>
               <form action={setWebhookAction} className="flex flex-wrap items-center gap-2 border-t border-border pt-3">
                 <input type="hidden" name="slug" value={slug} /><input type="hidden" name="kitSlug" value={kit.slug} /><input type="hidden" name="kitId" value={kit.id} />
-                <input name="url" type="url" defaultValue={sync.webhookUrl ?? ""} placeholder="https://ci.example.com/hook (optional)" className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-1.5 text-xs text-text focus:border-text focus:outline-none" />
+                <Input name="url" type="url" defaultValue={sync.webhookUrl ?? ""} placeholder="https://ci.example.com/hook (optional)" className="min-w-0 flex-1"  aria-label="https://ci.example.com/hook (optional)"/>
                 <button className="rounded-control border border-border px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2">Save webhook</button>
               </form>
               <p className="text-xs text-text-muted">Anyone with the token URL can read these tokens — treat it like a secret and rotate if leaked.</p>
@@ -212,10 +213,10 @@ export default async function KitDetailPage({ params, searchParams }: { params: 
           <input type="hidden" name="slug" value={slug} /><input type="hidden" name="kitSlug" value={kit.slug} /><input type="hidden" name="kitId" value={kit.id} />
           <h2 className="text-sm font-medium text-text">Add a color or palette</h2>
           <div className="flex flex-wrap gap-2">
-            <input name="name" placeholder="Name (e.g. Primary, Ramp)" required className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-            <input name="hexes" placeholder="#1d4ed8 or #1d4ed8, #3b82f6, …" required className="min-w-0 flex-[2] rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+            <Input name="name" placeholder="Name (e.g. Primary, Ramp)" required className="min-w-0 flex-1"  aria-label="Name (e.g. Primary, Ramp)"/>
+            <Input name="hexes" placeholder="#1d4ed8 or #1d4ed8, #3b82f6, …" required className="min-w-0 flex-[2]"  aria-label="#1d4ed8 or #1d4ed8, #3b82f6, …"/>
           </div>
-          <input name="notes" placeholder="Notes (optional)" className="rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+          <Input name="notes" placeholder="Notes (optional)"   aria-label="Notes (optional)"/>
           <button className="w-fit rounded-pill bg-text px-5 py-2 text-sm font-medium text-canvas hover:opacity-90">Add</button>
           <p className="text-xs text-text-muted">One hex = a color swatch; multiple = a palette.</p>
         </form>
@@ -225,10 +226,10 @@ export default async function KitDetailPage({ params, searchParams }: { params: 
           <h2 className="text-sm font-medium text-text">Propose a color or palette</h2>
           <p className="text-xs text-text-muted">As a member, your suggestion goes to an admin for review before it lands in the kit.</p>
           <div className="flex flex-wrap gap-2">
-            <input name="name" placeholder="Name" required className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-            <input name="hexes" placeholder="#1d4ed8 or #1d4ed8, #3b82f6, …" required className="min-w-0 flex-[2] rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+            <Input name="name" placeholder="Name" required className="min-w-0 flex-1"  aria-label="Name"/>
+            <Input name="hexes" placeholder="#1d4ed8 or #1d4ed8, #3b82f6, …" required className="min-w-0 flex-[2]"  aria-label="#1d4ed8 or #1d4ed8, #3b82f6, …"/>
           </div>
-          <input name="note" placeholder="Why this change? (optional)" className="rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+          <Input name="note" placeholder="Why this change? (optional)"   aria-label="Why this change? (optional)"/>
           <button className="w-fit rounded-pill bg-text px-5 py-2 text-sm font-medium text-canvas hover:opacity-90">Submit proposal</button>
         </form>
       )}

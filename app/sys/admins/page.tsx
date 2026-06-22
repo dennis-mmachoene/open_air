@@ -1,5 +1,6 @@
 import { requirePlatformAdmin } from "@/lib/platform/auth";
 import { SysShell } from "@/components/platform/SysShell";
+import { Input } from "@/components/ui";
 import { SectionCard, ErrorNote } from "@/components/platform/ui";
 import { listAdmins } from "@/lib/platform/admins";
 import { createAdminAction, setAdminStatusAction, resetAdminPasswordAction } from "@/app/sys/_actions";
@@ -38,7 +39,7 @@ export default async function SysAdminsPage({ searchParams }: { searchParams: Pr
                     </form>
                     <form action={resetAdminPasswordAction} className="flex items-center gap-1">
                       <input type="hidden" name="id" value={a.id} />
-                      <input name="password" type="password" placeholder="New password" required className="w-32 rounded-control border border-border bg-canvas px-2 py-1 text-xs text-text focus:border-text focus:outline-none" />
+                      <Input name="password" type="password" placeholder="New password" required className="w-32"  aria-label="New password"/>
                       <button className="rounded-control border border-border px-2.5 py-1 text-xs text-text-soft hover:bg-surface-2">Reset</button>
                     </form>
                   </div>
@@ -50,9 +51,9 @@ export default async function SysAdminsPage({ searchParams }: { searchParams: Pr
 
         <SectionCard title="Add an administrator">
           <form action={createAdminAction} className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-            <input name="name" placeholder="Name" className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-            <input name="email" type="email" placeholder="email@company.com" required className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-            <input name="password" type="password" placeholder="Temp password (12+)" required className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+            <Input name="name" placeholder="Name" className="min-w-0 flex-1"  aria-label="Name"/>
+            <Input name="email" type="email" placeholder="email@company.com" required className="min-w-0 flex-1"  aria-label="email@company.com"/>
+            <Input name="password" type="password" placeholder="Temp password (12+)" required className="min-w-0 flex-1"  aria-label="Temp password (12+)"/>
             <button className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas hover:opacity-90">Create</button>
           </form>
           <p className="text-xs text-text-muted">New admins must change their password at first sign-in.</p>

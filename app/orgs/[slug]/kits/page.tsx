@@ -5,7 +5,7 @@ import { requireUser } from "@/lib/auth-guard";
 import { getOrgBySlug, getMembership } from "@/lib/orgs";
 import { listKits } from "@/lib/brandkits";
 import { pendingCountByKit } from "@/lib/kitproposals";
-import { EmptyState } from "@/components/ui";
+import { EmptyState, Input } from "@/components/ui";
 import { createKitAction } from "../kits/_actions";
 
 export const metadata: Metadata = { title: "Brand kits", robots: { index: false, follow: false } };
@@ -58,8 +58,8 @@ export default async function KitsPage({ params, searchParams }: { params: Promi
         <form action={createKitAction} className="flex flex-col gap-3 rounded-card border border-border bg-surface p-5">
           <input type="hidden" name="slug" value={slug} />
           <h2 className="text-sm font-medium text-text">Create a brand kit</h2>
-          <input name="name" placeholder="Kit name (e.g. Core brand)" required className="rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-          <input name="description" placeholder="Description (optional)" className="rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+          <Input name="name" placeholder="Kit name (e.g. Core brand)" required   aria-label="Kit name (e.g. Core brand)"/>
+          <Input name="description" placeholder="Description (optional)"   aria-label="Description (optional)"/>
           <button className="w-fit rounded-pill bg-text px-5 py-2 text-sm font-medium text-canvas hover:opacity-90">Create kit</button>
         </form>
       ) : null}

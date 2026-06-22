@@ -1,5 +1,6 @@
 import { requirePlatformAdmin } from "@/lib/platform/auth";
 import { SysShell } from "@/components/platform/SysShell";
+import { Select } from "@/components/ui";
 import { PlanBadge } from "@/components/platform/ui";
 import { adminUsers } from "@/lib/admin-data";
 import { setUserPlanAction } from "@/app/sys/_actions";
@@ -45,11 +46,11 @@ export default async function SysUsersPage({ searchParams }: { searchParams: Pro
                   <td className="px-4 py-2">
                     <form action={setUserPlanAction} className="flex items-center gap-1">
                       <input type="hidden" name="userId" value={u.id} />
-                      <select name="plan" defaultValue={u.plan} className="rounded-control border border-border bg-canvas px-2 py-1 text-xs text-text focus:border-text focus:outline-none">
+                      <Select name="plan" defaultValue={u.plan}  aria-label="Plan">
                         <option value="free">free</option>
                         <option value="pro">pro</option>
                         <option value="studio">studio</option>
-                      </select>
+                      </Select>
                       <button className="rounded-control border border-border px-2.5 py-1 text-xs text-text-soft hover:bg-surface-2">Apply</button>
                     </form>
                   </td>
