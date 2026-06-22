@@ -116,7 +116,7 @@ export function GeneratorTool() {
         <button
           type="button"
           onClick={save}
-          className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+          className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
         >
           Save palette
         </button>

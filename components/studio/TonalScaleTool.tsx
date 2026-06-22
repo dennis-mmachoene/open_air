@@ -180,7 +180,7 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
                       type="button"
                       onClick={() => setFormat(f)}
                       className={clsx(
-                        "rounded-pill px-2.5 py-1 capitalize transition-colors",
+                        "rounded-pill px-2.5 py-1 capitalize transition-colors ease-standard",
                         f === format ? "bg-text text-canvas" : "text-text-soft hover:text-text",
                       )}
                     >
@@ -191,7 +191,7 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
                 <button
                   type="button"
                   onClick={copy}
-                  className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90"
+                  className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
                 >
                   {copied ? "Copied" : "Copy"}
                 </button>

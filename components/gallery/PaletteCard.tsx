@@ -11,7 +11,7 @@ export function PaletteCard({ palette }: { palette: Palette }) {
     <div className="group relative">
       <Link
         href={`/p/${palette.slug}`}
-        className="block rounded-card border border-border bg-surface transition-shadow hover:shadow-lg focus-visible:shadow-lg"
+        className="block rounded-card border border-border bg-surface transition-shadow ease-standard hover:shadow-lg focus-visible:shadow-lg"
       >
         <Strata
           hexes={hexes}
@@ -26,7 +26,7 @@ export function PaletteCard({ palette }: { palette: Palette }) {
           </div>
         </div>
       </Link>
-      <div className="pointer-events-none absolute right-3 top-3 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+      <div className="pointer-events-none absolute right-3 top-3 opacity-0 transition-opacity ease-standard group-hover:opacity-100 group-focus-within:opacity-100">
         <CopyButton
           value={hexes.join(", ")}
           label="Copy"

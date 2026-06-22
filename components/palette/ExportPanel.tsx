@@ -52,7 +52,7 @@ export function ExportPanel({
               type="button"
               onClick={() => setFormat(f)}
               className={clsx(
-                "rounded-pill px-3 py-1 text-sm transition-colors",
+                "rounded-pill px-3 py-1 text-sm transition-colors ease-standard",
                 f === format ? "bg-text text-canvas" : "text-text-soft hover:text-text",
               )}
             >

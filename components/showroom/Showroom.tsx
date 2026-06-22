@@ -38,7 +38,7 @@ function Segmented<T extends string>({
           type="button"
           onClick={() => onChange(v)}
           className={clsx(
-            "rounded-pill px-3 py-1 text-sm transition-colors",
+            "rounded-pill px-3 py-1 text-sm transition-colors ease-standard",
             v === value ? "bg-text text-canvas" : "text-text-soft hover:text-text",
           )}
         >
@@ -123,7 +123,7 @@ export function Showroom({
               type="button"
               onClick={() => setFilter(g)}
               className={clsx(
-                "rounded-pill border px-3 py-1 text-sm transition-colors",
+                "rounded-pill border px-3 py-1 text-sm transition-colors ease-standard",
                 filter === g
                   ? "border-text bg-text text-canvas"
                   : "border-border text-text-soft hover:border-text hover:text-text",

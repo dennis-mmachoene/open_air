@@ -70,7 +70,7 @@ export function Assistant() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? "Close color assistant" : "Open color assistant"}
-        className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-pill bg-text text-canvas shadow-lg transition-transform hover:scale-105"
+        className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-pill bg-text text-canvas shadow-lg transition-transform ease-standard hover:scale-105"
       >
         {open ? (
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -119,7 +119,7 @@ export function Assistant() {
                       <Link
                         key={p.slug}
                         href={authed ? `/p/${p.slug}` : "/signin"}
-                        className="flex items-center gap-2 rounded-control border border-border p-1.5 transition-colors hover:bg-surface-2"
+                        className="flex items-center gap-2 rounded-control border border-border p-1.5 transition-colors ease-standard hover:bg-surface-2"
                       >
                         <Strata hexes={p.hexes} className="h-7 w-16 shrink-0" />
                         <span className="truncate text-sm text-text">{p.name}</span>
@@ -144,7 +144,7 @@ export function Assistant() {
                     key={p}
                     type="button"
                     onClick={() => send(p)}
-                    className="rounded-pill border border-border px-2.5 py-1 text-xs text-text-soft transition-colors hover:border-text hover:text-text"
+                    className="rounded-pill border border-border px-2.5 py-1 text-xs text-text-soft transition-colors ease-standard hover:border-text hover:text-text"
                   >
                     {p}
                   </button>

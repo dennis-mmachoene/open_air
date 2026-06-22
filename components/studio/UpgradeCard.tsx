@@ -10,7 +10,7 @@ export function UpgradeCard({ feature }: { feature: string }) {
       </p>
       <Link
         href="/pricing"
-        className="rounded-pill bg-text px-5 py-2.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+        className="rounded-pill bg-text px-5 py-2.5 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
       >
         Go Pro
       </Link>

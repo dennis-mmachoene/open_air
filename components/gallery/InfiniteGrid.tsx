@@ -85,7 +85,7 @@ export function InfiniteGrid({
       {!done ? (
         <div ref={sentinel} className="flex h-8 items-center justify-center">
           <span
-            className="text-sm text-text-muted transition-opacity duration-200"
+            className="text-sm text-text-muted transition-opacity ease-standard duration-200"
             style={{ opacity: loading ? 1 : 0 }}
             aria-live="polite"
           >

@@ -14,7 +14,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="rounded-pill bg-text px-5 py-2.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+        className="rounded-pill bg-text px-5 py-2.5 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
       >
         Back home
       </Link>

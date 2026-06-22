@@ -100,7 +100,7 @@ export function StressTestTool({ initial = "#4f46e5" }: { initial?: string }) {
               type="button"
               onClick={() => setMode(m)}
               className={clsx(
-                "rounded-pill px-3 py-1 capitalize transition-colors",
+                "rounded-pill px-3 py-1 capitalize transition-colors ease-standard",
                 m === mode ? "bg-text text-canvas" : "text-text-soft hover:text-text",
               )}
             >

@@ -138,7 +138,7 @@ export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
               type="button"
               onClick={() => setInterval(iv)}
               className={clsx(
-                "rounded-pill px-3 py-1 text-sm capitalize transition-colors",
+                "rounded-pill px-3 py-1 text-sm capitalize transition-colors ease-standard",
                 iv === interval ? "bg-text text-canvas" : "text-text-soft hover:text-text",
               )}
             >
@@ -199,7 +199,7 @@ export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
                 onClick={a.onClick}
                 disabled={a.disabled}
                 className={clsx(
-                  "rounded-pill px-4 py-2.5 text-center text-sm font-medium transition-colors disabled:opacity-50",
+                  "rounded-pill px-4 py-2.5 text-center text-sm font-medium transition-colors ease-standard disabled:opacity-50",
                   tier.featured && !a.disabled
                     ? "bg-text text-canvas hover:opacity-90"
                     : "border border-border text-text hover:bg-surface-2",

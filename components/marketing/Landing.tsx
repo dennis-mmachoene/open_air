@@ -98,13 +98,13 @@ export function Landing() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/gallery"
-            className="rounded-pill bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+            className="rounded-pill bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
           >
             Explore the gallery
           </Link>
           <Link
             href="/pricing"
-            className="rounded-pill border border-border px-6 py-3 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+            className="rounded-pill border border-border px-6 py-3 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
           >
             See pricing
           </Link>
@@ -122,7 +122,7 @@ export function Landing() {
               <Strata
                 hexes={p.swatches.map((s) => s.hex)}
                 vertical
-                className="h-28 transition-transform group-hover:scale-[1.02]"
+                className="h-28 transition-transform ease-standard group-hover:scale-[1.02]"
               />
               <p className="mt-2 text-left text-xs text-text-muted">{p.name}</p>
             </Link>
@@ -169,7 +169,7 @@ export function Landing() {
           </p>
           <Link
             href="/studio"
-            className="mt-2 rounded-pill border border-border px-5 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+            className="mt-2 rounded-pill border border-border px-5 py-2.5 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
           >
             Open the Showroom
           </Link>
@@ -224,13 +224,13 @@ export function Landing() {
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/gallery"
-              className="rounded-pill bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+              className="rounded-pill bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
             >
               Browse the gallery
             </Link>
             <Link
               href="/pricing"
-              className="rounded-pill border border-border px-6 py-3 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+              className="rounded-pill border border-border px-6 py-3 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
             >
               See pricing
             </Link>

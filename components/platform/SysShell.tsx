@@ -45,7 +45,7 @@ export function SysShell({
                     className={
                       on
                         ? "rounded-control bg-surface-2 px-3 py-2 text-sm font-medium text-text"
-                        : "rounded-control px-3 py-2 text-sm text-text-soft transition-colors hover:bg-surface-2 hover:text-text"
+                        : "rounded-control px-3 py-2 text-sm text-text-soft transition-colors ease-standard hover:bg-surface-2 hover:text-text"
                     }
                   >
                     {n.label}
@@ -65,7 +65,7 @@ export function SysShell({
             <div className="flex items-center gap-3">
               <Link href="/" className="text-xs text-text-muted underline-offset-4 hover:text-text-soft hover:underline">Exit to site</Link>
               <form action={logoutAction}>
-                <button className="rounded-pill border border-border px-3 py-1.5 text-xs font-medium text-text transition-colors hover:bg-surface-2">Sign out</button>
+                <button className="rounded-pill border border-border px-3 py-1.5 text-xs font-medium text-text transition-colors ease-standard hover:bg-surface-2">Sign out</button>
               </form>
             </div>
           </header>

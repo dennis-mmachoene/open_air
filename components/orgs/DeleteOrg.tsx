@@ -23,7 +23,7 @@ export function DeleteOrg({ slug, name }: { slug: string; name: string }) {
         <button
           type="submit"
           disabled={!armed}
-          className="rounded-pill bg-p-danger px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-40"
+          className="rounded-pill bg-p-danger px-4 py-2 text-sm font-medium text-white transition-opacity ease-standard hover:opacity-90 disabled:opacity-40"
         >
           Delete team
         </button>

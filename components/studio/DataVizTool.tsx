@@ -65,7 +65,7 @@ export function DataVizTool() {
               type="button"
               onClick={() => setKind(k)}
               className={clsx(
-                "rounded-pill px-3 py-1 capitalize transition-colors",
+                "rounded-pill px-3 py-1 capitalize transition-colors ease-standard",
                 k === kind ? "bg-text text-canvas" : "text-text-soft hover:text-text",
               )}
             >
@@ -85,7 +85,7 @@ export function DataVizTool() {
                     type="button"
                     onClick={() => setCount(n)}
                     className={clsx(
-                      "rounded-pill px-3 py-1 text-sm transition-colors",
+                      "rounded-pill px-3 py-1 text-sm transition-colors ease-standard",
                       n === count ? "bg-text text-canvas" : "text-text-soft hover:text-text",
                     )}
                   >
@@ -190,7 +190,7 @@ export function DataVizTool() {
                 type="button"
                 onClick={() => setFormat(f)}
                 className={clsx(
-                  "rounded-pill px-2.5 py-1 uppercase transition-colors",
+                  "rounded-pill px-2.5 py-1 uppercase transition-colors ease-standard",
                   f === format ? "bg-text text-canvas" : "text-text-soft hover:text-text",
                 )}
               >
@@ -198,7 +198,7 @@ export function DataVizTool() {
               </button>
             ))}
           </div>
-          <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90">
+          <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity ease-standard hover:opacity-90">
             {copied ? "Copied" : "Copy"}
           </button>
         </div>

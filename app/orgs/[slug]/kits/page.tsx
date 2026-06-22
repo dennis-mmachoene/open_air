@@ -39,7 +39,7 @@ export default async function KitsPage({ params, searchParams }: { params: Promi
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {kits.map((k) => (
             <li key={k.id}>
-              <Link href={`/orgs/${slug}/kits/${k.slug}`} className="flex flex-col gap-3 rounded-card border border-border bg-surface p-4 transition-colors hover:border-text">
+              <Link href={`/orgs/${slug}/kits/${k.slug}`} className="flex flex-col gap-3 rounded-card border border-border bg-surface p-4 transition-colors ease-standard hover:border-text">
                 <div className="flex items-center justify-between gap-2">
                   <span className="truncate font-display text-lg text-text">{k.name}</span>
                   <span className="flex shrink-0 items-center gap-2 text-xs text-text-muted">

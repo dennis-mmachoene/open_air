@@ -137,7 +137,7 @@ export default async function PalettePage({
               <Link
                 key={`${kind}-${value}`}
                 href={`/c/${categorySlug(kind, value)}`}
-                className="rounded-pill border border-border px-3 py-1 text-sm text-text-soft transition-colors hover:border-text hover:text-text"
+                className="rounded-pill border border-border px-3 py-1 text-sm text-text-soft transition-colors ease-standard hover:border-text hover:text-text"
               >
                 <span className="text-text-muted">{KIND_LABELS[kind]}:</span> {value}
               </Link>

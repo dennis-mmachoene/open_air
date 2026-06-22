@@ -14,19 +14,19 @@ export function SiteFooter() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm text-text-soft transition-colors hover:text-text"
+                className="text-sm text-text-soft transition-colors ease-standard hover:text-text"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
           <div className="flex flex-wrap gap-x-4 gap-y-1">
-            <Link href="/legal/terms" className="text-xs text-text-muted transition-colors hover:text-text">Terms</Link>
-            <Link href="/legal/privacy" className="text-xs text-text-muted transition-colors hover:text-text">Privacy</Link>
-            <Link href="/legal/cookies" className="text-xs text-text-muted transition-colors hover:text-text">Cookies</Link>
-            <Link href="/trends" className="text-xs text-text-muted transition-colors hover:text-text">Trends</Link>
-            <Link href="/legal" className="text-xs text-text-muted transition-colors hover:text-text">Legal</Link>
-            <Link href="/status" className="text-xs text-text-muted transition-colors hover:text-text">Status</Link>
+            <Link href="/legal/terms" className="text-xs text-text-muted transition-colors ease-standard hover:text-text">Terms</Link>
+            <Link href="/legal/privacy" className="text-xs text-text-muted transition-colors ease-standard hover:text-text">Privacy</Link>
+            <Link href="/legal/cookies" className="text-xs text-text-muted transition-colors ease-standard hover:text-text">Cookies</Link>
+            <Link href="/trends" className="text-xs text-text-muted transition-colors ease-standard hover:text-text">Trends</Link>
+            <Link href="/legal" className="text-xs text-text-muted transition-colors ease-standard hover:text-text">Legal</Link>
+            <Link href="/status" className="text-xs text-text-muted transition-colors ease-standard hover:text-text">Status</Link>
           </div>
         </div>
 

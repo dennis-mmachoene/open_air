@@ -98,7 +98,7 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
           <h2 className="font-display text-lg text-text">Brand kits</h2>
           <p className="text-sm text-text-soft">Your team&apos;s shared colors and palettes.</p>
         </div>
-        <Link href={`/orgs/${org.slug}/kits`} className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">Open brand kits →</Link>
+        <Link href={`/orgs/${org.slug}/kits`} className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2">Open brand kits →</Link>
       </section>
 
       {canManage ? (
@@ -107,7 +107,7 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
             <h2 className="font-display text-lg text-text">Verified domains</h2>
             <p className="text-sm text-text-soft">Auto-join teammates by company email domain.</p>
           </div>
-          <Link href={`/orgs/${org.slug}/domains`} className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">Manage domains →</Link>
+          <Link href={`/orgs/${org.slug}/domains`} className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2">Manage domains →</Link>
         </section>
       ) : null}
 
@@ -117,7 +117,7 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
             <h2 className="font-display text-lg text-text">Audit log</h2>
             <p className="text-sm text-text-soft">Every membership and brand-kit change, with CSV/JSON export.</p>
           </div>
-          <Link href={`/orgs/${org.slug}/audit`} className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">View audit log →</Link>
+          <Link href={`/orgs/${org.slug}/audit`} className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2">View audit log →</Link>
         </section>
       ) : null}
 

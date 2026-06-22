@@ -84,7 +84,7 @@ export function CollectionsManager({ initial }: { initial: Collection[] }) {
         <button
           type="submit"
           disabled={!name.trim() || busy}
-          className="rounded-control bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity hover:opacity-90 disabled:opacity-40"
+          className="rounded-control bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90 disabled:opacity-40"
         >
           {busy ? "Working…" : "Create"}
         </button>
@@ -108,7 +108,7 @@ export function CollectionsManager({ initial }: { initial: Collection[] }) {
                 type="button"
                 onClick={() => remove(c.id)}
                 disabled={busy}
-                className="text-sm text-text-muted transition-colors hover:text-text disabled:opacity-40"
+                className="text-sm text-text-muted transition-colors ease-standard hover:text-text disabled:opacity-40"
               >
                 Delete
               </button>

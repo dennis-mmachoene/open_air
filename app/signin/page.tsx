@@ -32,7 +32,7 @@ export default function SignInPage() {
             >
               <button
                 type="submit"
-                className="w-full rounded-control border border-border px-4 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+                className="w-full rounded-control border border-border px-4 py-2.5 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
               >
                 Continue with Google
               </button>
@@ -59,7 +59,7 @@ export default function SignInPage() {
               />
               <button
                 type="submit"
-                className="w-full rounded-control bg-text px-4 py-2.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+                className="w-full rounded-control bg-text px-4 py-2.5 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
               >
                 Email me a sign-in link
               </button>

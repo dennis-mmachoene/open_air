@@ -64,7 +64,7 @@ export function MobileNav() {
   const linkCls = (href: string) => {
     const active = pathname === href || pathname.startsWith(`${href}/`);
     return clsx(
-      "rounded-control px-3 py-3 text-base transition-colors",
+      "rounded-control px-3 py-3 text-base transition-colors ease-standard",
       active
         ? "bg-surface-2 font-medium text-text"
         : "text-text-soft hover:bg-surface-2 hover:text-text",
@@ -80,7 +80,7 @@ export function MobileNav() {
         aria-label="Open menu"
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-pill text-text transition-colors hover:bg-surface-2"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-pill text-text transition-colors ease-standard hover:bg-surface-2"
       >
         <svg
           width="20"
@@ -120,7 +120,7 @@ export function MobileNav() {
                     type="button"
                     onClick={() => setOpen(false)}
                     aria-label="Close menu"
-                    className="flex h-9 w-9 items-center justify-center rounded-pill text-text transition-colors hover:bg-surface-2"
+                    className="flex h-9 w-9 items-center justify-center rounded-pill text-text transition-colors ease-standard hover:bg-surface-2"
                   >
                     <svg
                       width="18"
@@ -193,7 +193,7 @@ export function MobileNav() {
                     <button
                       type="button"
                       onClick={() => signOut({ callbackUrl: "/" })}
-                      className="rounded-control px-3 py-3 text-left text-base text-text-soft transition-colors hover:bg-surface-2 hover:text-text"
+                      className="rounded-control px-3 py-3 text-left text-base text-text-soft transition-colors ease-standard hover:bg-surface-2 hover:text-text"
                     >
                       Sign out
                     </button>
@@ -203,14 +203,14 @@ export function MobileNav() {
                     <Link
                       href="/signin"
                       onClick={close}
-                      className="rounded-pill border border-border px-4 py-2.5 text-center text-sm font-medium text-text transition-colors hover:bg-surface-2"
+                      className="rounded-pill border border-border px-4 py-2.5 text-center text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
                     >
                       Sign in
                     </Link>
                     <Link
                       href="/pricing"
                       onClick={close}
-                      className="rounded-pill bg-text px-4 py-2.5 text-center text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+                      className="rounded-pill bg-text px-4 py-2.5 text-center text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
                     >
                       Go Pro
                     </Link>

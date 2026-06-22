@@ -76,7 +76,7 @@ export function FilterBar({ facets }: { facets: Facet[] }) {
                     type="button"
                     onClick={() => toggle(facet.kind, value)}
                     className={clsx(
-                      "shrink-0 rounded-pill border px-3 py-1 text-sm transition-colors",
+                      "shrink-0 rounded-pill border px-3 py-1 text-sm transition-colors ease-standard",
                       active
                         ? "border-text bg-text text-canvas"
                         : "border-border text-text-soft hover:border-text hover:text-text",

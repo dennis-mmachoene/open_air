@@ -24,7 +24,7 @@ export default function LegalIndexPage() {
           <li key={d.slug}>
             <Link
               href={`/legal/${d.slug}`}
-              className="flex flex-col gap-0.5 px-5 py-4 transition-colors hover:bg-surface-2"
+              className="flex flex-col gap-0.5 px-5 py-4 transition-colors ease-standard hover:bg-surface-2"
             >
               <span className="font-medium text-text">{d.title}</span>
               <span className="text-sm text-text-soft">{d.summary}</span>

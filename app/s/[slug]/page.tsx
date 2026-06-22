@@ -77,7 +77,7 @@ export default async function PublishedPalettePage({ params }: { params: Promise
             {canRemix ? (
               <Link
                 href={remixHref}
-                className="inline-flex items-center gap-2 rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+                className="inline-flex items-center gap-2 rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <path d="M16 3h5v5M21 3l-7 7M8 21H3v-5M3 21l7-7" />

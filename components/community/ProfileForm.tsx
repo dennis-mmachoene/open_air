@@ -39,7 +39,7 @@ export function ProfileForm({ initial }: { initial: { handle: string | null; bio
   return (
     <form onSubmit={save} className="flex max-w-md flex-col gap-3">
       <Field label="Handle" hint={`Your profile lives at /u/${handle || "yourname"}`}>
-        <div className="flex items-center gap-1 rounded-control border border-border bg-canvas px-3 transition-colors focus-within:border-text">
+        <div className="flex items-center gap-1 rounded-control border border-border bg-canvas px-3 transition-colors ease-standard focus-within:border-text">
           <span className="text-text-muted">@</span>
           <input value={handle} onChange={(e) => setHandle(e.target.value)} placeholder="yourname" aria-label="Handle" className="min-w-0 flex-1 bg-transparent py-2 text-sm text-text outline-none" />
         </div>

@@ -84,7 +84,7 @@ export default async function StudioPage() {
                 <Link
                   key={t.href}
                   href={t.href}
-                  className="flex flex-col gap-1 rounded-card border border-border bg-surface p-4 transition-colors hover:border-text"
+                  className="flex flex-col gap-1 rounded-card border border-border bg-surface p-4 transition-colors ease-standard hover:border-text"
                 >
                   <span className="font-medium text-text">{t.label}</span>
                   <span className="text-xs text-text-soft">{t.blurb}</span>

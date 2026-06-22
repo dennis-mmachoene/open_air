@@ -108,7 +108,7 @@ export function AiDirectorTool() {
         {!base ? (
           <div className="flex flex-wrap gap-1.5">
             {SAMPLES.map((s) => (
-              <button key={s} type="button" onClick={() => { setBrief(s); call({ brief: s }); }} className="rounded-pill border border-border px-2.5 py-1 text-xs text-text-soft transition-colors hover:border-text hover:text-text">
+              <button key={s} type="button" onClick={() => { setBrief(s); call({ brief: s }); }} className="rounded-pill border border-border px-2.5 py-1 text-xs text-text-soft transition-colors ease-standard hover:border-text hover:text-text">
                 {s}
               </button>
             ))}
@@ -141,7 +141,7 @@ export function AiDirectorTool() {
             <span className="text-sm text-text-soft">Refine</span>
             <div className="flex flex-wrap gap-1.5">
               {ADJUSTMENTS.map((a) => (
-                <button key={a} type="button" onClick={() => chip(a)} className="rounded-pill border border-border px-2.5 py-1 text-xs text-text-soft transition-colors hover:border-text hover:text-text">
+                <button key={a} type="button" onClick={() => chip(a)} className="rounded-pill border border-border px-2.5 py-1 text-xs text-text-soft transition-colors ease-standard hover:border-text hover:text-text">
                   {ADJUSTMENT_LABELS[a]}
                 </button>
               ))}
@@ -192,7 +192,7 @@ export function AiDirectorTool() {
                 <Link href={`/studio/tokens`} className="text-text underline underline-offset-4">Open in token tool</Link>
                 <Link href={`/studio/stress`} className="text-text-soft underline underline-offset-4 hover:text-text">Stress test</Link>
               </div>
-              <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90">
+              <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity ease-standard hover:opacity-90">
                 {copied ? "Copied" : "Copy CSS"}
               </button>
             </div>

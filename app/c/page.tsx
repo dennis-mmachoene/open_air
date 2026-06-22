@@ -31,7 +31,7 @@ export default async function CollectionsIndexPage() {
             <Link
               key={c.slug}
               href={`/c/${c.slug}`}
-              className="group flex flex-col gap-3 rounded-card border border-border bg-surface p-4 transition-shadow hover:shadow-lg"
+              className="group flex flex-col gap-3 rounded-card border border-border bg-surface p-4 transition-shadow ease-standard hover:shadow-lg"
             >
               <div className="grid grid-cols-2 gap-1.5">
                 {preview.map((p) => (

@@ -58,7 +58,7 @@ export function GradientTool({ palettes }: { palettes: Pal[] }) {
               type="button"
               onClick={() => setType(t)}
               className={clsx(
-                "rounded-pill px-3 py-1 text-sm capitalize transition-colors",
+                "rounded-pill px-3 py-1 text-sm capitalize transition-colors ease-standard",
                 t === type ? "bg-text text-canvas" : "text-text-soft hover:text-text",
               )}
             >

@@ -22,7 +22,7 @@ export function PrimaryNav() {
             href={item.href}
             aria-current={active ? "page" : undefined}
             className={clsx(
-              "rounded-pill px-3 py-1.5 text-sm transition-colors",
+              "rounded-pill px-3 py-1.5 text-sm transition-colors ease-standard",
               active
                 ? "bg-surface-2 font-medium text-text"
                 : "text-text-soft hover:bg-surface-2 hover:text-text",

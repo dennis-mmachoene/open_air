@@ -65,7 +65,7 @@ export default async function AccountPage() {
         {plan === "free" ? (
           <a
             href="/pricing"
-            className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+            className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
           >
             Upgrade plan
           </a>
@@ -74,12 +74,12 @@ export default async function AccountPage() {
         )}
         <a
           href="/account/api"
-          className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+          className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
         >
           API keys
         </a>
         <form action={doSignOut}>
-          <button className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">
+          <button className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2">
             Sign out
           </button>
         </form>
@@ -98,7 +98,7 @@ export default async function AccountPage() {
         <div className="flex flex-wrap items-center gap-4">
           <a
             href="/api/account/export"
-            className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+            className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
           >
             Export my data
           </a>

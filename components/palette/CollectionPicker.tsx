@@ -129,7 +129,7 @@ export function CollectionPicker({ slug }: { slug: string }) {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="inline-flex items-center gap-2 rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+        className="inline-flex items-center gap-2 rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
       >
         Add to collection
         {inCount > 0 ? (

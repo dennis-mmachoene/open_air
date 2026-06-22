@@ -69,7 +69,7 @@ export const primitives: Specimen[] = [
         </label>
         <div className="flex items-center gap-2">
           <span className="flex h-5 w-9 items-center rounded-pill p-0.5" style={{ backgroundColor: "var(--p-primary)" }}>
-            <span className="h-4 w-4 translate-x-4 rounded-pill bg-white transition-transform" />
+            <span className="h-4 w-4 translate-x-4 rounded-pill bg-white transition-transform ease-standard" />
           </span>
           <span>Switch on</span>
         </div>

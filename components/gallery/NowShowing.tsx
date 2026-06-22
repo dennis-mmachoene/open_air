@@ -31,7 +31,7 @@ export function NowShowing({ palettes }: { palettes: Palette[] }) {
         {palettes.map((p, i) => (
           <div
             key={p.slug}
-            className="absolute inset-0 transition-opacity duration-1000"
+            className="absolute inset-0 transition-opacity ease-standard duration-1000"
             style={{ opacity: i === index ? 1 : 0 }}
             aria-hidden={i !== index}
           >
@@ -65,7 +65,7 @@ export function NowShowing({ palettes }: { palettes: Palette[] }) {
                 onClick={() => setIndex(i)}
                 aria-label={`Show ${p.name}`}
                 aria-current={i === index}
-                className="h-1.5 rounded-pill transition-all"
+                className="h-1.5 rounded-pill transition-all ease-standard"
                 style={{
                   width: i === index ? 28 : 10,
                   backgroundColor:

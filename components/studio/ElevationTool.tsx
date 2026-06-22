@@ -51,7 +51,7 @@ export function ElevationTool({ initial = "#4f46e5" }: { initial?: string }) {
           <section className="flex flex-col gap-2 rounded-card border border-border bg-surface p-4">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-text">CSS</span>
-              <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90">
+              <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity ease-standard hover:opacity-90">
                 {copied ? "Copied" : "Copy"}
               </button>
             </div>

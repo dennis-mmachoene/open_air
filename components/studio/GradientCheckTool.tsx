@@ -41,7 +41,7 @@ export function GradientCheckTool() {
           Text
           <div className="inline-flex rounded-pill border border-border p-0.5 text-xs">
             {(["auto", "#ffffff", "#0b0b0c"] as const).map((v) => (
-              <button key={v} type="button" onClick={() => setText(v)} className={clsx("rounded-pill px-2.5 py-1 transition-colors", v === text ? "bg-text text-canvas" : "text-text-soft hover:text-text")}>
+              <button key={v} type="button" onClick={() => setText(v)} className={clsx("rounded-pill px-2.5 py-1 transition-colors ease-standard", v === text ? "bg-text text-canvas" : "text-text-soft hover:text-text")}>
                 {v === "auto" ? "Auto" : v === "#ffffff" ? "White" : "Black"}
               </button>
             ))}
@@ -51,7 +51,7 @@ export function GradientCheckTool() {
           Interpolation
           <div className="inline-flex rounded-pill border border-border p-0.5 text-xs">
             {(["oklch", "oklab", "srgb"] as GradientSpace[]).map((v) => (
-              <button key={v} type="button" onClick={() => setSpace(v)} className={clsx("rounded-pill px-2.5 py-1 uppercase transition-colors", v === space ? "bg-text text-canvas" : "text-text-soft hover:text-text")}>
+              <button key={v} type="button" onClick={() => setSpace(v)} className={clsx("rounded-pill px-2.5 py-1 uppercase transition-colors ease-standard", v === space ? "bg-text text-canvas" : "text-text-soft hover:text-text")}>
                 {v}
               </button>
             ))}

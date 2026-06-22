@@ -42,13 +42,13 @@ export function AuthNav() {
       <div className="flex items-center gap-2">
         <Link
           href="/signin"
-          className="hidden rounded-pill px-3 py-1.5 text-sm text-text-soft transition-colors hover:text-text sm:inline-flex"
+          className="hidden rounded-pill px-3 py-1.5 text-sm text-text-soft transition-colors ease-standard hover:text-text sm:inline-flex"
         >
           Sign in
         </Link>
         <Link
           href="/pricing"
-          className="rounded-pill bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+          className="rounded-pill bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
         >
           Go Pro
         </Link>
@@ -74,7 +74,7 @@ export function AuthNav() {
       ) : (
         <Link
           href="/pricing"
-          className="rounded-pill bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+          className="rounded-pill bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
         >
           Go Pro
         </Link>
@@ -88,7 +88,7 @@ export function AuthNav() {
           aria-expanded={open}
           aria-label="Account menu"
           className={clsx(
-            "flex h-8 w-8 items-center justify-center rounded-pill text-xs font-medium transition-shadow",
+            "flex h-8 w-8 items-center justify-center rounded-pill text-xs font-medium transition-shadow ease-standard",
             "bg-text text-canvas",
             open && "ring-2 ring-text ring-offset-2 ring-offset-canvas",
           )}
@@ -135,7 +135,7 @@ export function AuthNav() {
                 type="button"
                 role="menuitem"
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className="w-full px-4 py-2 text-left text-sm text-text-soft transition-colors hover:bg-surface-2 hover:text-text"
+                className="w-full px-4 py-2 text-left text-sm text-text-soft transition-colors ease-standard hover:bg-surface-2 hover:text-text"
               >
                 Sign out
               </button>
@@ -161,7 +161,7 @@ function MenuLink({
       href={href}
       role="menuitem"
       onClick={onClick}
-      className="px-4 py-2 text-sm text-text-soft transition-colors hover:bg-surface-2 hover:text-text"
+      className="px-4 py-2 text-sm text-text-soft transition-colors ease-standard hover:bg-surface-2 hover:text-text"
     >
       {children}
     </Link>

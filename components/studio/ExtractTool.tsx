@@ -141,7 +141,7 @@ export function ExtractTool() {
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="rounded-pill border border-border bg-surface px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+          className="rounded-pill border border-border bg-surface px-4 py-2 text-sm font-medium text-text transition-colors ease-standard hover:bg-surface-2"
         >
           {imageUrl ? "Choose another image" : "Choose image"}
         </button>
@@ -166,7 +166,7 @@ export function ExtractTool() {
             <button
               type="button"
               onClick={save}
-              className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+              className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
             >
               Save palette
             </button>

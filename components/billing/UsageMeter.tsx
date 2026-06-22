@@ -60,7 +60,7 @@ export function UsageMeter({
       </div>
       <div className="h-2 w-full overflow-hidden rounded-pill bg-surface-2">
         <div
-          className={`h-full rounded-pill transition-all ${atLimit ? "bg-amber-500" : "bg-text"}`}
+          className={`h-full rounded-pill transition-all ease-standard ${atLimit ? "bg-amber-500" : "bg-text"}`}
           style={{ width: `${pct}%` }}
         />
       </div>

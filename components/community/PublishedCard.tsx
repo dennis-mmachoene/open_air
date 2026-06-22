@@ -12,7 +12,7 @@ export interface PublishedCardData {
 
 export function PublishedCard({ p }: { p: PublishedCardData }) {
   return (
-    <Link href={`/s/${p.slug}`} className="group flex flex-col overflow-hidden rounded-card border border-border bg-surface transition-colors hover:border-text">
+    <Link href={`/s/${p.slug}`} className="group flex flex-col overflow-hidden rounded-card border border-border bg-surface transition-colors ease-standard hover:border-text">
       <Strata hexes={p.hexes} className="h-28 rounded-b-none" />
       <div className="flex items-center justify-between gap-2 p-3">
         <div className="min-w-0">

@@ -114,7 +114,7 @@ export function ApiKeys() {
               <button
                 type="button"
                 onClick={() => revoke(k.id)}
-                className="text-sm text-text-muted transition-colors hover:text-p-danger"
+                className="text-sm text-text-muted transition-colors ease-standard hover:text-p-danger"
               >
                 Revoke
               </button>
