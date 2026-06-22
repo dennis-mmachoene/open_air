@@ -130,3 +130,23 @@ export function paymentFailedEmail(to: string, plan: string): Mail {
     ),
   };
 }
+
+export function orgInviteEmail(
+  to: string,
+  opts: { orgName: string; inviterName?: string | null; token: string },
+): Mail {
+  const url = `${site.url.replace(/\/$/, "")}/invite/${opts.token}`;
+  const who = opts.inviterName ? `${opts.inviterName} invited you` : "You've been invited";
+  return {
+    to,
+    subject: `Join ${opts.orgName} on Open Air`,
+    text: `${who} to join the team "${opts.orgName}" on Open Air. Accept your invite: ${url}`,
+    html: shell(
+      `Join ${opts.orgName}`,
+      `<p style="margin:0 0 16px">${who} to collaborate on color systems in the team <strong>${opts.orgName}</strong> on Open Air.</p>
+       <p style="margin:0 0 24px">${button(url, "Accept invite")}</p>
+       <p style="margin:0;font-size:13px;color:#78716c">Or paste this link into your browser:<br />${link(url, url)}</p>
+       <p style="margin:16px 0 0;font-size:12px;color:#a8a29e">This invite expires in 14 days. If you weren't expecting it, you can ignore this email.</p>`,
+    ),
+  };
+}

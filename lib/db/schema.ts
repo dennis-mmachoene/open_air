@@ -364,3 +364,60 @@ export const userPalettes = pgTable("user_palettes", {
   why: jsonb("why").$type<Why>().notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
+
+// ---------------------------------------------------------------------------
+// Teams & governance (Wave 6)
+// ---------------------------------------------------------------------------
+
+export const organizations = pgTable("organizations", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  slug: text("slug").notNull().unique(),
+  name: text("name").notNull(),
+  ownerId: uuid("owner_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  plan: text("plan").notNull().default("team"),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
+export const organizationMembers = pgTable(
+  "organization_members",
+  {
+    orgId: uuid("org_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    role: text("role").notNull().default("member"),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.orgId, t.userId] }),
+    index("org_members_user_idx").on(t.userId),
+  ],
+);
+
+export const organizationInvites = pgTable(
+  "organization_invites",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    orgId: uuid("org_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    email: text("email").notNull(),
+    role: text("role").notNull().default("member"),
+    token: text("token").notNull().unique(),
+    invitedBy: uuid("invited_by")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    status: text("status").notNull().default("pending"),
+    createdAt: createdAt(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  },
+  (t) => [
+    index("org_invites_org_idx").on(t.orgId),
+    index("org_invites_email_idx").on(t.email),
+  ],
+);
