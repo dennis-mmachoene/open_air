@@ -533,6 +533,8 @@ export const brandKits = pgTable(
     name: text("name").notNull(),
     description: text("description"),
     createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
+    syncToken: text("sync_token").unique(),
+    syncWebhookUrl: text("sync_webhook_url"),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },

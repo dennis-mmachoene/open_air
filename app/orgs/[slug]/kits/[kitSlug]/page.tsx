@@ -5,6 +5,9 @@ import { requireUser } from "@/lib/auth-guard";
 import { getOrgBySlug, getMembership, listMembers } from "@/lib/orgs";
 import { getKit } from "@/lib/brandkits";
 import { listProposals } from "@/lib/kitproposals";
+import { getSyncConfig } from "@/lib/sync/kit-sync";
+import { FORMATS } from "@/lib/sync/serialize";
+import { site } from "@/lib/site";
 import { Strata } from "@/components/palette/Strata";
 import { lintTokens } from "@/lib/color/lint";
 import { CopyHex } from "@/components/orgs/CopyHex";
@@ -12,6 +15,9 @@ import {
   addAssetAction,
   deleteAssetAction,
   deleteKitAction,
+  rotateSyncTokenAction,
+  revokeSyncTokenAction,
+  setWebhookAction,
   proposeAddAction,
   proposeRemoveAction,
   approveProposalAction,
@@ -41,10 +47,13 @@ export default async function KitDetailPage({ params, searchParams }: { params: 
   const kit = await getKit(org.id, kitSlug);
   if (!kit) notFound();
 
-  const [pending, members] = await Promise.all([
+  const [pending, members, sync] = await Promise.all([
     listProposals(kit.id, "pending"),
     canManage ? listMembers(org.id) : Promise.resolve([]),
+    canManage ? getSyncConfig(kit.id) : Promise.resolve({ syncToken: null, webhookUrl: null }),
   ]);
+  const base = site.url.replace(/\/$/, "");
+  const syncUrl = sync.syncToken ? `${base}/api/v1/kits/${kit.id}/tokens?format=dtcg&token=${sync.syncToken}` : null;
   const lintReport = lintTokens(kit.assets.flatMap((a) => a.hexes.map((hex) => ({ name: a.name, hex }))));
   const nameOf = (id: string) => members.find((m) => m.userId === id)?.name ?? members.find((m) => m.userId === id)?.email ?? "A member";
   const assetName = (id: string | null) => kit.assets.find((a) => a.id === id)?.name ?? "an asset";
@@ -136,7 +145,7 @@ export default async function KitDetailPage({ params, searchParams }: { params: 
                 </div>
                 {canManage ? (
                   <form action={deleteAssetAction}>
-                    <input type="hidden" name="slug" value={slug} /><input type="hidden" name="kitSlug" value={kit.slug} /><input type="hidden" name="assetId" value={a.id} />
+                    <input type="hidden" name="slug" value={slug} /><input type="hidden" name="kitSlug" value={kit.slug} /><input type="hidden" name="kitId" value={kit.id} /><input type="hidden" name="assetId" value={a.id} />
                     <button className="text-xs text-text-muted hover:text-p-danger">Remove</button>
                   </form>
                 ) : (
@@ -153,6 +162,50 @@ export default async function KitDetailPage({ params, searchParams }: { params: 
           ))}
         </ul>
       )}
+
+      {canManage ? (
+        <section className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5">
+          <div className="flex flex-col gap-1">
+            <h2 className="font-display text-lg text-text">Live sync</h2>
+            <p className="text-sm text-text-soft">Serve this kit as design tokens at a stable URL. Consumers poll with ETag — they only re-download when colors change.</p>
+          </div>
+          {sync.syncToken ? (
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1">
+                <span className="text-xs font-medium text-text-soft">Sync URL (DTCG)</span>
+                <code className="block overflow-x-auto rounded-lg border border-border bg-canvas px-3 py-2 font-mono text-xs text-text">{syncUrl}</code>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 text-xs">
+                <span className="text-text-muted">Formats:</span>
+                {FORMATS.map((fmt) => (
+                  <a key={fmt.id} href={`${base}/api/v1/kits/${kit.id}/tokens?format=${fmt.id}&token=${sync.syncToken}`} target="_blank" rel="noopener" className="rounded-full border border-border px-2.5 py-1 text-text-soft hover:bg-surface-2">{fmt.label}</a>
+                ))}
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <form action={rotateSyncTokenAction}>
+                  <input type="hidden" name="slug" value={slug} /><input type="hidden" name="kitSlug" value={kit.slug} /><input type="hidden" name="kitId" value={kit.id} />
+                  <button className="rounded-lg border border-border px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2">Rotate token</button>
+                </form>
+                <form action={revokeSyncTokenAction}>
+                  <input type="hidden" name="slug" value={slug} /><input type="hidden" name="kitSlug" value={kit.slug} /><input type="hidden" name="kitId" value={kit.id} />
+                  <button className="rounded-lg border border-p-danger/40 px-3 py-1.5 text-xs text-p-danger hover:bg-p-danger/5">Revoke</button>
+                </form>
+              </div>
+              <form action={setWebhookAction} className="flex flex-wrap items-center gap-2 border-t border-border pt-3">
+                <input type="hidden" name="slug" value={slug} /><input type="hidden" name="kitSlug" value={kit.slug} /><input type="hidden" name="kitId" value={kit.id} />
+                <input name="url" type="url" defaultValue={sync.webhookUrl ?? ""} placeholder="https://ci.example.com/hook (optional)" className="min-w-0 flex-1 rounded-lg border border-border bg-canvas px-3 py-1.5 text-xs text-text focus:border-text focus:outline-none" />
+                <button className="rounded-lg border border-border px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2">Save webhook</button>
+              </form>
+              <p className="text-xs text-text-muted">Anyone with the token URL can read these tokens — treat it like a secret and rotate if leaked.</p>
+            </div>
+          ) : (
+            <form action={rotateSyncTokenAction}>
+              <input type="hidden" name="slug" value={slug} /><input type="hidden" name="kitSlug" value={kit.slug} /><input type="hidden" name="kitId" value={kit.id} />
+              <button className="w-fit rounded-full bg-text px-4 py-2 text-sm font-medium text-canvas hover:opacity-90">Enable live sync</button>
+            </form>
+          )}
+        </section>
+      ) : null}
 
       {canManage ? (
         <form action={addAssetAction} className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5">

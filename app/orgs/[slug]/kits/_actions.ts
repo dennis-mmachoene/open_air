@@ -10,6 +10,7 @@ import { getKit } from "@/lib/brandkits";
 import { listReviewerEmails, memberEmail } from "@/lib/orgs";
 import { getProposal } from "@/lib/kitproposals";
 import { sendEmail, kitProposalEmail, kitDecisionEmail } from "@/lib/email";
+import { fireKitWebhook } from "@/lib/sync/kit-sync";
 import { site } from "@/lib/site";
 
 async function org(slug: string) {
@@ -63,6 +64,7 @@ export async function addAssetAction(formData: FormData): Promise<void> {
   } catch (e) {
     redirect(`/orgs/${slug}/kits/${kitSlug}?error=${encodeURIComponent((e as Error).message)}`);
   }
+  await fireKitWebhook(kitId, "asset.added");
   revalidatePath(`/orgs/${slug}/kits/${kitSlug}`);
 }
 
@@ -82,6 +84,8 @@ export async function updateAssetAction(formData: FormData): Promise<void> {
   } catch (e) {
     redirect(`/orgs/${slug}/kits/${kitSlug}?error=${encodeURIComponent((e as Error).message)}`);
   }
+  const kitId2 = String(formData.get("kitId") ?? "");
+  if (kitId2) await fireKitWebhook(kitId2, "asset.updated");
   revalidatePath(`/orgs/${slug}/kits/${kitSlug}`);
 }
 
@@ -91,6 +95,8 @@ export async function deleteAssetAction(formData: FormData): Promise<void> {
   const kitSlug = String(formData.get("kitSlug"));
   const assetId = String(formData.get("assetId"));
   await deleteAsset(assetId, user.id);
+  const kitId3 = String(formData.get("kitId") ?? "");
+  if (kitId3) await fireKitWebhook(kitId3, "asset.removed");
   revalidatePath(`/orgs/${slug}/kits/${kitSlug}`);
 }
 
@@ -161,6 +167,7 @@ export async function approveProposalAction(formData: FormData): Promise<void> {
     redirect(`/orgs/${slug}/kits/${kitSlug}?error=${encodeURIComponent((e as Error).message)}`);
   }
   await notifyDecision(o, slug, kitSlug, proposal?.proposedBy, user.name ?? user.email ?? "An admin", true, null);
+  if (proposal?.kitId) await fireKitWebhook(proposal.kitId, "proposal.approved");
   revalidatePath(`/orgs/${slug}/kits/${kitSlug}`);
 }
 
@@ -199,4 +206,45 @@ async function notifyDecision(
     const url = `${site.url.replace(/\/$/, "")}/orgs/${slug}/kits/${kitSlug}`;
     await sendEmail(kitDecisionEmail(to, { orgName: o.name, kitName: kit?.name ?? "a brand kit", approved, reviewerName, note, kitUrl: url }));
   } catch { /* email is non-critical */ }
+}
+
+/* --- Live sync ----------------------------------------------------------- */
+
+export async function rotateSyncTokenAction(formData: FormData): Promise<void> {
+  const user = await requireUser();
+  const slug = String(formData.get("slug"));
+  const kitSlug = String(formData.get("kitSlug"));
+  const kitId = String(formData.get("kitId"));
+  const { rotateSyncToken } = await import("@/lib/sync/kit-sync");
+  try {
+    await rotateSyncToken(kitId, user.id);
+  } catch (e) {
+    redirect(`/orgs/${slug}/kits/${kitSlug}?error=${encodeURIComponent((e as Error).message)}`);
+  }
+  revalidatePath(`/orgs/${slug}/kits/${kitSlug}`);
+}
+
+export async function revokeSyncTokenAction(formData: FormData): Promise<void> {
+  const user = await requireUser();
+  const slug = String(formData.get("slug"));
+  const kitSlug = String(formData.get("kitSlug"));
+  const kitId = String(formData.get("kitId"));
+  const { revokeSyncToken } = await import("@/lib/sync/kit-sync");
+  await revokeSyncToken(kitId, user.id);
+  revalidatePath(`/orgs/${slug}/kits/${kitSlug}`);
+}
+
+export async function setWebhookAction(formData: FormData): Promise<void> {
+  const user = await requireUser();
+  const slug = String(formData.get("slug"));
+  const kitSlug = String(formData.get("kitSlug"));
+  const kitId = String(formData.get("kitId"));
+  const url = String(formData.get("url") ?? "");
+  const { setWebhookUrl } = await import("@/lib/sync/kit-sync");
+  try {
+    await setWebhookUrl(kitId, user.id, url);
+  } catch (e) {
+    redirect(`/orgs/${slug}/kits/${kitSlug}?error=${encodeURIComponent((e as Error).message)}`);
+  }
+  revalidatePath(`/orgs/${slug}/kits/${kitSlug}`);
 }
