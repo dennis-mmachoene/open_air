@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
+  <defs><linearGradient id="brand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366f1"/><stop offset=".3" stop-color="#0ea5e9"/><stop offset=".55" stop-color="#14b8a6"/><stop offset=".8" stop-color="#f59e0b"/><stop offset="1" stop-color="#ec4899"/></linearGradient>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#a8a29e"/></marker>
+  <style>.t{fill:#1c1c1a;font-size:13px;font-weight:600}.m{fill:#8a8a85;font-size:11px}.card{fill:#fff;stroke:#e7e5e4}.h{fill:#57534e;font-size:12px;font-weight:700;letter-spacing:.06em}.edge{stroke:#cfcfca;stroke-width:1.5;fill:none}</style></defs>
+  <rect width="960" height="520" rx="16" fill="#fbfbfa"/><rect width="960" height="6" rx="3" fill="url(#brand)"/>
+  <text x="32" y="46" fill="#1c1c1a" font-size="22" font-weight="600">Component &amp; Module Architecture</text>
+  <text x="32" y="68" class="m">Pure engine + tested libs · server-first routes · a shared UI kit</text>
+
+  <!-- routes layer -->
+  <text x="32" y="104" class="h">app/ · ROUTES (App Router)</text>
+  <rect x="32" y="114" width="896" height="70" rx="12" fill="#f5f5f4" stroke="#e7e5e4"/>
+  <rect x="48" y="128" width="160" height="44" rx="9" class="card"/><text x="64" y="148" class="t">gallery · /p · /c</text><text x="64" y="165" class="m">catalog (ISR)</text>
+  <rect x="216" y="128" width="160" height="44" rx="9" class="card"/><text x="232" y="148" class="t">studio</text><text x="232" y="165" class="m">12 tools + Showroom</text>
+  <rect x="384" y="128" width="160" height="44" rx="9" class="card"/><text x="400" y="148" class="t">explore · /s · /u</text><text x="400" y="165" class="m">community</text>
+  <rect x="552" y="128" width="160" height="44" rx="9" class="card"/><text x="568" y="148" class="t">orgs</text><text x="568" y="165" class="m">teams + kits</text>
+  <rect x="720" y="128" width="192" height="44" rx="9" class="card"/><text x="736" y="148" class="t">sys</text><text x="736" y="165" class="m">platform admin console</text>
+
+  <!-- components layer -->
+  <text x="32" y="216" class="h">components/ · UI</text>
+  <rect x="32" y="226" width="896" height="70" rx="12" fill="#f5f5f4" stroke="#e7e5e4"/>
+  <rect x="48" y="240" width="210" height="44" rx="9" class="card"/><text x="64" y="260" class="t">ui/ — shared kit</text><text x="64" y="277" class="m">Button · Card · Input · Toast · Skeleton</text>
+  <rect x="266" y="240" width="210" height="44" rx="9" class="card"/><text x="282" y="260" class="t">studio/ · showroom/</text><text x="282" y="277" class="m">tools + live preview</text>
+  <rect x="484" y="240" width="210" height="44" rx="9" class="card"/><text x="500" y="260" class="t">community/ · orgs/</text><text x="500" y="277" class="m">feature components</text>
+  <rect x="702" y="240" width="210" height="44" rx="9" class="card"/><text x="718" y="260" class="t">platform/ · chrome/</text><text x="718" y="277" class="m">/sys shell · nav</text>
+
+  <!-- lib layer -->
+  <text x="32" y="328" class="h">lib/ · DOMAIN (pure + tested)</text>
+  <rect x="32" y="338" width="896" height="96" rx="12" fill="#f5f5f4" stroke="#e7e5e4"/>
+  <rect x="48" y="352" width="200" height="68" rx="9" class="card"/><text x="64" y="376" class="t">color/*</text><text x="64" y="396" class="m">OKLCH engine: scales,</text><text x="64" y="412" class="m">tokens, stress, lint, dataviz</text>
+  <rect x="256" y="352" width="200" height="68" rx="9" class="card"/><text x="272" y="376" class="t">orgs · brandkits</text><text x="272" y="396" class="m">kitproposals · org-audit</text><text x="272" y="412" class="m">org-domains · sync</text>
+  <rect x="464" y="352" width="200" height="68" rx="9" class="card"/><text x="480" y="376" class="t">publish · social</text><text x="480" y="396" class="m">plans · entitlements</text><text x="480" y="412" class="m">saves · taste · trends</text>
+  <rect x="672" y="352" width="240" height="68" rx="9" class="card"/><text x="688" y="376" class="t">platform/*</text><text x="688" y="396" class="m">password · sessions · 2FA</text><text x="688" y="412" class="m">audit · flags · settings</text>
+
+  <!-- db -->
+  <rect x="32" y="456" width="896" height="44" rx="12" class="card"/><text x="48" y="483" class="t">db/ · Drizzle schema + migrations → Neon Postgres (or static snapshot.json for public reads)</text>
+
+  <path class="edge" d="M480 184 V226" marker-end="url(#arr)"/>
+  <path class="edge" d="M480 296 V338" marker-end="url(#arr)"/>
+  <path class="edge" d="M480 434 V456" marker-end="url(#arr)"/>
+</svg>

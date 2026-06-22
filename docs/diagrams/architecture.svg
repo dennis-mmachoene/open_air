@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6366f1"/><stop offset=".3" stop-color="#0ea5e9"/>
+      <stop offset=".55" stop-color="#14b8a6"/><stop offset=".8" stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#a8a29e"/>
+    </marker>
+    <style>
+      .t{fill:#1c1c1a;font-weight:600}.s{fill:#57534e}.m{fill:#8a8a85;font-size:12px}
+      .card{fill:#fff;stroke:#e7e5e4}.tint{fill:#f5f5f4;stroke:#e7e5e4}
+      .lbl{font-size:13px}.h{font-size:13px;font-weight:700;fill:#57534e;letter-spacing:.08em}
+      .edge{stroke:#cfcfca;stroke-width:1.5;fill:none}
+    </style>
+  </defs>
+  <rect width="960" height="600" rx="16" fill="#fbfbfa"/>
+  <rect x="0" y="0" width="960" height="6" rx="3" fill="url(#brand)"/>
+  <text x="32" y="46" class="t" font-size="22">Open Air — System Architecture</text>
+  <text x="32" y="68" class="m">Next.js 16 · React 19 · TypeScript · Drizzle + Neon Postgres</text>
+
+  <!-- Client -->
+  <text x="32" y="104" class="h">CLIENT</text>
+  <rect x="32" y="114" width="896" height="60" rx="12" class="card"/>
+  <text x="52" y="140" class="t lbl">Browser</text>
+  <text x="52" y="159" class="m">RSC-rendered pages · client components (Studio, toasts) · mobile drawer · PWA-quiet chrome</text>
+
+  <!-- App layer -->
+  <text x="32" y="208" class="h">APPLICATION · Next.js App Router (Vercel)</text>
+  <rect x="32" y="218" width="896" height="120" rx="12" class="tint"/>
+  <g>
+    <rect x="48" y="236" width="200" height="86" rx="10" class="card"/>
+    <text x="64" y="262" class="t lbl">Server Components</text>
+    <text x="64" y="282" class="m">catalog, dashboard,</text><text x="64" y="298" class="m">teams, /sys console</text>
+    <rect x="262" y="236" width="200" height="86" rx="10" class="card"/>
+    <text x="278" y="262" class="t lbl">Server Actions</text>
+    <text x="278" y="282" class="m">mutations: kits,</text><text x="278" y="298" class="m">proposals, admin</text>
+    <rect x="476" y="236" width="200" height="86" rx="10" class="card"/>
+    <text x="492" y="262" class="t lbl">Route Handlers</text>
+    <text x="492" y="282" class="m">/api: public API,</text><text x="492" y="298" class="m">webhooks, token sync</text>
+    <rect x="690" y="236" width="222" height="86" rx="10" class="card"/>
+    <text x="706" y="262" class="t lbl">Domain libs (lib/*)</text>
+    <text x="706" y="282" class="m">color engine, plans,</text><text x="706" y="298" class="m">orgs, publish, platform</text>
+  </g>
+
+  <!-- Data + services -->
+  <text x="32" y="372" class="h">DATA &amp; SERVICES</text>
+  <g>
+    <rect x="32" y="382" width="288" height="86" rx="12" class="card"/>
+    <text x="50" y="408" class="t lbl">Neon Postgres + Drizzle</text>
+    <text x="50" y="428" class="m">users, orgs, kits, audit,</text><text x="50" y="444" class="m">platform admins · 14 migrations</text>
+    <rect x="336" y="382" width="288" height="86" rx="12" class="card"/>
+    <text x="354" y="408" class="t lbl">Auth.js v5</text>
+    <text x="354" y="428" class="m">Google OAuth + magic links,</text><text x="354" y="444" class="m">DB sessions · entitlements</text>
+    <rect x="640" y="382" width="288" height="86" rx="12" class="card"/>
+    <text x="658" y="408" class="t lbl">Stripe</text>
+    <text x="658" y="428" class="m">Checkout, Billing Portal,</text><text x="658" y="444" class="m">idempotent webhooks</text>
+  </g>
+  <g>
+    <rect x="32" y="486" width="218" height="74" rx="12" class="card"/>
+    <text x="50" y="512" class="t lbl">Google Gemini</text><text x="50" y="532" class="m">AI color director (REST)</text>
+    <rect x="266" y="486" width="218" height="74" rx="12" class="card"/>
+    <text x="284" y="512" class="t lbl">Upstash Redis</text><text x="284" y="532" class="m">distributed rate limits</text>
+    <rect x="500" y="486" width="200" height="74" rx="12" class="card"/>
+    <text x="518" y="512" class="t lbl">SMTP (Nodemailer)</text><text x="518" y="532" class="m">transactional email</text>
+    <rect x="716" y="486" width="212" height="74" rx="12" class="card"/>
+    <text x="734" y="512" class="t lbl">PostHog · Sentry</text><text x="734" y="532" class="m">analytics · errors</text>
+  </g>
+
+  <!-- edges -->
+  <path class="edge" d="M480 174 V218" marker-end="url(#arr)"/>
+  <path class="edge" d="M176 338 V382" marker-end="url(#arr)"/>
+  <path class="edge" d="M480 338 V382" marker-end="url(#arr)"/>
+  <path class="edge" d="M784 338 V382" marker-end="url(#arr)"/>
+  <text x="600" y="586" class="m">Static snapshot.json (108 palettes) serves the public catalog even with the database offline.</text>
+</svg>

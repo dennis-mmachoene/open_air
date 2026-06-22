@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
+  <defs><linearGradient id="brand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366f1"/><stop offset=".3" stop-color="#0ea5e9"/><stop offset=".55" stop-color="#14b8a6"/><stop offset=".8" stop-color="#f59e0b"/><stop offset="1" stop-color="#ec4899"/></linearGradient>
+  <style>.h{font-size:13px;font-weight:700;letter-spacing:.04em}.t{fill:#1c1c1a;font-size:13px}.m{fill:#8a8a85;font-size:11px}.card{fill:#fff;stroke:#e7e5e4}</style></defs>
+  <rect width="960" height="540" rx="16" fill="#fbfbfa"/><rect width="960" height="6" rx="3" fill="url(#brand)"/>
+  <text x="32" y="46" fill="#1c1c1a" font-size="22" font-weight="600">Database Schema (domains)</text>
+  <text x="32" y="68" class="m">Drizzle ORM · Neon Postgres · migrations 0000–0014</text>
+
+  <!-- Accounts -->
+  <rect x="32" y="92" width="288" height="150" rx="12" class="card"/><rect x="32" y="92" width="288" height="30" rx="12" fill="#eef2ff"/><text x="48" y="112" class="h" fill="#4f46e5">ACCOUNTS</text>
+  <text x="48" y="142" class="t">users</text><text x="48" y="162" class="m">accounts · sessions · verification_tokens</text>
+  <text x="48" y="184" class="t">saved_palettes · collections</text><text x="48" y="204" class="m">user_palettes · api_keys</text><text x="48" y="226" class="m">webhook_events (Stripe idempotency)</text>
+
+  <!-- Community -->
+  <rect x="336" y="92" width="288" height="150" rx="12" class="card"/><rect x="336" y="92" width="288" height="30" rx="12" fill="#ecfeff"/><text x="352" y="112" class="h" fill="#0891b2">COMMUNITY</text>
+  <text x="352" y="142" class="t">published_palettes</text><text x="352" y="162" class="m">palette_likes · bookmarks</text>
+  <text x="352" y="184" class="t">comments · follows · reports</text><text x="352" y="204" class="m">users.handle / bio / website</text>
+
+  <!-- Teams -->
+  <rect x="640" y="92" width="288" height="150" rx="12" class="card"/><rect x="640" y="92" width="288" height="30" rx="12" fill="#f0fdfa"/><text x="656" y="112" class="h" fill="#0d9488">TEAMS &amp; GOVERNANCE</text>
+  <text x="656" y="142" class="t">organizations · organization_members</text><text x="656" y="162" class="m">organization_invites · org_domains</text>
+  <text x="656" y="184" class="t">brand_kits · brand_kit_assets</text><text x="656" y="204" class="m">brand_kit_proposals · org_audit_logs</text>
+
+  <!-- Platform -->
+  <rect x="32" y="262" width="444" height="150" rx="12" class="card"/><rect x="32" y="262" width="444" height="30" rx="12" fill="#fffbeb"/><text x="48" y="282" class="h" fill="#b45309">PLATFORM ADMINISTRATION (isolated)</text>
+  <text x="48" y="312" class="t">platform_admins</text><text x="48" y="332" class="m">scrypt password · TOTP secret + backup codes</text>
+  <text x="48" y="356" class="t">platform_sessions · platform_login_challenges</text>
+  <text x="48" y="378" class="t">audit_logs · feature_flags · platform_settings</text>
+  <text x="48" y="400" class="m">No FK to users — a separate authentication domain.</text>
+
+  <!-- Catalog -->
+  <rect x="492" y="262" width="436" height="150" rx="12" class="card"/><rect x="492" y="262" width="436" height="30" rx="12" fill="#fdf2f8"/><text x="508" y="282" class="h" fill="#be185d">CATALOG (source of truth)</text>
+  <text x="508" y="312" class="t">palettes · palette_colors · categories</text><text x="508" y="332" class="m">palette_categories · collections (curated)</text>
+  <text x="508" y="356" class="t">Snapshotted to snapshot.json</text><text x="508" y="376" class="m">Public read paths run from the static snapshot,</text><text x="508" y="394" class="m">so browsing survives a database outage.</text>
+
+  <rect x="32" y="436" width="896" height="74" rx="12" fill="#f5f5f4" stroke="#e7e5e4"/>
+  <text x="48" y="462" class="t" font-weight="600">Key invariants</text>
+  <text x="48" y="484" class="m">• Plan derived server-side from Stripe (never trusted from client) · entitlements gate every action.</text>
+  <text x="48" y="502" class="m">• Org data is orgId-scoped with role checks · platform admin plane is fully isolated · everything mutating is audit-logged.</text>
+</svg>
