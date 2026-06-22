@@ -37,7 +37,7 @@ describe("org audit log", () => {
 
   it("records kit + proposal governance", async () => {
     const owner = await seedUser(ctx.db, { plan: "pro" });
-    const member = await seedUser(ctx.db);
+    const member = await seedUser(ctx.db, { email: "m@acme.dev" });
     const org = await createOrg(owner, "Acme");
     const inv = await inviteMember(org.id, owner, "m@acme.dev");
     await acceptInvite(inv.token, member);

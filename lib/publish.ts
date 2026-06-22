@@ -35,6 +35,19 @@ function slugify(name: string): string {
   return `${base || "palette"}-${suffix}`;
 }
 
+/** Accept only http(s) profile URLs; reject javascript:, data:, etc. Returns null when empty/invalid. */
+export function safeWebsite(input: string): string | null {
+  const v = input.trim().slice(0, 200);
+  if (!v) return null;
+  let url: URL;
+  try {
+    url = new URL(v);
+  } catch {
+    return null;
+  }
+  return url.protocol === "http:" || url.protocol === "https:" ? url.toString() : null;
+}
+
 export function isValidHandle(handle: string): boolean {
   return /^[a-z0-9](?:[a-z0-9_-]{1,28}[a-z0-9])$/.test(handle);
 }
@@ -239,7 +252,7 @@ export async function updateProfile(userId: string, update: ProfileUpdate): Prom
     set.handle = h || null;
   }
   if (update.bio !== undefined) set.bio = update.bio.slice(0, 300) || null;
-  if (update.website !== undefined) set.website = update.website.slice(0, 200) || null;
+  if (update.website !== undefined) set.website = safeWebsite(update.website);
 
   await db.update(users).set(set).where(eq(users.id, userId));
   return (await getOwnProfile(userId))!;

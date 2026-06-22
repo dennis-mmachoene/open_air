@@ -20,9 +20,9 @@ import {
 
 export const dynamic = "force-dynamic";
 
-export default async function SysSecurityPage({ searchParams }: { searchParams: Promise<{ enroll?: string; backup?: string; error?: string }> }) {
-  const admin = await requirePlatformAdmin();
-  const { enroll, backup, error } = await searchParams;
+export default async function SysSecurityPage({ searchParams }: { searchParams: Promise<{ enroll?: string; backup?: string; error?: string; required?: string }> }) {
+  const admin = await requirePlatformAdmin({ allow2faSetup: true });
+  const { enroll, backup, error, required } = await searchParams;
   const [sessions, row, remaining] = await Promise.all([
     listActiveSessions(),
     getAdminById(admin.id),
@@ -53,6 +53,11 @@ export default async function SysSecurityPage({ searchParams }: { searchParams: 
           <p className="text-sm text-text-muted">Two-factor authentication and active administrator sessions.</p>
         </div>
         <ErrorNote message={error} />
+        {required && !row?.totpEnabled ? (
+          <p className="rounded-lg border border-amber-600/40 bg-amber-600/5 px-3 py-2 text-sm text-amber-700 dark:text-amber-400">
+            Two-factor authentication is required for platform administrators. Set it up below to access the console.
+          </p>
+        ) : null}
 
         <SectionCard title="Two-factor authentication">
           {row?.totpEnabled ? (

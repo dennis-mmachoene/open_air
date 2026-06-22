@@ -1,5 +1,5 @@
 import { randomBytes } from "node:crypto";
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq, gt, sql } from "drizzle-orm";
 import { getDb } from "./db";
 import { organizations, organizationMembers, organizationInvites, users } from "./db/schema";
 import { normalizePlan, PLAN_FEATURES } from "./plans";
@@ -119,7 +119,7 @@ export async function seatUsage(orgId: string): Promise<number> {
   const [i] = await db
     .select({ n: sql<number>`count(*)` })
     .from(organizationInvites)
-    .where(and(eq(organizationInvites.orgId, orgId), eq(organizationInvites.status, "pending")));
+    .where(and(eq(organizationInvites.orgId, orgId), eq(organizationInvites.status, "pending"), gt(organizationInvites.expiresAt, new Date())));
   return Number(m.n) + Number(i.n);
 }
 
@@ -251,6 +251,12 @@ export async function acceptInvite(token: string, userId: string): Promise<{ org
   if (!invite) throw new Error("This invite link is invalid.");
   if (invite.status !== "pending") throw new Error("This invite has already been used.");
   if (invite.expiresAt.getTime() < Date.now()) throw new Error("This invite has expired.");
+
+  // The invite is addressed to a specific email — only that account may accept it.
+  const [acct] = await db.select({ email: users.email }).from(users).where(eq(users.id, userId)).limit(1);
+  if (!acct?.email || acct.email.trim().toLowerCase() !== invite.email.trim().toLowerCase()) {
+    throw new Error("This invite was sent to a different email address. Sign in with that address to accept.");
+  }
 
   await db
     .insert(organizationMembers)

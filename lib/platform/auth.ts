@@ -30,9 +30,19 @@ export async function getPlatformAdmin(): Promise<PlatformAdmin | null> {
   return resolveSession(token);
 }
 
-/** Gate a console page. Redirects to /sys/login when unauthenticated. */
-export async function requirePlatformAdmin(): Promise<PlatformAdmin> {
+/**
+ * Gate a console page. Redirects to /sys/login when unauthenticated, and — when
+ * the platform requires 2FA (default on) — to /sys/security until the admin has
+ * enrolled. Pages that must remain reachable during enrollment pass
+ * `allow2faSetup: true` (the security + password screens).
+ */
+export async function requirePlatformAdmin(opts: { allow2faSetup?: boolean } = {}): Promise<PlatformAdmin> {
   const admin = await getPlatformAdmin();
   if (!admin) redirect("/sys/login");
+  if (!opts.allow2faSetup && !admin.totpEnabled) {
+    const { getSetting } = await import("./settings");
+    const required = (await getSetting<boolean>("require_2fa")) ?? true;
+    if (required) redirect("/sys/security?required=1");
+  }
   return admin;
 }

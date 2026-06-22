@@ -61,7 +61,7 @@ describe("invites", () => {
   });
   it("members cannot invite; admins can", async () => {
     const owner = await seedUser(ctx.db, { plan: "pro" });
-    const member = await seedUser(ctx.db);
+    const member = await seedUser(ctx.db, { email: "m@test.dev" });
     const org = await createOrg(owner, "Acme");
     const inv = await inviteMember(org.id, owner, "m@test.dev", "member");
     await acceptInvite(inv.token, member);
@@ -69,7 +69,7 @@ describe("invites", () => {
   });
   it("a used invite can't be reused; revoked invites can't be accepted", async () => {
     const owner = await seedUser(ctx.db, { plan: "pro" });
-    const a = await seedUser(ctx.db);
+    const a = await seedUser(ctx.db, { email: "a@test.dev" });
     const org = await createOrg(owner, "Acme");
     const inv = await inviteMember(org.id, owner, "a@test.dev");
     await acceptInvite(inv.token, a);
@@ -77,7 +77,7 @@ describe("invites", () => {
 
     const inv2 = await inviteMember(org.id, owner, "b@test.dev");
     await revokeInvite(org.id, owner, inv2.id);
-    const b = await seedUser(ctx.db);
+    const b = await seedUser(ctx.db, { email: "b@test.dev" });
     await expect(acceptInvite(inv2.token, b)).rejects.toThrow();
   });
 });
@@ -85,7 +85,7 @@ describe("invites", () => {
 describe("roles & removal", () => {
   it("owner can promote; protects the last owner", async () => {
     const owner = await seedUser(ctx.db, { plan: "pro" });
-    const member = await seedUser(ctx.db);
+    const member = await seedUser(ctx.db, { email: "m@test.dev" });
     const org = await createOrg(owner, "Acme");
     const inv = await inviteMember(org.id, owner, "m@test.dev");
     await acceptInvite(inv.token, member);
@@ -100,7 +100,7 @@ describe("roles & removal", () => {
   });
   it("admins can't remove owners; removing the last owner is blocked", async () => {
     const owner = await seedUser(ctx.db, { plan: "pro" });
-    const admin = await seedUser(ctx.db);
+    const admin = await seedUser(ctx.db, { email: "a@test.dev" });
     const org = await createOrg(owner, "Acme");
     const inv = await inviteMember(org.id, owner, "a@test.dev", "admin");
     await acceptInvite(inv.token, admin);

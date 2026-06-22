@@ -105,4 +105,4 @@ These Terms are governed by the laws of the Republic of South Africa, without re
 
 ## 18. Contact
 
-Questions about these Terms can be sent to **openair.mailer@gmail.com** (alternate: openair.mailer@gmail.com). See [Contact & Legal Information](/legal/contact) for more.
+Questions about these Terms can be sent to **openair.mailer@gmail.com**. See [Contact & Legal Information](/legal/contact) for more.

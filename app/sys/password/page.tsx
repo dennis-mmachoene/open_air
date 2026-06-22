@@ -5,7 +5,7 @@ import { ErrorNote } from "@/components/platform/ui";
 export const dynamic = "force-dynamic";
 
 export default async function SysPasswordPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
-  const admin = await requirePlatformAdmin();
+  const admin = await requirePlatformAdmin({ allow2faSetup: true });
   const { error } = await searchParams;
 
   return (

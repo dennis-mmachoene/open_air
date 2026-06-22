@@ -1,5 +1,6 @@
 import { kitTokensBySyncToken } from "@/lib/sync/kit-sync";
 import { serializeTokens, etagFor, isTokenFormat, FORMATS, type TokenFormat } from "@/lib/sync/serialize";
+import { rateLimit } from "@/lib/rate-limit";
 
 /**
  * Live Sync: GET /api/v1/kits/:id/tokens?format=dtcg|css|scss|tailwind|json
@@ -13,6 +14,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ kitI
   const bearer = authz.startsWith("Bearer ") ? authz.slice(7).trim() : "";
   const token = bearer || url.searchParams.get("token") || "";
   if (!token) return json({ error: "missing sync token" }, 401);
+
+  const rl = await rateLimit(`kit-sync:${token.slice(0, 16)}`, { limit: 60, windowMs: 60_000 });
+  if (!rl.success) return json({ error: "rate limit exceeded" }, 429);
 
   const data = await kitTokensBySyncToken(token);
   if (!data || data.kitId !== kitId) return json({ error: "invalid sync token" }, 401);

@@ -19,7 +19,7 @@ beforeEach(async () => { await resetDb(ctx.db); });
 
 async function teamWithMember() {
   const owner = await seedUser(ctx.db, { plan: "pro" });
-  const member = await seedUser(ctx.db);
+  const member = await seedUser(ctx.db, { email: "m@test.dev" });
   const org = await createOrg(owner, "Acme");
   const inv = await inviteMember(org.id, owner, "m@test.dev");
   await acceptInvite(inv.token, member);

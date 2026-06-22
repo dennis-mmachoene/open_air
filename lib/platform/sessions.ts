@@ -16,6 +16,7 @@ export interface PlatformAdmin {
   role: string;
   status: string;
   mustChangePassword: boolean;
+  totpEnabled: boolean;
 }
 
 export function hashToken(token: string): string {
@@ -103,6 +104,7 @@ export async function resolveSession(token: string): Promise<PlatformAdmin | nul
       role: platformAdmins.role,
       status: platformAdmins.status,
       mustChangePassword: platformAdmins.mustChangePassword,
+      totpEnabled: platformAdmins.totpEnabled,
     })
     .from(platformSessions)
     .innerJoin(platformAdmins, eq(platformAdmins.id, platformSessions.adminId))

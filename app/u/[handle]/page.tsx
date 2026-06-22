@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { getProfileByHandle, listByAuthor } from "@/lib/publish";
+import { getProfileByHandle, listByAuthor, safeWebsite } from "@/lib/publish";
 import { countFollowers, countFollowing, isFollowing } from "@/lib/social";
 import { PublishedCard } from "@/components/community/PublishedCard";
 import { FollowButton } from "@/components/community/FollowButton";
@@ -45,9 +45,9 @@ export default async function ProfilePage({ params }: { params: Promise<{ handle
         </div>
         {profile.bio ? <p className="max-w-2xl text-lg text-text-soft">{profile.bio}</p> : null}
         <div className="flex flex-wrap items-center gap-4 text-sm text-text-soft">
-          {profile.website ? (
-            <a href={profile.website} rel="me noopener" target="_blank" className="text-text underline-offset-4 hover:underline">
-              {profile.website.replace(/^https?:\/\//, "")}
+          {safeWebsite(profile.website ?? "") ? (
+            <a href={safeWebsite(profile.website ?? "")!} rel="me noopener nofollow ugc" target="_blank" className="text-text underline-offset-4 hover:underline">
+              {profile.website!.replace(/^https?:\/\//, "")}
             </a>
           ) : null}
           <span><strong className="text-text">{followers}</strong> {followers === 1 ? "follower" : "followers"}</span>

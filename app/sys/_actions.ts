@@ -14,6 +14,7 @@ import { setSetting, deleteSetting } from "@/lib/platform/settings";
 import { writeAudit } from "@/lib/platform/audit";
 import { setUserPlan, type Plan } from "@/lib/platform/users";
 import { resolveReports, adminRemovePalette, setFeatured } from "@/lib/social";
+import { rateLimit } from "@/lib/rate-limit";
 
 async function reqCtx() {
   const h = await headers();
@@ -24,10 +25,19 @@ async function reqCtx() {
 
 /* --- Authentication ------------------------------------------------------ */
 
+const LOGIN_LIMIT = { limit: 8, windowMs: 15 * 60_000 }; // 8 attempts / 15 min
+
 export async function loginAction(formData: FormData): Promise<void> {
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
   const { ip, userAgent } = await reqCtx();
+  // Brute-force protection: throttle by IP and by targeted email.
+  const byIp = await rateLimit(`sys-login:ip:${ip ?? "unknown"}`, LOGIN_LIMIT);
+  const byEmail = await rateLimit(`sys-login:email:${email.trim().toLowerCase()}`, LOGIN_LIMIT);
+  if (!byIp.success || !byEmail.success) {
+    await writeAudit({ actorLabel: email.trim().toLowerCase(), action: "admin.login.throttled", targetType: "session", ip });
+    redirect(`/sys/login?error=${encodeURIComponent("Too many attempts. Please wait a few minutes and try again.")}`);
+  }
   const result = await authenticate(email, password, { ip: ip ?? undefined, userAgent: userAgent ?? undefined });
   if (!result.ok) {
     redirect(`/sys/login?error=${encodeURIComponent(result.error ?? "Sign-in failed.")}`);
@@ -46,6 +56,10 @@ export async function loginAction(formData: FormData): Promise<void> {
 export async function totpLoginAction(formData: FormData): Promise<void> {
   const code = String(formData.get("code") ?? "");
   const { ip, userAgent } = await reqCtx();
+  const rl = await rateLimit(`sys-totp:ip:${ip ?? "unknown"}`, { limit: 10, windowMs: 15 * 60_000 });
+  if (!rl.success) {
+    redirect(`/sys/login?step=totp&error=${encodeURIComponent("Too many attempts. Please wait a few minutes and try again.")}`);
+  }
   const jar = await cookies();
   const challenge = jar.get("oa_sys_challenge")?.value ?? "";
   const result = await completeTotpLogin(challenge, code, { ip: ip ?? undefined, userAgent: userAgent ?? undefined });
