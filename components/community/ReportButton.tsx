@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useToast } from "@/components/ui";
+import { Button, useToast } from "@/components/ui";
 
 const REASONS = [
   { id: "spam", label: "Spam or misleading" },
@@ -65,7 +65,7 @@ export function ReportButton({ id }: { id: string }) {
           </div>
           <div className="mt-3 flex justify-end gap-2">
             <button type="button" onClick={() => setOpen(false)} className="rounded-control px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2">Cancel</button>
-            <button type="button" onClick={submit} disabled={busy} className="rounded-control bg-text px-3 py-1.5 text-xs font-medium text-canvas hover:opacity-90 disabled:opacity-50">Submit</button>
+            <Button size="sm" onClick={submit} disabled={busy}>Submit</Button>
           </div>
         </div>
       ) : null}

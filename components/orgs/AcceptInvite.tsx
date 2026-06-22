@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
@@ -31,9 +32,9 @@ export function AcceptInvite({ token }: { token: string }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <button type="button" onClick={accept} disabled={busy} className="rounded-pill bg-text px-5 py-2.5 text-sm font-medium text-canvas hover:opacity-90 disabled:opacity-50">
+      <Button onClick={accept} disabled={busy}>
         {status === "authenticated" ? (busy ? "Joining…" : "Accept invite") : "Sign in to accept"}
-      </button>
+      </Button>
       {error ? <p className="text-sm text-p-danger">{error}</p> : null}
     </div>
   );
