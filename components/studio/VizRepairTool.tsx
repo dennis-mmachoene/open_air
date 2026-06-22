@@ -130,7 +130,7 @@ export function VizRepairTool() {
                   {copied ? "Copied" : "Copy JSON"}
                 </button>
               </div>
-              <pre className="overflow-auto rounded-control bg-canvas p-3 text-xs text-text-soft"><code>{toCssVars(result.output, "series")}</code></pre>
+              <pre className="overflow-auto rounded-control bg-canvas p-3 text-sm text-text-soft"><code>{toCssVars(result.output, "series")}</code></pre>
             </section>
           </div>
         )

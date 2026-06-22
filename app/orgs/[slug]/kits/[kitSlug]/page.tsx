@@ -158,7 +158,7 @@ export default async function KitDetailPage({ params, searchParams }: { params: 
               </div>
               {a.type === "palette" ? <Strata hexes={a.hexes} className="h-14" /> : <div className="h-14 rounded-control border border-border" style={{ background: a.hexes[0] }} />}
               <div className="flex flex-wrap gap-1.5">{a.hexes.map((h, i) => <CopyHex key={`${h}-${i}`} hex={h} />)}</div>
-              {a.notes ? <p className="text-xs text-text-soft">{a.notes}</p> : null}
+              {a.notes ? <p className="text-sm text-text-soft">{a.notes}</p> : null}
             </li>
           ))}
         </ul>

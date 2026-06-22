@@ -65,7 +65,7 @@ export function UsageMeter({
         />
       </div>
       {(atLimit || near) && (
-        <p className="text-xs text-text-soft">
+        <p className="text-sm text-text-soft">
           {atLimit ? "You've hit the free limit." : "One save left on the free plan."}{" "}
           <Link href="/pricing" className="font-medium text-text underline underline-offset-4">
             Go Pro

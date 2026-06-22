@@ -25,7 +25,7 @@ export function Button({ variant = "primary", size = "md", className, type = "bu
     <button
       type={type}
       className={clsx(
-        "inline-flex items-center justify-center gap-2 rounded-pill font-medium transition-[color,background-color,opacity] ease-standard disabled:opacity-50 disabled:pointer-events-none",
+        "inline-flex items-center justify-center gap-2 rounded-pill font-medium transition-[color,background-color,opacity,transform] ease-standard active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none",
         VARIANT[variant],
         SIZE[size],
         className,
