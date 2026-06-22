@@ -142,6 +142,19 @@
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Radius scale — three steps only (was seven ad-hoc) */
+  --radius-control: 0.625rem; /* inputs, buttons, small chips (10px) */
+  --radius-card: 1rem;        /* cards, sections, panels (16px) */
+  --radius-pill: 9999px;      /* fully-rounded pills + avatars */
+
+  /* Elevation — the app is border-based; shadows are for overlays only */
+  --shadow-overlay: 0 8px 30px -8px rgb(0 0 0 / 0.18), 0 2px 8px -2px rgb(0 0 0 / 0.10);
+
+  /* Motion — one easing, two durations */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --animate-duration-fast: 120ms;
+  --animate-duration-standard: 200ms;
 }
 
 /* ----------------------------------------------------------------------------
