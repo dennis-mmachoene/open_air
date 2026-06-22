@@ -15,6 +15,7 @@ import { ALL_PALETTES, getPalette } from "@/lib/palettes/snapshot";
 import { computeTasteProfile, recommendFromTaste, describeTaste } from "@/lib/taste";
 import { PaletteCard } from "@/components/gallery/PaletteCard";
 import { Rail } from "@/components/gallery/Rail";
+import { EmptyState } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
@@ -52,21 +53,23 @@ export default async function DashboardPage() {
         </p>
       </header>
 
-      <UsageMeter
-        used={savedSlugs.length}
-        limit={PLAN_FEATURES[normalizePlan(session.user.plan)].savedLimit}
-        plan={normalizePlan(session.user.plan)}
-      />
-
-      {/* Saved */}
+      {/* Saved — lead with the user's content; usage demoted to a chip */}
       <section className="flex flex-col gap-4">
-        <h2 className="font-display text-2xl text-text">Saved palettes</h2>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="font-display text-2xl text-text">Saved palettes</h2>
+          <UsageMeter
+            compact
+            used={savedSlugs.length}
+            limit={PLAN_FEATURES[normalizePlan(session.user.plan)].savedLimit}
+            plan={normalizePlan(session.user.plan)}
+          />
+        </div>
         {saved.length === 0 ? (
-          <p className="text-text-soft">
-            Nothing saved yet —{" "}
-            <Link href="/" className="underline underline-offset-4">browse the gallery</Link>{" "}
-            and tap the heart on any palette.
-          </p>
+          <EmptyState
+            title="No saved palettes yet"
+            description="Tap the heart on any palette to keep it here, then organize them into collections."
+            action={<Link href="/gallery" className="text-sm text-text underline-offset-4 hover:underline">Browse the gallery →</Link>}
+          />
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {saved.map((p) => (

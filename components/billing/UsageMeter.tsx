@@ -8,11 +8,33 @@ export function UsageMeter({
   used,
   limit,
   plan,
+  compact = false,
 }: {
   used: number;
   limit: number | null;
   plan: string;
+  compact?: boolean;
 }) {
+  if (compact) {
+    if (limit === null) {
+      return (
+        <span className="inline-flex items-center gap-1.5 rounded-pill border border-border px-2.5 py-1 text-xs text-text-soft">
+          <span className="capitalize text-text">{plan}</span> · unlimited saves
+        </span>
+      );
+    }
+    const cpct = Math.min(100, Math.round((used / limit) * 100));
+    const cAt = used >= limit;
+    return (
+      <span className="inline-flex items-center gap-2 text-xs text-text-soft" title={`${used} of ${limit} saves used`}>
+        <span className="tabular-nums">{used} / {limit} saved</span>
+        <span className="h-1.5 w-16 overflow-hidden rounded-pill bg-surface-2" aria-hidden="true">
+          <span className={`block h-full rounded-pill ${cAt ? "bg-amber-500" : "bg-text"}`} style={{ width: `${cpct}%` }} />
+        </span>
+      </span>
+    );
+  }
+
   if (limit === null) {
     return (
       <div className="flex items-center justify-between rounded-card border border-border bg-surface px-5 py-4">
