@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Button } from "@/components/ui";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { hexToOklch, toHex, type OKLCH } from "@/lib/color/convert";
@@ -163,13 +164,13 @@ export function ExtractTool() {
           <p className="text-text-soft">{palette.why.rationale}</p>
 
           <div className="flex flex-wrap items-center gap-3">
-            <button
+            <Button
               type="button"
               onClick={save}
-              className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
+              
             >
               Save palette
-            </button>
+            </Button>
             {saveMsg ? <span className="text-sm text-text-soft">{saveMsg}</span> : null}
           </div>
 

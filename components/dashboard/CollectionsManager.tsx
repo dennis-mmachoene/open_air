@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui";
+import { Button, useToast } from "@/components/ui";
 
 interface Collection {
   id: string;
@@ -81,13 +81,7 @@ export function CollectionsManager({ initial }: { initial: Collection[] }) {
           aria-label="New collection name"
           className="min-w-0 flex-1 rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
         />
-        <button
-          type="submit"
-          disabled={!name.trim() || busy}
-          className="rounded-control bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90 disabled:opacity-40"
-        >
-          {busy ? "Working…" : "Create"}
-        </button>
+        <Button type="submit" disabled={!name.trim() || busy}>{busy ? "Working…" : "Create"}</Button>
       </form>
 
       {error ? <p className="text-sm text-p-danger">{error}</p> : null}

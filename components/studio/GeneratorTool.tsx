@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Button } from "@/components/ui";
 import { useSession } from "next-auth/react";
 import { generatePalette } from "@/lib/palettes/generate";
 import type { Palette } from "@/lib/palettes/types";
@@ -113,13 +114,13 @@ export function GeneratorTool() {
           />
         </label>
 
-        <button
+        <Button
           type="button"
           onClick={save}
-          className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity ease-standard hover:opacity-90"
+          
         >
           Save palette
-        </button>
+        </Button>
         {saveMsg ? <span className="text-sm text-text-soft">{saveMsg}</span> : null}
       </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Button } from "@/components/ui";
 import Link from "next/link";
 import { generateSemanticTokens, tokensToCss, type SemanticToken } from "@/lib/color/tokens";
 import { stressTest, type CategoricalColor, type TextPair } from "@/lib/color/stress";
@@ -100,9 +101,9 @@ export function AiDirectorTool() {
               placeholder="e.g. modern, trustworthy fintech for young professionals"
               className="min-w-0 flex-1 rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
             />
-            <button type="submit" disabled={busy || !brief.trim()} className="rounded-control bg-text px-4 py-2 text-sm font-medium text-canvas disabled:opacity-40">
+            <Button type="submit" disabled={busy || !brief.trim()} >
               {busy ? "Designing…" : "Create system"}
-            </button>
+            </Button>
           </div>
         </label>
         {!base ? (
@@ -192,9 +193,9 @@ export function AiDirectorTool() {
                 <Link href={`/studio/tokens`} className="text-text underline underline-offset-4">Open in token tool</Link>
                 <Link href={`/studio/stress`} className="text-text-soft underline underline-offset-4 hover:text-text">Stress test</Link>
               </div>
-              <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity ease-standard hover:opacity-90">
+              <Button size="sm" type="button" onClick={copy} >
                 {copied ? "Copied" : "Copy CSS"}
-              </button>
+              </Button>
             </div>
           </section>
         </>

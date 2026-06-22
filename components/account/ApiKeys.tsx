@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CopyButton } from "@/components/ui/CopyButton";
-import { useToast } from "@/components/ui";
+import { Button, useToast } from "@/components/ui";
 
 interface Key {
   id: string;
@@ -89,14 +89,7 @@ export function ApiKeys() {
           placeholder="Key label (e.g. Production)"
           className="min-w-0 flex-1 rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
         />
-        <button
-          type="button"
-          onClick={create}
-          disabled={busy}
-          className="rounded-control bg-text px-4 py-2 text-sm font-medium text-canvas disabled:opacity-50"
-        >
-          Create key
-        </button>
+        <Button onClick={create} disabled={busy}>Create key</Button>
       </div>
 
       {keys.length === 0 ? (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Button } from "@/components/ui";
 import {
   categorical,
   categoricalReport,
@@ -198,9 +199,9 @@ export function DataVizTool() {
               </button>
             ))}
           </div>
-          <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity ease-standard hover:opacity-90">
+          <Button size="sm" type="button" onClick={copy} >
             {copied ? "Copied" : "Copy"}
-          </button>
+          </Button>
         </div>
         <pre className="max-h-64 overflow-auto rounded-control bg-canvas p-3 text-xs leading-relaxed text-text-soft">
           <code>{exportText}</code>
