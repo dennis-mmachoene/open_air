@@ -100,6 +100,16 @@ export default async function OrgPage({ params }: { params: Promise<{ slug: stri
       {canManage ? (
         <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-5">
           <div>
+            <h2 className="font-display text-lg text-text">Verified domains</h2>
+            <p className="text-sm text-text-soft">Auto-join teammates by company email domain.</p>
+          </div>
+          <Link href={`/orgs/${org.slug}/domains`} className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">Manage domains →</Link>
+        </section>
+      ) : null}
+
+      {canManage ? (
+        <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-5">
+          <div>
             <h2 className="font-display text-lg text-text">Audit log</h2>
             <p className="text-sm text-text-soft">Every membership and brand-kit change, with CSV/JSON export.</p>
           </div>

@@ -62,5 +62,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const { sendEmail, welcomeEmail } = await import("./email");
       await sendEmail(welcomeEmail(user.email, user.name));
     },
+    async signIn({ user }) {
+      // Enterprise just-in-time provisioning: auto-seat the user into any team
+      // that has verified their email domain with auto-join enabled.
+      if (!user?.id || !user.email) return;
+      try {
+        const { provisionMembershipsForEmail } = await import("./org-domains");
+        await provisionMembershipsForEmail(user.id, user.email);
+      } catch (err) {
+        console.error("[auth] domain provisioning failed", err);
+      }
+    },
   },
 });

@@ -615,3 +615,23 @@ export const orgAuditLogs = pgTable(
     index("org_audit_created_idx").on(t.createdAt),
   ],
 );
+
+// ---------------------------------------------------------------------------
+// Enterprise access (Wave 8 Part 2) — verified domains for JIT provisioning.
+// ---------------------------------------------------------------------------
+
+export const orgDomains = pgTable(
+  "org_domains",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    orgId: uuid("org_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    domain: text("domain").notNull().unique(),
+    verified: boolean("verified").notNull().default(false),
+    verificationToken: text("verification_token").notNull(),
+    autoJoin: boolean("auto_join").notNull().default(true),
+    createdAt: createdAt(),
+  },
+  (t) => [index("org_domains_org_idx").on(t.orgId)],
+);
