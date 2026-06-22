@@ -50,7 +50,7 @@ export function FollowButton({
       disabled={busy}
       aria-pressed={following}
       className={clsx(
-        "inline-flex items-center gap-2 rounded-full border px-5 py-2 text-sm font-medium transition-colors",
+        "inline-flex items-center gap-2 rounded-pill border px-5 py-2 text-sm font-medium transition-colors",
         following ? "border-border text-text hover:bg-surface-2" : "border-text bg-text text-canvas hover:opacity-90",
       )}
     >

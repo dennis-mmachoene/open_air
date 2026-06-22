@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button, Input, ErrorNote } from "@/components/ui";
 
 export function CreateOrgForm() {
   const router = useRouter();
@@ -31,22 +32,20 @@ export function CreateOrgForm() {
   }
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5">
+    <form onSubmit={submit} className="flex flex-col gap-3 rounded-card border border-border bg-surface p-5">
       <label className="text-sm font-medium text-text" htmlFor="org-name">Create a team</label>
       <div className="flex flex-wrap gap-2">
-        <input
+        <Input
           id="org-name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="e.g. Acme Design"
           maxLength={60}
-          className="min-w-0 flex-1 rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-text focus:outline-none"
+          className="min-w-0 flex-1"
         />
-        <button type="submit" disabled={busy || !name.trim()} className="rounded-full bg-text px-5 py-2 text-sm font-medium text-canvas hover:opacity-90 disabled:opacity-50">
-          {busy ? "Creating…" : "Create"}
-        </button>
+        <Button type="submit" disabled={busy || !name.trim()}>{busy ? "Creating…" : "Create"}</Button>
       </div>
-      {error ? <p className="text-xs text-p-danger">{error}</p> : null}
+      <ErrorNote message={error} />
     </form>
   );
 }

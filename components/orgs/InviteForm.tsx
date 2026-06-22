@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button, Input, Select, ErrorNote } from "@/components/ui";
 
 export function InviteForm({ slug }: { slug: string }) {
   const router = useRouter();
@@ -38,23 +39,22 @@ export function InviteForm({ slug }: { slug: string }) {
   return (
     <form onSubmit={submit} className="flex flex-col gap-2">
       <div className="flex flex-wrap gap-2">
-        <input
+        <Input
           type="email"
+          aria-label="Teammate email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="teammate@company.com"
-          className="min-w-0 flex-1 rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-text focus:outline-none"
+          className="min-w-0 flex-1"
         />
-        <select value={role} onChange={(e) => setRole(e.target.value)} className="rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none">
+        <Select aria-label="Role" value={role} onChange={(e) => setRole(e.target.value)} className="w-auto">
           <option value="member">Member</option>
           <option value="admin">Admin</option>
-        </select>
-        <button type="submit" disabled={busy || !email.trim()} className="rounded-full bg-text px-4 py-2 text-sm font-medium text-canvas hover:opacity-90 disabled:opacity-50">
-          {busy ? "Sending…" : "Invite"}
-        </button>
+        </Select>
+        <Button type="submit" disabled={busy || !email.trim()}>{busy ? "Sending…" : "Invite"}</Button>
       </div>
-      {error ? <p className="text-xs text-p-danger">{error}</p> : null}
-      {sent ? <p className="text-xs text-text-soft">Invite sent to {sent}.</p> : null}
+      <ErrorNote message={error} />
+      {sent ? <p className="text-sm text-text-soft">Invite sent to {sent}.</p> : null}
     </form>
   );
 }

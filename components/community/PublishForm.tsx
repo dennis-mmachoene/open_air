@@ -6,7 +6,7 @@ import { parseHexList } from "@/lib/color/repair";
 import { bestOn } from "@/lib/color/contrast";
 import { Strata } from "@/components/palette/Strata";
 import { LICENSES } from "@/lib/publish";
-import { clsx } from "@/lib/cn";
+import { Button, Input, Select, Textarea, ErrorNote } from "@/components/ui";
 
 const VIS = [
   { id: "public", label: "Public — appears in Explore" },
@@ -75,51 +75,49 @@ export function PublishForm({ initialColors = "" }: { initialColors?: string }) 
 
       <label className="flex flex-col gap-1 text-sm text-text-soft">
         Name
-        <input value={name} onChange={(e) => setName(e.target.value)} maxLength={80} placeholder="e.g. Tidewater" className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text" />
+        <Input value={name} onChange={(e) => setName(e.target.value)} maxLength={80} placeholder="e.g. Tidewater" />
       </label>
 
       <label className="flex flex-col gap-1 text-sm text-text-soft">
         Colors (paste hex values)
-        <textarea value={colors} onChange={(e) => setColors(e.target.value)} rows={2} spellCheck={false} placeholder="#0ea5e9 #0369a1 #082f49" className="rounded-lg border border-border bg-surface px-3 py-2 font-mono text-sm text-text outline-none focus-visible:border-text" />
+        <Textarea value={colors} onChange={(e) => setColors(e.target.value)} rows={2} spellCheck={false} placeholder="#0ea5e9 #0369a1 #082f49" className="font-mono" />
         <span className="text-xs text-text-muted">{hexes.length} colors · accessibility {score}/100</span>
       </label>
 
       <label className="flex flex-col gap-1 text-sm text-text-soft">
         Description <span className="text-text-muted">(optional)</span>
-        <input value={description} onChange={(e) => setDescription(e.target.value)} maxLength={500} className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text" />
+        <Input value={description} onChange={(e) => setDescription(e.target.value)} maxLength={500} />
       </label>
 
       <label className="flex flex-col gap-1 text-sm text-text-soft">
         Why it works <span className="text-text-muted">(optional)</span>
-        <textarea value={rationale} onChange={(e) => setRationale(e.target.value)} maxLength={500} rows={2} className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text" />
+        <Textarea value={rationale} onChange={(e) => setRationale(e.target.value)} maxLength={500} rows={2} />
       </label>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="flex flex-col gap-1 text-sm text-text-soft">
           License
-          <select value={license} onChange={(e) => setLicense(e.target.value)} className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text">
+          <Select value={license} onChange={(e) => setLicense(e.target.value)}>
             {LICENSES.map((l) => <option key={l.id} value={l.id}>{l.label}</option>)}
-          </select>
+          </Select>
         </label>
         <label className="flex flex-col gap-1 text-sm text-text-soft">
           Visibility
-          <select value={visibility} onChange={(e) => setVisibility(e.target.value)} className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text">
+          <Select value={visibility} onChange={(e) => setVisibility(e.target.value)}>
             {VIS.map((v) => <option key={v.id} value={v.id}>{v.label}</option>)}
-          </select>
+          </Select>
         </label>
       </div>
 
       <label className="flex flex-col gap-1 text-sm text-text-soft">
         Tags <span className="text-text-muted">(comma-separated, optional)</span>
-        <input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="wellness, calm, dark-ui" className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text" />
+        <Input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="wellness, calm, dark-ui" />
       </label>
 
-      {error ? <p className="text-sm text-p-danger">{error}</p> : null}
+      <ErrorNote message={error} />
 
       <div className="flex items-center gap-3">
-        <button type="submit" disabled={!valid || busy} className={clsx("rounded-full bg-text px-6 py-2.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90", (!valid || busy) && "opacity-40")}>
-          {busy ? "Publishing…" : "Publish"}
-        </button>
+        <Button type="submit" disabled={!valid || busy}>{busy ? "Publishing…" : "Publish"}</Button>
         <span className="text-xs text-text-muted">You keep ownership; the license tells others how they may use it.</span>
       </div>
     </form>

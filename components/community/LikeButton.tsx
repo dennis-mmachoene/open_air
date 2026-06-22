@@ -42,7 +42,7 @@ export function LikeButton({ id, initialLiked, initialCount }: { id: string; ini
       disabled={busy}
       aria-pressed={liked}
       className={clsx(
-        "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+        "inline-flex items-center gap-2 rounded-pill border px-4 py-2 text-sm font-medium transition-colors",
         liked ? "border-p-danger text-p-danger" : "border-border text-text hover:bg-surface-2",
       )}
     >
