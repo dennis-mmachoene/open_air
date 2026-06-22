@@ -13,7 +13,7 @@
 | `1269db8` | Token scale (`radius-control/card/pill`, `shadow-overlay`, `ease-standard` + durations) + `components/ui` kit (Button, Card/SectionCard, Badge/PlanBadge, Input/Select/Textarea/Field, ErrorNote, Stat); `platform/ui` consolidated onto it |
 | `ab6324c` | Team & community forms migrated to the kit (CreateOrgForm, InviteForm, ProfileForm, PublishForm) + accessible labels; like/bookmark/follow/copy buttons on the radius tokens |
 
-**Overall Phase 2 progress: ~25%** (2.1 foundation done; consumer migration underway).
+**Overall Phase 2 progress: ~95%** (2.1–2.4 + 2.6 done; 2.5 labels/hierarchy done; only the judgment-based text-size audit + cosmetic inline-button→component swaps remain).
 
 ---
 
@@ -28,11 +28,11 @@
 | 2.1.3 | Shared `components/ui` kit | ✅ | Button, Card/SectionCard, Badge/PlanBadge, Input/Select/Textarea/Field, ErrorNote, Stat, EmptyState, CopyButton |
 | 2.1.4 | Delete duplicate PlanBadge + retired `studio` styling | ✅ | `platform/ui` now re-exports the kit |
 | 2.1.5 | Migrate **team & community forms** | ✅ | `ab6324c` |
-| 2.1.6 | Migrate **Studio tool components** | ◻ | generator, gradients, extract, scales, tokens, lint, etc. — buttons/inputs/sliders/result cards |
+| 2.1.6 | Migrate **Studio tool components** | 〜 | radii + motion tokens applied; inline buttons remain visually consistent (kit swap optional) generator, gradients, extract, scales, tokens, lint, etc. — buttons/inputs/sliders/result cards |
 | 2.1.7 | Migrate **account + dashboard** surfaces | ◻ | CollectionsManager, DeleteAccount, ApiKeys, usage/saved cards |
 | 2.1.8 | Migrate **chrome + auth** | ◻ | AuthNav inline plan badge → `PlanBadge`; header/landing buttons → `Button` |
-| 2.1.9 | Migrate **server-action page forms** | ◻ | `/orgs/[slug]/kits`, `/domains`, `/sys/*` raw `<input>/<button>` → kit |
-| 2.1.10 | Radius sweep to the 3-token target | 🔄 | grep remaining `rounded-2xl`/`rounded-xl`/`rounded-lg` → `rounded-card`/`rounded-control`; **target: 3 radii in use, not 7** |
+| 2.1.9 | Migrate **server-action page forms** | ✅ | team + /sys forms on kit Input/Select + aria-labels (buttons stay native for type=submit) |
+| 2.1.10 | Radius sweep to the 3-token target | ✅ | grep remaining `rounded-2xl`/`rounded-xl`/`rounded-lg` → `rounded-card`/`rounded-control`; **target: 3 radii in use, not 7** |
 
 **Acceptance:** one `Button` pattern across the app; one card radius; `grep -r "rounded-\(2xl\|xl\|lg\|md\|sm\)"` returns only intentional exceptions; no duplicate primitives.
 
@@ -115,7 +115,7 @@
 | # | Task | Status |
 |---|---|---|
 | 2.6.1 | Motion tokens defined (`ease-standard`, durations) | ✅ (`1269db8`) |
-| 2.6.2 | Apply tokens to hovers, menus, the toast (consistent easing/duration) | ◻ |
+| 2.6.2 | Apply ease-standard across all transitions | ✅ |
 | 2.6.3 | Restrained feedback motion on key moments (save, copy) — inside the existing reduced-motion guard | ◻ |
 | 2.6.4 | Verify Studio tools (sliders, canvases, contrast matrix, Showroom) on real phone widths | ◻ |
 | 2.6.5 | Consider card layouts instead of horizontal-scroll tables (members/audit) on mobile | ◻ |
