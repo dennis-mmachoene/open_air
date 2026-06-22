@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui";
 
 interface Collection {
   id: string;
@@ -11,6 +12,7 @@ interface Collection {
 
 export function CollectionsManager({ initial }: { initial: Collection[] }) {
   const router = useRouter();
+  const { success } = useToast();
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +39,8 @@ export function CollectionsManager({ initial }: { initial: Collection[] }) {
         return;
       }
       setName("");
+      success("Collection created");
+      success("Collection deleted");
       router.refresh();
     } catch {
       setError("Network error — please try again.");

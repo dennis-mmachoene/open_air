@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CopyButton } from "@/components/ui/CopyButton";
+import { useToast } from "@/components/ui";
 
 interface Key {
   id: string;
@@ -15,6 +16,7 @@ export function ApiKeys() {
   const [label, setLabel] = useState("");
   const [token, setToken] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const { success } = useToast();
 
   async function refresh() {
     const r = await fetch("/api/keys");
@@ -49,6 +51,7 @@ export function ApiKeys() {
       const d: { token?: string } = await r.json();
       if (d.token) {
         setToken(d.token);
+        success("API key created");
         setLabel("");
         await refresh();
       }
@@ -59,6 +62,7 @@ export function ApiKeys() {
 
   async function revoke(id: string) {
     await fetch(`/api/keys?id=${id}`, { method: "DELETE" });
+    success("API key revoked");
     await refresh();
   }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useToast } from "@/components/ui";
 
 interface Coll {
   id: string;
@@ -16,6 +17,7 @@ export function CollectionPicker({ slug }: { slug: string }) {
   const [name, setName] = useState("");
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { success } = useToast();
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -78,6 +80,7 @@ export function CollectionPicker({ slug }: { slug: string }) {
         setCollections((cs) =>
           cs.map((c) => (c.id === id ? { ...c, inCollection: data.inCollection! } : c)),
         );
+        success(data.inCollection ? "Added to collection" : "Removed from collection");
       }
     } catch {
       // Revert the optimistic change on failure.
@@ -105,6 +108,7 @@ export function CollectionPicker({ slug }: { slug: string }) {
       const data: { collection?: { id: string; name: string } } = await res.json();
       setName("");
       if (data.collection) {
+        success("Collection created");
         // Add it to the list, then immediately add this palette to it.
         setCollections((cs) => [
           ...cs,

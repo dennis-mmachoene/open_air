@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useToast } from "@/components/ui";
 
 const REASONS = [
   { id: "spam", label: "Spam or misleading" },
@@ -17,6 +18,7 @@ export function ReportButton({ id }: { id: string }) {
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState("spam");
   const [done, setDone] = useState(false);
+  const { success } = useToast();
   const [busy, setBusy] = useState(false);
 
   async function submit() {
@@ -33,6 +35,7 @@ export function ReportButton({ id }: { id: string }) {
       });
       setDone(true);
       setOpen(false);
+      success("Reported — thank you");
     } finally {
       setBusy(false);
     }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useToast } from "@/components/ui";
 
 export interface CommentView {
   id: string;
@@ -37,6 +38,7 @@ export function Comments({
   const { data: session, status } = useSession();
   const router = useRouter();
   const me = session?.user?.id;
+  const { success } = useToast();
   const [items, setItems] = useState<CommentView[]>(initial);
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
@@ -62,6 +64,7 @@ export function Comments({
       if (!res.ok) throw new Error(data.error ?? "Could not post.");
       setItems((cur) => [data.comment as CommentView, ...cur]);
       setBody("");
+      success("Comment posted");
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -75,6 +78,7 @@ export function Comments({
     try {
       const res = await fetch(`/api/comments/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
+      success("Comment removed");
     } catch {
       setItems(prev);
     }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { clsx } from "@/lib/cn";
+import { useToast } from "@/components/ui";
 
 export function SaveButton({ slug }: { slug: string }) {
   const router = useRouter();
@@ -10,6 +11,7 @@ export function SaveButton({ slug }: { slug: string }) {
   const [saved, setSaved] = useState(false);
   const [busy, setBusy] = useState(false);
   const [limit, setLimit] = useState(false);
+  const { success } = useToast();
 
   useEffect(() => {
     let active = true;
@@ -42,7 +44,10 @@ export function SaveButton({ slug }: { slug: string }) {
       });
       const data: { saved: boolean; limitReached?: boolean } = await res.json();
       if (data.limitReached) setLimit(true);
-      else setSaved(data.saved);
+      else {
+        setSaved(data.saved);
+        success(data.saved ? "Saved to your library" : "Removed from saved");
+      }
     } finally {
       setBusy(false);
     }

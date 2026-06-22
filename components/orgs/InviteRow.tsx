@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui";
 
 export function InviteRow({ slug, id, email, role }: { slug: string; id: string; email: string; role: string }) {
   const router = useRouter();
+  const { success } = useToast();
   const [busy, setBusy] = useState(false);
 
   async function revoke() {
@@ -12,6 +14,7 @@ export function InviteRow({ slug, id, email, role }: { slug: string; id: string;
     try {
       const res = await fetch(`/api/orgs/${slug}/invites/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
+      success("Invite revoked");
       router.refresh();
     } catch {
       setBusy(false);
