@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui";
 import Link from "next/link";
 
 const ROLES = ["owner", "admin", "member"] as const;
@@ -26,6 +27,7 @@ export function MemberRow({
   isSelf: boolean;
 }) {
   const router = useRouter();
+  const { success } = useToast();
   const [role, setRole] = useState(member.role);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,6 +45,7 @@ export function MemberRow({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Could not update role.");
+      success("Role updated");
       router.refresh();
     } catch (e) {
       setRole(prev);
@@ -60,6 +63,7 @@ export function MemberRow({
       const res = await fetch(`/api/orgs/${slug}/members/${member.userId}`, { method: "DELETE" });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error ?? "Could not remove member.");
+      success("Member removed");
       router.refresh();
     } catch (e) {
       setError((e as Error).message);

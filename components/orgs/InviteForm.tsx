@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Input, Select, ErrorNote } from "@/components/ui";
+import { Button, Input, Select, ErrorNote, useToast } from "@/components/ui";
 
 export function InviteForm({ slug }: { slug: string }) {
   const router = useRouter();
@@ -10,14 +10,13 @@ export function InviteForm({ slug }: { slug: string }) {
   const [role, setRole] = useState("member");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [sent, setSent] = useState<string | null>(null);
+  const { success } = useToast();
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim() || busy) return;
     setBusy(true);
     setError(null);
-    setSent(null);
     try {
       const res = await fetch(`/api/orgs/${slug}/invite`, {
         method: "POST",
@@ -26,7 +25,7 @@ export function InviteForm({ slug }: { slug: string }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Could not send invite.");
-      setSent(email.trim());
+      success(`Invite sent to ${email.trim()}`);
       setEmail("");
       router.refresh();
     } catch (e) {
@@ -54,7 +53,6 @@ export function InviteForm({ slug }: { slug: string }) {
         <Button type="submit" disabled={busy || !email.trim()}>{busy ? "Sending…" : "Invite"}</Button>
       </div>
       <ErrorNote message={error} />
-      {sent ? <p className="text-sm text-text-soft">Invite sent to {sent}.</p> : null}
     </form>
   );
 }

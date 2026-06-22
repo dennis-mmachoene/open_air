@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useToast } from "@/components/ui";
 
 export function CopyHexList({ hexes }: { hexes: string[] }) {
   const [copied, setCopied] = useState<string | null>(null);
+  const { success } = useToast();
   async function copy(hex: string) {
     try {
       await navigator.clipboard.writeText(hex);
+        success("Copied " + hex);
       setCopied(hex);
       setTimeout(() => setCopied(null), 1200);
     } catch {

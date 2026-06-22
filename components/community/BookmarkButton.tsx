@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { clsx } from "@/lib/cn";
+import { useToast } from "@/components/ui";
 
 export function BookmarkButton({ id, initialBookmarked }: { id: string; initialBookmarked: boolean }) {
   const { status } = useSession();
   const router = useRouter();
   const [saved, setSaved] = useState(initialBookmarked);
   const [busy, setBusy] = useState(false);
+  const { success } = useToast();
 
   async function toggle() {
     if (status !== "authenticated") {
@@ -24,6 +26,7 @@ export function BookmarkButton({ id, initialBookmarked }: { id: string; initialB
       if (!res.ok) throw new Error();
       const data = await res.json();
       setSaved(data.bookmarked);
+      success(data.bookmarked ? "Saved to your library" : "Removed from saved");
     } catch {
       setSaved(initialBookmarked);
     } finally {

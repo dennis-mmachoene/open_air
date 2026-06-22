@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Input, Textarea, Field, ErrorNote } from "@/components/ui";
+import { Button, Input, Textarea, Field, ErrorNote, useToast } from "@/components/ui";
 
 export function ProfileForm({ initial }: { initial: { handle: string | null; bio: string | null; website: string | null } }) {
   const router = useRouter();
@@ -11,13 +11,12 @@ export function ProfileForm({ initial }: { initial: { handle: string | null; bio
   const [website, setWebsite] = useState(initial.website ?? "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [ok, setOk] = useState<string | null>(null);
+  const { success } = useToast();
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
     setError(null);
-    setOk(null);
     try {
       const res = await fetch("/api/profile", {
         method: "PATCH",
@@ -27,7 +26,7 @@ export function ProfileForm({ initial }: { initial: { handle: string | null; bio
       const data = await res.json();
       if (!res.ok) setError(data.error ?? "Couldn't save.");
       else {
-        setOk("Profile saved.");
+        success("Profile saved");
         router.refresh();
       }
     } catch {
@@ -52,7 +51,6 @@ export function ProfileForm({ initial }: { initial: { handle: string | null; bio
         <Input value={website} onChange={(e) => setWebsite(e.target.value)} placeholder="https://…" aria-label="Website" />
       </Field>
       <ErrorNote message={error} />
-      {ok ? <p className="text-sm text-text-soft">{ok}</p> : null}
       <Button type="submit" disabled={busy} className="self-start">{busy ? "Saving…" : "Save profile"}</Button>
     </form>
   );

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { clsx } from "@/lib/cn";
+import { useToast } from "./Toast";
 
 export function CopyButton({
   value,
@@ -17,11 +18,13 @@ export function CopyButton({
   title?: string;
 }) {
   const [copied, setCopied] = useState(false);
+  const { success } = useToast();
 
   async function copy() {
     try {
       await navigator.clipboard.writeText(value);
       setCopied(true);
+      success(copiedLabel);
       setTimeout(() => setCopied(false), 1400);
     } catch {
       // clipboard unavailable — no-op
