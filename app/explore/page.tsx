@@ -41,6 +41,8 @@ export default async function ExplorePage({ searchParams }: { searchParams: Prom
             {tab("top", "Top")}
             {tab("featured", "Staff picks")}
           </div>
+          <Link href="/trends" className="rounded-pill px-3 py-1 text-sm text-text-soft transition-colors hover:bg-surface-2 hover:text-text">Trends</Link>
+          <Link href="/bookmarks" className="rounded-pill px-3 py-1 text-sm text-text-soft transition-colors hover:bg-surface-2 hover:text-text">Saved</Link>
           <Link href="/publish" className="rounded-pill bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90">Publish</Link>
         </div>
       </header>
