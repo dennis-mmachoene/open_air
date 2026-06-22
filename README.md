@@ -1,225 +1,192 @@
 <div align="center">
 
-<img src="app/icon.svg" alt="Open Air" width="120" height="120" />
+<img src="app/icon.svg" alt="Open Air" width="96" height="96" />
 
 # Open Air
 
-**A living gallery of color — a museum of palettes you can put to work.**
+**A living gallery of color — the platform to create, validate, govern, and ship production-ready color systems.**
 
-Browse **108** hand-tuned, AA-gated OKLCH palettes, understand *why* each one works, then watch any palette dress a complete component library and real screens in real time in the **Showroom**.
+Browse **108** hand-tuned, AA-gated OKLCH palettes, understand *why* each one works, build complete token systems in the **Studio**, watch any palette dress a full UI in the **Showroom**, publish to a community, and govern shared brand kits as a team.
 
 <br />
 
-<!-- Status & meta — update the repo path in the CI badge to match your GitHub repo -->
 ![CI](https://img.shields.io/github/actions/workflow/status/dennis-mmachoene/open-air/ci.yml?branch=main&style=for-the-badge&label=CI&logo=githubactions&logoColor=white)
+![Version](https://img.shields.io/badge/version-0.8.0-6366F1?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-EF4444?style=for-the-badge)
-![PRs](https://img.shields.io/badge/PRs-welcome-22C55E?style=for-the-badge)
 ![Palettes](https://img.shields.io/badge/palettes-108-8B5CF6?style=for-the-badge)
+![WCAG](https://img.shields.io/badge/WCAG-AA%20gated-14B8A6?style=for-the-badge)
+![API](https://img.shields.io/badge/API-v1-0EA5E9?style=for-the-badge)
 
-<!-- Tech stack -->
 ![Next.js](https://img.shields.io/badge/Next.js%2016-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React%2019-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind%20v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![Drizzle](https://img.shields.io/badge/Drizzle%20ORM-C5F74F?style=for-the-badge&logo=drizzle&logoColor=000000)
-![Neon Postgres](https://img.shields.io/badge/Neon%20Postgres-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind%20v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Drizzle](https://img.shields.io/badge/Drizzle-C5F74F?style=for-the-badge&logo=drizzle&logoColor=000000)
+![Neon](https://img.shields.io/badge/Neon%20Postgres-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white)
-![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
 
-[**Live Demo**](#) &nbsp;·&nbsp; [**Report Bug**](https://github.com/dennis-mmachoene/open-air/issues) &nbsp;·&nbsp; [**Request Feature**](https://github.com/dennis-mmachoene/open-air/issues)
-
-Designed & built by **Open Air**
+[**Getting Started**](docs/getting-started.md) · [**Documentation**](#-documentation) · [**Architecture**](docs/architecture.md) · [**API**](docs/api.md) · [**Report a bug**](https://github.com/dennis-mmachoene/open-air/issues)
 
 </div>
 
----
+<br />
 
-## Table of Contents
-
-- [🎨 Overview](#-overview)
-- [✨ Features](#-features)
-- [🧱 Tech Stack](#-tech-stack)
-- [🚀 Getting Started](#-getting-started)
-- [⚙️ Environment Variables](#️-environment-variables)
-- [🗄️ Database](#️-database)
-- [💳 Stripe](#-stripe)
-- [🔐 Admin](#-admin)
-- [📜 Scripts](#-scripts)
-- [🗂️ Project Structure](#️-project-structure)
-- [🧪 Testing and CI](#-testing-and-ci)
-- [📄 License](#-license)
+![Open Air](docs/images/hero.png)
 
 ---
 
-## 🎨 Overview
+## Table of contents
 
-Open Air is a premium color-exploration platform — a museum of palettes you can put to work. The **Gallery** keeps a quiet, near-neutral shell so every saturated pixel on screen belongs to a palette. The **Showroom** lets a single click re-theme an entire UI specimen library. The **Studio** generates, extracts, and repairs palettes client-side. It all runs on a static catalog snapshot, so reads work even without a database connection.
-
-> **No setup required to explore.** The app boots with zero environment variables — the public gallery runs entirely off a static `snapshot.json` of 108 palettes. Add credentials to unlock accounts, billing, and AI.
-
-<!-- Drop a few screenshots here to show off the Gallery, Showroom, and Studio.
-<div align="center">
-  <img src="docs/gallery.png" alt="Gallery" width="49%" />
-  <img src="docs/showroom.png" alt="Showroom" width="49%" />
-</div>
--->
+- [Overview](#-overview)
+- [Features](#-features)
+- [Screenshots](#-screenshots)
+- [Quick start](#-quick-start)
+- [Tech stack](#-tech-stack)
+- [Architecture](#-architecture)
+- [Documentation](#-documentation)
+- [Scripts](#-scripts)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ---
 
-## ✨ Features
+## <img src="docs/icons/sparkles.svg" width="22" align="center" /> Overview
+
+Open Air is a premium color-exploration **platform** built around three pillars:
+
+- **System** — the **Studio** (AI director, tonal scales, semantic tokens, gradients, linter, …) and the **Showroom**, which re-themes a whole UI from `--p-*` role tokens.
+- **Guarantee** — accessibility everywhere: AA/AAA contrast, color-vision-deficiency simulation, wide-gamut/print, and a color linter.
+- **Govern** — a **community** (publish, follow, like, comment) and **teams** (orgs, roles, shared brand kits, a review workflow, verified domains, audit logs) — under an isolated **System Administrator** plane.
+
+> **Zero config to explore.** The app boots with no environment variables — the public gallery runs entirely off a static `snapshot.json` of 108 palettes. Add credentials to unlock accounts, billing, AI, and admin.
+
+---
+
+## <img src="docs/icons/layout.svg" width="22" align="center" /> Features
 
 | | Feature | What it does |
-|---|---------|--------------|
-| 🖼️ | **Gallery** | A quiet, near-neutral shell so every saturated pixel belongs to a palette. Filter by mood, industry, family, style, or season, then open any palette to see its ramp, harmony, contrast pairings, and rationale. |
-| 🎭 | **Showroom** | Select a palette and it re-themes an entire UI specimen library (primitives, components, data-viz, full screens) at once, driven purely by `--p-*` role tokens. |
-| 🎛️ | **Studio** | Generate palettes client-side (instant), extract a palette from an image, build gradients, and repair any palette for WCAG AA contrast. |
-| 👤 | **Accounts** | Save palettes, organize collections, and revisit recently viewed. A two-step onboarding seeds new accounts with picks for their use-case. |
-| 💳 | **Billing** | Free, Pro, and Studio tiers via Stripe, with entitlements derived **server-side** from the user's plan. |
-| 🔌 | **Public API** | `GET /api/v1/palettes` with API keys and rate limiting. |
-| 🛡️ | **Admin** | An allow-listed control room: overview KPIs, user management, content insights, and a health dashboard. |
+|---|---|---|
+| <img src="docs/icons/palette.svg" width="18" /> | **Gallery** | A quiet, near-neutral shell so every saturated pixel belongs to a palette. Filter by mood, industry, family, style, or season; open any palette for its ramp, harmony, contrast pairings, and rationale. |
+| <img src="docs/icons/monitor.svg" width="18" /> | **Showroom** | One click re-themes an entire UI specimen library — primitives, components, data-viz, full screens — driven purely by role tokens. |
+| <img src="docs/icons/cpu.svg" width="18" /> | **Studio** | 14 client-side tools across **Create · Systematize · Validate · Data-viz**: generate, extract, scales, tokens, elevation, **linter**, stress test, gamut & print, and more. |
+| <img src="docs/icons/users.svg" width="18" /> | **Teams** | Organizations with roles & seats, shared **brand kits**, a **propose → review → approve** workflow, verified domains with auto-join, and a per-tenant audit log + export. |
+| <img src="docs/icons/api.svg" width="18" /> | **Live sync & API** | Serve a brand kit as design tokens (DTCG/CSS/SCSS/Tailwind/JSON) with ETag polling; a public palette API with keys + rate limiting. |
+| <img src="docs/icons/shield.svg" width="18" /> | **System Admin** | An isolated `/sys` console: scrypt credentials + **TOTP 2FA**, audit log, feature flags, user/billing oversight, moderation. |
+| <img src="docs/icons/credit.svg" width="18" /> | **Billing** | Free / Pro / Studio via Stripe, with entitlements derived **server-side** from the plan. |
 
 ---
 
-## 🧱 Tech Stack
+## <img src="docs/icons/monitor.svg" width="22" align="center" /> Screenshots
 
-| Area | Choice |
-|------|--------|
-| **Framework** | Next.js 16 (App Router), React 19, TypeScript (strict) |
-| **Styling** | Tailwind v4 (`@theme inline`, CSS role tokens) |
-| **Color** | OKLCH via `culori`; WCAG AA contrast gating |
-| **Data** | Drizzle ORM + Neon Postgres |
-| **Auth** | Auth.js v5 (Google OAuth + email magic links, database sessions) |
-| **Billing** | Stripe (Checkout, Billing Portal, webhooks) |
-| **AI** | Google Gemini color concierge (REST, with local fallback) |
-| **Rate limiting** | Upstash Redis |
-| **Email** | Nodemailer (SMTP) |
-| **Analytics / errors** | PostHog (CDN), Sentry (optional) |
-| **Tests / CI** | Vitest + GitHub Actions (lint → typecheck → test → build) |
+<table>
+  <tr>
+    <td width="50%"><img src="docs/images/gallery.png" alt="Gallery" /><br/><sub><b>Gallery</b> — filterable, AA-gated catalog</sub></td>
+    <td width="50%"><img src="docs/images/palette-details.png" alt="Palette details" /><br/><sub><b>Palette</b> — ramp, why it works, contrast</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/showroom.png" alt="Showroom" /><br/><sub><b>Showroom</b> — any palette on a real UI</sub></td>
+    <td><img src="docs/images/studio.png" alt="Studio" /><br/><sub><b>Studio</b> — tools, categorized</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/dashboard.png" alt="Dashboard" /><br/><sub><b>Dashboard</b> — content-first</sub></td>
+    <td><img src="docs/images/admin.png" alt="System Administrator" /><br/><sub><b>/sys</b> — isolated admin console (dark)</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/collections.png" alt="Collections" /><br/><sub><b>Collections</b> — named sets</sub></td>
+    <td><img src="docs/images/mobile.png" alt="Mobile" /><br/><sub><b>Mobile</b> — light &amp; dark</sub></td>
+  </tr>
+</table>
 
 ---
 
-## 🚀 Getting Started
+## <img src="docs/icons/rocket.svg" width="22" align="center" /> Quick start
 
 **Prerequisites:** Node **22+** and npm.
 
 ```bash
-# 1. Install dependencies
-npm install
+# 1. Run it — zero config (static catalog, all Studio tools)
+npm ci && npm run dev          # → http://localhost:3000
 
-# 2. Copy the env template, then fill in the values you need
-cp .env.example .env.local
-
-# 3. Start the dev server
+# 2. Full app (accounts, teams, admin)
+cp .env.example .env.local     # then edit — see docs/environment.md
+npm run db:migrate             # apply migrations 0000–0014
+npm run db:seed                # optional: load the catalog
+npm run platform:admin -- create you@example.com "You"   # optional: /sys admin
 npm run dev
 ```
 
-Open **<http://localhost:3000>**. The app runs immediately off the static snapshot — configure the variables below to unlock accounts, billing, and AI.
+Full walkthrough → **[docs/getting-started.md](docs/getting-started.md)** · every key → **[docs/environment.md](docs/environment.md)** & [SETUP-KEYS.md](SETUP-KEYS.md).
 
 ---
 
-## ⚙️ Environment Variables
+## <img src="docs/icons/cpu.svg" width="22" align="center" /> Tech stack
 
-All variables are validated by `lib/env.ts` (Zod) — **never read `process.env` directly elsewhere.** In production, `DATABASE_URL` and `AUTH_SECRET` are required (the deploy **fails closed** if missing). Everything else is optional and degrades gracefully.
-
-| Variable | Purpose |
-|----------|---------|
-| `NEXT_PUBLIC_SITE_URL` | Base URL for metadata, OG images, canonical links |
-| `DATABASE_URL` | Neon Postgres pooled connection string |
-| `AUTH_SECRET` | Auth.js session secret (`npx auth secret`) |
-| `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET` | Google OAuth credentials |
-| `AUTH_EMAIL_SERVER` / `AUTH_EMAIL_FROM` | SMTP for magic-link + transactional email |
-| `GEMINI_API_KEY` / `GEMINI_MODEL` | AI color concierge (falls back to local matching) |
-| `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` | Stripe API + webhook signing |
-| `STRIPE_PRICE_*` | Price IDs for Pro / Studio monthly + yearly |
-| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | Public-API rate limiting |
-| `NEXT_PUBLIC_POSTHOG_KEY` / `NEXT_PUBLIC_POSTHOG_HOST` | Product analytics |
-| `SENTRY_DSN` / `NEXT_PUBLIC_SENTRY_DSN` | Error reporting (no-op until set) |
+| Area | Choice |
+|------|--------|
+| **Framework** | Next.js 16 (App Router), React 19, TypeScript (strict) |
+| **Styling** | Tailwind v4 (`@theme inline`, CSS role tokens) + a shared `components/ui` kit |
+| **Color** | OKLCH via `culori`; WCAG AA/AAA contrast gating |
+| **Data** | Drizzle ORM + Neon Postgres (migrations `0000`–`0014`) |
+| **Auth** | Auth.js v5 (Google OAuth + magic links) · isolated `/sys` admin (scrypt + TOTP) |
+| **Billing** | Stripe (Checkout, Billing Portal, idempotent webhooks) |
+| **AI** | Google Gemini color director (REST, local fallback) |
+| **Infra** | Upstash Redis (rate limits) · Nodemailer (SMTP) · PostHog · Sentry |
+| **Tests / CI** | Vitest (unit + in-process Postgres integration) · GitHub Actions (lockfile → migrations → lint → typecheck → test → build) |
 
 ---
 
-## 🗄️ Database
+## <img src="docs/icons/layout.svg" width="22" align="center" /> Architecture
 
-```bash
-npm run db:generate   # generate a migration from schema changes
-npm run db:migrate    # apply migrations
-npm run db:seed       # seed the catalog from the snapshot
-npm run db:studio     # open Drizzle Studio
-```
+![Architecture](docs/diagrams/architecture.svg)
 
-Migrations live in `drizzle/` (currently `0000`–`0004`). After pulling changes that touch the schema, run `npm run db:migrate`.
+Server-first routes over pure, tested `lib/` domain logic, with a static snapshot powering public reads. Deep dive → **[docs/architecture.md](docs/architecture.md)** · schema → **[docs/database.md](docs/database.md)**.
 
 ---
 
-## 💳 Stripe
+## <img src="docs/icons/book.svg" width="22" align="center" /> Documentation
 
-```bash
-npm run stripe:setup  # creates products/prices, prints the price IDs to paste into .env.local
-```
+| | Document | |
+|---|---|---|
+| <img src="docs/icons/rocket.svg" width="16"/> | [Getting Started](docs/getting-started.md) | Clone → running |
+| <img src="docs/icons/settings.svg" width="16"/> | [Environment](docs/environment.md) | Every variable |
+| <img src="docs/icons/layout.svg" width="16"/> | [Architecture](docs/architecture.md) | System design |
+| <img src="docs/icons/database.svg" width="16"/> | [Database](docs/database.md) | Schema & migrations |
+| <img src="docs/icons/lock.svg" width="16"/> | [Authentication](docs/authentication.md) | Auth & the admin plane |
+| <img src="docs/icons/shield.svg" width="16"/> | [Security](docs/security.md) | Posture & trust boundaries |
+| <img src="docs/icons/api.svg" width="16"/> | [API](docs/api.md) | Palette API & token sync |
+| <img src="docs/icons/credit.svg" width="16"/> | [Billing](docs/billing.md) | Plans, entitlements, Stripe |
+| <img src="docs/icons/rocket.svg" width="16"/> | [Deployment](docs/deployment.md) | CI/CD & release checklist |
+| <img src="docs/icons/sparkles.svg" width="16"/> | [Accessibility](docs/accessibility.md) | The guarantee, in & out |
+| <img src="docs/icons/monitor.svg" width="16"/> | [Performance](docs/performance.md) | Snapshots, ISR, caching |
+| <img src="docs/icons/terminal.svg" width="16"/> | [Troubleshooting](docs/troubleshooting.md) | Common failures |
+| <img src="docs/icons/users.svg" width="16"/> | [Contributing](docs/contributing.md) | Workflow & conventions |
+| <img src="docs/icons/sparkles.svg" width="16"/> | [Roadmap](docs/roadmap.md) · [Changelog](docs/changelog.md) · [FAQ](docs/faq.md) | |
 
-The webhook lives at **`/api/stripe/webhook`** (idempotent via a `webhook_events` table). Plan is derived **server-side** from the Stripe price — never trusted from the client.
-
----
-
-## 🔐 Admin
-
-The admin area at **`/admin`** is gated by an email allow-list in `lib/admin.ts`:
-
-```ts
-export const ADMIN_EMAILS = new Set(
-  ["openair.mailer@gmail.com"].map((e) => e.toLowerCase())
-);
-```
-
-Add or change addresses there — no migration needed. Non-admins receive a **404** rather than a 403, so the area's existence isn't advertised.
-
-**Tabs:** **Overview** (KPIs) · **Users** (searchable) · **Content** (most-saved palettes, popular use-cases, generator harmonies) · **Health**.
-
-A public uptime probe is exposed at **`/api/health`** — it returns boolean checks only (no secrets) and responds `503` when a critical dependency is degraded.
+Operations: **[docs/RUNBOOK.md](docs/RUNBOOK.md)** (backups, restore, incident response).
 
 ---
 
-## 📜 Scripts
+## <img src="docs/icons/terminal.svg" width="22" align="center" /> Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start the dev server |
-| `npm run build` / `npm start` | Production build / serve |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm test` / `npm run test:watch` | Vitest |
-| `npm run palettes:snapshot` | Rebuild `snapshot.json` from source |
+| `npm run dev` / `build` / `start` | Dev · production build · serve |
+| `npm run lint` · `typecheck` · `test` · `test:integration` | The CI gate, locally |
+| `npm run db:migrate` · `db:seed` · `db:studio` · `db:check` | Database lifecycle |
+| `npm run platform:admin -- create <email> "<name>"` | Create a `/sys` Super Admin |
+| `npm run stripe:setup` | Create Stripe products + print price IDs |
+| `npm run palettes:snapshot` | Rebuild `snapshot.json` |
 
 ---
 
-## 🗂️ Project Structure
+## <img src="docs/icons/users.svg" width="22" align="center" /> Contributing
 
-```
-app/            App Router routes (gallery, studio, dashboard, admin, api/*)
-components/     UI — chrome, gallery, studio, showroom, billing, auth, admin
-lib/            Domain logic — color, db, auth, plans, saves, admin, health, env
-drizzle/        SQL migrations + meta
-scripts/        build-snapshot, stripe-setup
-tests/          Vitest suites
-types/          Ambient type declarations
-```
+Issues and PRs welcome. Read **[docs/contributing.md](docs/contributing.md)** and the [Code of Conduct](CODE_OF_CONDUCT.md). Security reports: [SECURITY.md](SECURITY.md). Questions: [SUPPORT.md](SUPPORT.md).
 
 ---
 
-## 🧪 Testing and CI
+## <img src="docs/icons/shield.svg" width="22" align="center" /> License
 
-```bash
-npm run lint && npm run typecheck && npm test
-```
+© Open Air. All rights reserved. See [LICENSE](LICENSE).
 
-GitHub Actions runs the same gate on every push and PR: **lint → typecheck → test → build**.
-
----
-
-## 📄 License
-
-© Open Air. All rights reserved.
-
-<div align="center">
-<br />
-<sub>Built with Next.js, Tailwind, and a love for color · Open Air</sub>
-</div>
+<div align="center"><br /><sub>Built with Next.js, Tailwind, and a love for color · Open Air · <a href="mailto:openair.mailer@gmail.com">openair.mailer@gmail.com</a></sub></div>
