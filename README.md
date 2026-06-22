@@ -146,7 +146,7 @@ npm run db:seed       # seed the catalog from the snapshot
 npm run db:studio     # open Drizzle Studio
 ```
 
-Migrations live in `drizzle/` (currently `0000`–`0004`). After pulling changes that touch the schema, run `npm run db:migrate`.
+Migrations live in `drizzle/` (currently `0000`–`0006`). After pulling changes that touch the schema, run `npm run db:migrate`.
 
 ---
 

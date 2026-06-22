@@ -119,6 +119,9 @@ export function AuthNav() {
               <MenuLink href="/dashboard" onClick={() => setOpen(false)}>
                 Dashboard
               </MenuLink>
+              <MenuLink href="/bookmarks" onClick={() => setOpen(false)}>
+                Saved palettes
+              </MenuLink>
               <MenuLink href="/account" onClick={() => setOpen(false)}>
                 Account &amp; billing
               </MenuLink>

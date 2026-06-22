@@ -43,6 +43,13 @@
       "when": 1782031498909,
       "tag": "0005_wave5_publishing",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1782032202777,
+      "tag": "0006_wave5_social",
+      "breakpoints": true
     }
   ]
 }

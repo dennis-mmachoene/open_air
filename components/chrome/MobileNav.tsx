@@ -169,6 +169,13 @@ export function MobileNav() {
                       </span>
                     </div>
                     <Link
+                      href="/bookmarks"
+                      onClick={close}
+                      className={linkCls("/bookmarks")}
+                    >
+                      Saved palettes
+                    </Link>
+                    <Link
                       href="/account"
                       onClick={close}
                       className={linkCls("/account")}

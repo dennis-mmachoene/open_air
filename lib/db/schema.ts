@@ -159,6 +159,7 @@ export const publishedPalettes = pgTable(
     license: text("license").notNull().default("all-rights-reserved"),
     tags: jsonb("tags").$type<string[]>().notNull().default([]),
     visibility: text("visibility").notNull().default("public"),
+    featured: boolean("featured").notNull().default(false),
     likeCount: integer("like_count").notNull().default(0),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
@@ -182,6 +183,63 @@ export const paletteLikes = pgTable(
   },
   (t) => [primaryKey({ columns: [t.userId, t.publishedId] })],
 );
+
+export const follows = pgTable(
+  "follows",
+  {
+    followerId: uuid("follower_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    followingId: uuid("following_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: createdAt(),
+  },
+  (t) => [primaryKey({ columns: [t.followerId, t.followingId] })],
+);
+
+export const bookmarks = pgTable(
+  "bookmarks",
+  {
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    publishedId: uuid("published_id")
+      .notNull()
+      .references(() => publishedPalettes.id, { onDelete: "cascade" }),
+    createdAt: createdAt(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.publishedId] })],
+);
+
+export const comments = pgTable(
+  "comments",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    publishedId: uuid("published_id")
+      .notNull()
+      .references(() => publishedPalettes.id, { onDelete: "cascade" }),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    body: text("body").notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index("comments_published_idx").on(t.publishedId)],
+);
+
+export const reports = pgTable("reports", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  publishedId: uuid("published_id")
+    .notNull()
+    .references(() => publishedPalettes.id, { onDelete: "cascade" }),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  reason: text("reason").notNull(),
+  resolved: boolean("resolved").notNull().default(false),
+  createdAt: createdAt(),
+});
 
 export const savedPalettes = pgTable(
   "saved_palettes",

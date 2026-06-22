@@ -3,9 +3,13 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { getPublishedBySlug, hasLiked, LICENSES } from "@/lib/publish";
+import { isBookmarked, listComments } from "@/lib/social";
 import { Strata } from "@/components/palette/Strata";
 import { CopyHexList } from "@/components/community/CopyHexList";
 import { LikeButton } from "@/components/community/LikeButton";
+import { BookmarkButton } from "@/components/community/BookmarkButton";
+import { ReportButton } from "@/components/community/ReportButton";
+import { Comments, type CommentView } from "@/components/community/Comments";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -15,6 +19,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 export const dynamic = "force-dynamic";
+
+// Licenses that permit a derivative work (remix).
+const REMIXABLE = new Set(["attribution", "commercial", "public-domain"]);
 
 export default async function PublishedPalettePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -26,9 +33,26 @@ export default async function PublishedPalettePage({ params }: { params: Promise
   // Private palettes are visible only to their author.
   if (p.visibility === "private" && viewerId !== p.authorId) notFound();
 
-  const liked = viewerId ? await hasLiked(viewerId, p.id) : false;
+  const [liked, bookmarked, comments] = await Promise.all([
+    viewerId ? hasLiked(viewerId, p.id) : Promise.resolve(false),
+    viewerId ? isBookmarked(viewerId, p.id) : Promise.resolve(false),
+    listComments(p.id),
+  ]);
   const license = LICENSES.find((l) => l.id === p.license)?.label ?? p.license;
   const author = p.authorHandle ? `@${p.authorHandle}` : (p.authorName ?? "Anonymous");
+  const canModerate = viewerId === p.authorId;
+  const canRemix = REMIXABLE.has(p.license);
+  const remixHref = `/publish?colors=${encodeURIComponent(p.hexes.join(","))}`;
+
+  const initialComments: CommentView[] = comments.map((c) => ({
+    id: c.id,
+    body: c.body,
+    createdAt: c.createdAt.toISOString(),
+    authorId: c.authorId,
+    authorName: c.authorName,
+    authorHandle: c.authorHandle,
+    authorImage: c.authorImage,
+  }));
 
   return (
     <article className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-5 py-12 sm:px-8">
@@ -47,7 +71,21 @@ export default async function PublishedPalettePage({ params }: { params: Promise
               )}
             </p>
           </div>
-          <LikeButton id={p.id} initialLiked={liked} initialCount={p.likeCount} />
+          <div className="flex flex-wrap items-center gap-2">
+            <LikeButton id={p.id} initialLiked={liked} initialCount={p.likeCount} />
+            <BookmarkButton id={p.id} initialBookmarked={bookmarked} />
+            {canRemix ? (
+              <Link
+                href={remixHref}
+                className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M16 3h5v5M21 3l-7 7M8 21H3v-5M3 21l7-7" />
+                </svg>
+                Remix
+              </Link>
+            ) : null}
+          </div>
         </div>
         {p.description ? <p className="text-lg text-text-soft">{p.description}</p> : null}
       </header>
@@ -76,9 +114,12 @@ export default async function PublishedPalettePage({ params }: { params: Promise
         </div>
       ) : null}
 
-      <p className="text-sm text-text-muted">
-        <Link href="/explore" className="underline-offset-4 hover:underline">← Back to Explore</Link>
-      </p>
+      <Comments publishedId={p.id} initial={initialComments} canModerate={canModerate} />
+
+      <div className="flex items-center justify-between">
+        <Link href="/explore" className="text-sm text-text-muted underline-offset-4 hover:underline">← Back to Explore</Link>
+        <ReportButton id={p.id} />
+      </div>
     </article>
   );
 }
