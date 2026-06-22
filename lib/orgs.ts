@@ -3,6 +3,7 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import { getDb } from "./db";
 import { organizations, organizationMembers, organizationInvites, users } from "./db/schema";
 import { normalizePlan, PLAN_FEATURES } from "./plans";
+import { writeOrgAudit } from "./org-audit";
 
 export const ORG_ROLES = ["owner", "admin", "member"] as const;
 export type OrgRole = (typeof ORG_ROLES)[number];
@@ -208,6 +209,7 @@ export async function inviteMember(
     .insert(organizationInvites)
     .values({ orgId, email: clean, role: r, token, invitedBy: actorId, expiresAt })
     .returning();
+  await writeOrgAudit({ orgId, actorId, action: "member.invited", targetType: "invite", targetId: row.id, metadata: { email: clean, role: r } });
   return row as Invite;
 }
 
@@ -258,6 +260,7 @@ export async function acceptInvite(token: string, userId: string): Promise<{ org
     .update(organizationInvites)
     .set({ status: "accepted" })
     .where(eq(organizationInvites.id, invite.id));
+  await writeOrgAudit({ orgId: invite.orgId, actorId: userId, action: "member.joined", targetType: "user", targetId: userId, metadata: { role: invite.role } });
   return { orgSlug: invite.orgSlug };
 }
 
@@ -289,6 +292,7 @@ export async function updateMemberRole(
     .update(organizationMembers)
     .set({ role })
     .where(and(eq(organizationMembers.orgId, orgId), eq(organizationMembers.userId, targetUserId)));
+  await writeOrgAudit({ orgId, actorId, action: "member.role_changed", targetType: "user", targetId: targetUserId, metadata: { from: current, to: role } });
 }
 
 /** Remove a member. Owner/admin; admins can't remove owners; never the last owner. */
@@ -304,6 +308,7 @@ export async function removeMember(orgId: string, actorId: string, targetUserId:
   await db
     .delete(organizationMembers)
     .where(and(eq(organizationMembers.orgId, orgId), eq(organizationMembers.userId, targetUserId)));
+  await writeOrgAudit({ orgId, actorId, action: "member.removed", targetType: "user", targetId: targetUserId, metadata: { role: targetRole } });
 }
 
 export async function renameOrg(orgId: string, actorId: string, name: string): Promise<void> {
@@ -312,6 +317,7 @@ export async function renameOrg(orgId: string, actorId: string, name: string): P
   if (clean.length < 2) throw new Error("Team name must be at least 2 characters.");
   const db = getDb();
   await db.update(organizations).set({ name: clean, updatedAt: new Date() }).where(eq(organizations.id, orgId));
+  await writeOrgAudit({ orgId, actorId, action: "org.renamed", targetType: "org", targetId: orgId, metadata: { name: clean } });
 }
 
 

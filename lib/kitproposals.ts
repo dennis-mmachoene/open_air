@@ -3,6 +3,7 @@ import { getDb } from "./db";
 import { brandKits, brandKitAssets, brandKitProposals } from "./db/schema";
 import { requireRole } from "./orgs";
 import { addAsset, updateAsset, deleteAsset } from "./brandkits";
+import { writeOrgAudit } from "./org-audit";
 
 export type ProposalType = "add_asset" | "update_asset" | "delete_asset";
 const TYPES = new Set<ProposalType>(["add_asset", "update_asset", "delete_asset"]);
@@ -70,6 +71,7 @@ export async function proposeChange(kitId: string, userId: string, input: Propos
     .insert(brandKitProposals)
     .values({ kitId, proposedBy: userId, type: input.type, targetAssetId, payload, note: input.note?.slice(0, 280) || null })
     .returning();
+  await writeOrgAudit({ orgId, actorId: userId, action: "proposal.created", targetType: "kit", targetId: kitId, metadata: { type: input.type } });
   return row as Proposal;
 }
 
@@ -122,6 +124,7 @@ export async function approveProposal(proposalId: string, actorId: string): Prom
     .update(brandKitProposals)
     .set({ status: "approved", reviewedBy: actorId, reviewedAt: new Date() })
     .where(eq(brandKitProposals.id, proposalId));
+  await writeOrgAudit({ orgId, actorId, action: "proposal.approved", targetType: "kit", targetId: proposal.kitId, metadata: { type: proposal.type } });
 }
 
 /** Reject a pending proposal with an optional note. Requires admin/owner. */
@@ -136,4 +139,5 @@ export async function rejectProposal(proposalId: string, actorId: string, note?:
     .update(brandKitProposals)
     .set({ status: "rejected", reviewedBy: actorId, reviewNote: note?.slice(0, 280) || null, reviewedAt: new Date() })
     .where(eq(brandKitProposals.id, proposalId));
+  await writeOrgAudit({ orgId, actorId, action: "proposal.rejected", targetType: "kit", targetId: proposal.kitId, metadata: { type: proposal.type } });
 }

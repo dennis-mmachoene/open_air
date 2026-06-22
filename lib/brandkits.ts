@@ -3,6 +3,7 @@ import { and, asc, desc, eq } from "drizzle-orm";
 import { getDb } from "./db";
 import { brandKits, brandKitAssets } from "./db/schema";
 import { requireRole } from "./orgs";
+import { writeOrgAudit } from "./org-audit";
 
 const HEX_RE = /^#[0-9a-f]{6}$/i;
 
@@ -45,6 +46,7 @@ export async function createKit(orgId: string, actorId: string, name: string, de
     .insert(brandKits)
     .values({ orgId, slug: slugify(clean), name: clean, description: description?.slice(0, 280) || null, createdBy: actorId })
     .returning();
+  await writeOrgAudit({ orgId, actorId, action: "kit.created", targetType: "kit", targetId: row.id, metadata: { name: clean } });
   return row as BrandKit;
 }
 
@@ -94,6 +96,7 @@ export async function deleteKit(kitId: string, actorId: string): Promise<void> {
   await requireRole(orgId, actorId, "admin");
   const db = getDb();
   await db.delete(brandKits).where(eq(brandKits.id, kitId));
+  await writeOrgAudit({ orgId, actorId, action: "kit.deleted", targetType: "kit", targetId: kitId });
 }
 
 /** Add a color (1 hex) or palette (many) to a kit. Requires admin/owner. */

@@ -97,6 +97,16 @@ export default async function OrgPage({ params }: { params: Promise<{ slug: stri
         <Link href={`/orgs/${org.slug}/kits`} className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">Open brand kits →</Link>
       </section>
 
+      {canManage ? (
+        <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-5">
+          <div>
+            <h2 className="font-display text-lg text-text">Audit log</h2>
+            <p className="text-sm text-text-soft">Every membership and brand-kit change, with CSV/JSON export.</p>
+          </div>
+          <Link href={`/orgs/${org.slug}/audit`} className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">View audit log →</Link>
+        </section>
+      ) : null}
+
       <section className="rounded-2xl border border-dashed border-border p-5 text-sm text-text-muted">
         A review / approval workflow for color changes is coming next for teams.
       </section>

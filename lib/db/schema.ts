@@ -590,3 +590,28 @@ export const brandKitProposals = pgTable(
     index("brand_kit_proposals_status_idx").on(t.status),
   ],
 );
+
+// ---------------------------------------------------------------------------
+// Organization audit log (Wave 8) — per-team activity trail for governance.
+// ---------------------------------------------------------------------------
+
+export const orgAuditLogs = pgTable(
+  "org_audit_logs",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    orgId: uuid("org_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    actorId: uuid("actor_id").references(() => users.id, { onDelete: "set null" }),
+    actorLabel: text("actor_label"),
+    action: text("action").notNull(),
+    targetType: text("target_type"),
+    targetId: text("target_id"),
+    metadata: jsonb("metadata").$type<Record<string, unknown>>().notNull().default({}),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index("org_audit_org_idx").on(t.orgId),
+    index("org_audit_created_idx").on(t.createdAt),
+  ],
+);
