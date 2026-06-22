@@ -157,4 +157,36 @@ Server-first routes over pure, tested `lib/` domain logic, with a static snapsho
 | <img src="docs/icons/credit.svg" width="16"/> | [Billing](docs/billing.md) | Plans, entitlements, Stripe |
 | <img src="docs/icons/rocket.svg" width="16"/> | [Deployment](docs/deployment.md) | CI/CD & release checklist |
 | <img src="docs/icons/sparkles.svg" width="16"/> | [Accessibility](docs/accessibility.md) | The guarantee, in & out |
-| <img src="docs/icons/monitor.svg" width="16"/> | [Performance
+| <img src="docs/icons/monitor.svg" width="16"/> | [Performance](docs/performance.md) | Snapshots, ISR, caching |
+| <img src="docs/icons/terminal.svg" width="16"/> | [Troubleshooting](docs/troubleshooting.md) | Common failures |
+| <img src="docs/icons/users.svg" width="16"/> | [Contributing](docs/contributing.md) | Workflow & conventions |
+| <img src="docs/icons/sparkles.svg" width="16"/> | [Roadmap](docs/roadmap.md) · [Changelog](docs/changelog.md) · [FAQ](docs/faq.md) | |
+
+Operations: **[docs/RUNBOOK.md](docs/RUNBOOK.md)** (backups, restore, incident response).
+
+---
+
+## <img src="docs/icons/terminal.svg" width="22" align="center" /> Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` / `build` / `start` | Dev · production build · serve |
+| `npm run lint` · `typecheck` · `test` · `test:integration` | The CI gate, locally |
+| `npm run db:migrate` · `db:seed` · `db:studio` · `db:check` | Database lifecycle |
+| `npm run platform:admin -- create <email> "<name>"` | Create a `/sys` Super Admin |
+| `npm run stripe:setup` | Create Stripe products + print price IDs |
+| `npm run palettes:snapshot` | Rebuild `snapshot.json` |
+
+---
+
+## <img src="docs/icons/users.svg" width="22" align="center" /> Contributing
+
+Issues and PRs welcome. Read **[docs/contributing.md](docs/contributing.md)** and the [Code of Conduct](CODE_OF_CONDUCT.md). Security reports: [SECURITY.md](SECURITY.md). Questions: [SUPPORT.md](SUPPORT.md).
+
+---
+
+## <img src="docs/icons/shield.svg" width="22" align="center" /> License
+
+© Open Air. All rights reserved. See [LICENSE](LICENSE).
+
+<div align="center"><br /><sub>Built with Next.js, Tailwind, and a love for color · Open Air · <a href="mailto:openair.mailer@gmail.com">openair.mailer@gmail.com</a></sub></div>
