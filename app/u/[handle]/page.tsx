@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { getProfileByHandle, listByAuthor, safeWebsite } from "@/lib/publish";
 import { countFollowers, countFollowing, isFollowing } from "@/lib/social";
 import { PublishedCard } from "@/components/community/PublishedCard";
+import { EmptyState } from "@/components/ui";
 import { FollowButton } from "@/components/community/FollowButton";
 
 export async function generateMetadata({ params }: { params: Promise<{ handle: string }> }): Promise<Metadata> {
@@ -58,7 +59,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ handle
       </header>
 
       {published.length === 0 ? (
-        <p className="text-text-soft">No published palettes yet.</p>
+        <EmptyState title="No published palettes yet" description="When this creator publishes a palette, it shows up here." />
       ) : (
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
           {published.map((p) => (

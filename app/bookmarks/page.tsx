@@ -3,6 +3,7 @@ import Link from "next/link";
 import { requireUser } from "@/lib/auth-guard";
 import { listBookmarks } from "@/lib/social";
 import { PublishedCard } from "@/components/community/PublishedCard";
+import { EmptyState } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Saved palettes" };
 export const dynamic = "force-dynamic";
@@ -20,9 +21,7 @@ export default async function BookmarksPage() {
       </header>
 
       {saved.length === 0 ? (
-        <div className="rounded-card border border-dashed border-border p-12 text-center text-text-soft">
-          Nothing saved yet. <Link href="/explore" className="underline underline-offset-4">Explore community palettes</Link> and tap Save.
-        </div>
+        <EmptyState title="Nothing saved yet" description="Browse the community and tap Save to keep palettes here." action={<Link href="/explore" className="text-sm text-text underline-offset-4 hover:underline">Explore community palettes →</Link>} />
       ) : (
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
           {saved.map((p) => (

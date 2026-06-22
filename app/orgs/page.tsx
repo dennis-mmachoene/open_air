@@ -4,6 +4,7 @@ import { requireUser } from "@/lib/auth-guard";
 import { listOrgsForUser } from "@/lib/orgs";
 import { getEntitlements } from "@/lib/entitlements";
 import { CreateOrgForm } from "@/components/orgs/CreateOrgForm";
+import { EmptyState } from "@/components/ui";
 import { UpgradeCard } from "@/components/studio/UpgradeCard";
 
 export const metadata: Metadata = { title: "Teams" };
@@ -22,7 +23,7 @@ export default async function OrgsPage() {
       </header>
 
       {orgs.length === 0 ? (
-        <p className="text-text-soft">You&apos;re not on any team yet. Create one to get started.</p>
+        <EmptyState title="No teams yet" description="Create a team to share brand kits, invite collaborators, and govern color changes together." />
       ) : (
         <ul className="flex flex-col gap-2">
           {orgs.map((o) => (

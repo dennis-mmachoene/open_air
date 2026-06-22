@@ -3,6 +3,7 @@ import Link from "next/link";
 import { listFeed, type FeedSort } from "@/lib/publish";
 import { listFeatured } from "@/lib/social";
 import { PublishedCard } from "@/components/community/PublishedCard";
+import { EmptyState } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Explore",
@@ -45,13 +46,15 @@ export default async function ExplorePage({ searchParams }: { searchParams: Prom
       </header>
 
       {feed.length === 0 ? (
-        <div className="rounded-card border border-dashed border-border p-12 text-center text-text-soft">
-          {active === "featured" ? (
-            <>No staff picks yet — check back soon.</>
-          ) : (
-            <>Nothing published yet. <Link href="/publish" className="underline underline-offset-4">Be the first to publish a palette.</Link></>
-          )}
-        </div>
+        active === "featured" ? (
+          <EmptyState title="No staff picks yet" description="Our favorites will appear here soon — check back." />
+        ) : (
+          <EmptyState
+            title="Nothing published yet"
+            description="Be the first to share a palette with the community."
+            action={<Link href="/publish" className="text-sm text-text underline-offset-4 hover:underline">Publish a palette →</Link>}
+          />
+        )
       ) : (
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
           {feed.map((p) => (

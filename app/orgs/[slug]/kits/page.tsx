@@ -5,6 +5,7 @@ import { requireUser } from "@/lib/auth-guard";
 import { getOrgBySlug, getMembership } from "@/lib/orgs";
 import { listKits } from "@/lib/brandkits";
 import { pendingCountByKit } from "@/lib/kitproposals";
+import { EmptyState } from "@/components/ui";
 import { createKitAction } from "../kits/_actions";
 
 export const metadata: Metadata = { title: "Brand kits", robots: { index: false, follow: false } };
@@ -33,7 +34,7 @@ export default async function KitsPage({ params, searchParams }: { params: Promi
       {error ? <p className="rounded-control border border-p-danger/40 bg-p-danger/5 px-3 py-2 text-sm text-p-danger">{error}</p> : null}
 
       {kits.length === 0 ? (
-        <p className="text-text-soft">No brand kits yet.{canManage ? " Create one below." : ""}</p>
+        <EmptyState title="No brand kits yet" description={canManage ? "Create your team\u2019s first brand kit below \u2014 a shared set of canonical colors and palettes." : "This team hasn\u2019t created any brand kits yet."} />
       ) : (
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {kits.map((k) => (
