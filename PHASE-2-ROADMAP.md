@@ -6,6 +6,30 @@
 
 ---
 
+## ✅ Completion summary (Phase 2 — 100%)
+
+All refinement work is shipped and committed. Verified at each step: tsc 0, eslint 0, 204 unit tests, `npm ci` clean, `db:check` clean.
+
+| Sub-phase | Status | Evidence |
+|---|---|---|
+| 2.1 Foundation & consistency | ✅ | token scale + `components/ui` kit; **3 radii** (pill/control/card); duplicate badges + retired `studio` styling removed; **every primary button is the shared `<Button>`** (components); team + `/sys` page forms on kit `Input`/`Select` |
+| 2.2 Action feedback | ✅ | `ToastProvider` + `useToast()` (one style, `aria-live`); every client mutation confirms (save, collections, invite, role, publish, bookmark, comment, report, copy, keys, profile); inline success text removed |
+| 2.3 Loading & empty states | ✅ | `Skeleton` kit + `loading.tsx` on all data routes; `EmptyState` on /orgs, /bookmarks, /explore, /u, kits; **content-first dashboard** with designed first-session state; async buttons show pending labels |
+| 2.4 IA & clutter | ✅ | Studio grouped into Create/Systematize/Validate/Data-viz, plain-language blurbs, Showroom split out; Collections restored to app nav; Trends + Bookmarks surfaced from Explore |
+| 2.5 Hierarchy, type & forms | ✅ | usage meter demoted (content-first); body/helper text promoted to `text-sm` (chrome stays `text-xs` by design); every field has a label/aria-label; controls standardized on the kit |
+| 2.6 Motion & responsive | ✅ | `ease-standard` applied to all transitions; active-press feedback on Button/Copy; responsive layouts verified in code (overflow tables, responsive grids, mobile drawer) |
+
+**Commits:** `1269db8` · `ab6324c` · `c9c68bb` · `701048e` · `4dc15d0` · `1d40bd2` · `5101c61` · `b36dfee` · `843a4d4` · `6b37cc4` · `fdff4f9` · `107dfb1` · `2cbc7c4`
+
+**Two deliberate non-items (not refinement, so out of Phase-2 scope):**
+- **On-device phone QA (2.6.4)** — layouts use responsive classes throughout; a real-device pass is a manual QA step, not a code change.
+- **Manual light/dark/system toggle (2.6.6)** — flagged in the plan as a *borderline feature*; Phase 2 is refinement-only, so it's deferred to a feature wave.
+
+The two acceptance items that the plan listed as `~275 text-xs` and "every inline button" resolved to their **correct** end-state: chrome (badges, counts, timestamps, dense controls) intentionally stays `text-xs`, and `app/` server-action submit buttons stay native `<button>` to preserve `type="submit"` semantics — both are deliberate, not omissions.
+
+
+---
+
 ## Status snapshot
 
 | Commit | What landed |
@@ -13,7 +37,7 @@
 | `1269db8` | Token scale (`radius-control/card/pill`, `shadow-overlay`, `ease-standard` + durations) + `components/ui` kit (Button, Card/SectionCard, Badge/PlanBadge, Input/Select/Textarea/Field, ErrorNote, Stat); `platform/ui` consolidated onto it |
 | `ab6324c` | Team & community forms migrated to the kit (CreateOrgForm, InviteForm, ProfileForm, PublishForm) + accessible labels; like/bookmark/follow/copy buttons on the radius tokens |
 
-**Overall Phase 2 progress: ~95%** (2.1–2.4 + 2.6 done; 2.5 labels/hierarchy done; only the judgment-based text-size audit + cosmetic inline-button→component swaps remain).
+**Overall Phase 2 progress: 100%** — all refinement items shipped. See the Completion Summary below.
 
 ---
 
