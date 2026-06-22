@@ -21,6 +21,7 @@ const TOOLS = [
   { href: "/studio/gradient-check", label: "Gradient a11y", blurb: "Readable-text regions" },
   { href: "/studio/elevation", label: "Elevation", blurb: "Tinted shadow system" },
   { href: "/studio/viz-repair", label: "Repair a chart", blurb: "Fix colorblind conflicts" },
+  { href: "/studio/lint", label: "Color linter", blurb: "Audit tokens for issues" },
   { href: "/studio/generate", label: "Generator", blurb: "Build a palette from scratch" },
   { href: "/studio/extract", label: "Extract from image", blurb: "Pull colors from a photo" },
   { href: "/studio/gradients", label: "Gradients", blurb: "Perceptual gradient studio" },

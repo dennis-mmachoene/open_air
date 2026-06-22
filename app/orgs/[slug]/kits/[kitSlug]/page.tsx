@@ -6,6 +6,7 @@ import { getOrgBySlug, getMembership, listMembers } from "@/lib/orgs";
 import { getKit } from "@/lib/brandkits";
 import { listProposals } from "@/lib/kitproposals";
 import { Strata } from "@/components/palette/Strata";
+import { lintTokens } from "@/lib/color/lint";
 import { CopyHex } from "@/components/orgs/CopyHex";
 import {
   addAssetAction,
@@ -44,6 +45,7 @@ export default async function KitDetailPage({ params, searchParams }: { params: 
     listProposals(kit.id, "pending"),
     canManage ? listMembers(org.id) : Promise.resolve([]),
   ]);
+  const lintReport = lintTokens(kit.assets.flatMap((a) => a.hexes.map((hex) => ({ name: a.name, hex }))));
   const nameOf = (id: string) => members.find((m) => m.userId === id)?.name ?? members.find((m) => m.userId === id)?.email ?? "A member";
   const assetName = (id: string | null) => kit.assets.find((a) => a.id === id)?.name ?? "an asset";
 
@@ -68,6 +70,28 @@ export default async function KitDetailPage({ params, searchParams }: { params: 
 
       {error ? <p className="rounded-lg border border-p-danger/40 bg-p-danger/5 px-3 py-2 text-sm text-p-danger">{error}</p> : null}
       {proposed ? <p className="rounded-lg border border-green-600/40 bg-green-600/5 px-3 py-2 text-sm text-green-700 dark:text-green-400">Proposal submitted for review.</p> : null}
+
+      {kit.assets.length > 0 ? (
+        <section className="flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-surface p-4">
+          <div className="flex items-baseline gap-2">
+            <span className="font-display text-2xl text-text">{lintReport.score}</span>
+            <span className="text-xs text-text-muted">lint score</span>
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs">
+            {lintReport.counts.error > 0 ? <span className="rounded-full border border-p-danger/40 px-2.5 py-1 text-p-danger">{lintReport.counts.error} errors</span> : null}
+            {lintReport.counts.warning > 0 ? <span className="rounded-full border border-amber-600/40 px-2.5 py-1 text-amber-700 dark:text-amber-400">{lintReport.counts.warning} warnings</span> : null}
+            {lintReport.violations.length === 0 ? <span className="rounded-full bg-green-600/15 px-2.5 py-1 font-medium text-green-700 dark:text-green-400">Clean ✨</span> : null}
+          </div>
+          {lintReport.violations.length > 0 ? (
+            <details className="w-full">
+              <summary className="cursor-pointer text-xs text-text-muted hover:text-text-soft">Show {lintReport.violations.length} issue{lintReport.violations.length === 1 ? "" : "s"}</summary>
+              <ul className="mt-2 flex flex-col gap-1 text-sm text-text-soft">
+                {lintReport.violations.map((v, i) => <li key={i}>· {v.message}</li>)}
+              </ul>
+            </details>
+          ) : null}
+        </section>
+      ) : null}
 
       {canManage && pending.length > 0 ? (
         <section className="flex flex-col gap-3 rounded-2xl border border-amber-600/40 bg-amber-600/5 p-5">
