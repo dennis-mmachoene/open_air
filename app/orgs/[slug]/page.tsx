@@ -6,6 +6,7 @@ import { getOrgBySlug, getMembership, listMembers, listInvites, seatUsage, owner
 import { InviteForm } from "@/components/orgs/InviteForm";
 import { InviteRow } from "@/components/orgs/InviteRow";
 import { MemberRow } from "@/components/orgs/MemberRow";
+import { DeleteOrg } from "@/components/orgs/DeleteOrg";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -15,8 +16,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export const dynamic = "force-dynamic";
 
-export default async function OrgPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function OrgPage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ error?: string }> }) {
   const { slug } = await params;
+  const { error } = await searchParams;
   const user = await requireUser();
   const org = await getOrgBySlug(slug);
   if (!org) notFound();
@@ -42,6 +44,8 @@ export default async function OrgPage({ params }: { params: Promise<{ slug: stri
         </div>
         <span className="rounded-full border border-border px-3 py-1 text-sm capitalize text-text-soft">You&apos;re {role === "admin" ? "an" : "the"} {role}</span>
       </header>
+
+      {error ? <p className="rounded-lg border border-p-danger/40 bg-p-danger/5 px-3 py-2 text-sm text-p-danger">{error}</p> : null}
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-xl text-text">Members <span className="text-text-muted">({members.length})</span></h2>
@@ -117,9 +121,20 @@ export default async function OrgPage({ params }: { params: Promise<{ slug: stri
         </section>
       ) : null}
 
-      <section className="rounded-2xl border border-dashed border-border p-5 text-sm text-text-muted">
-        A review / approval workflow for color changes is coming next for teams.
-      </section>
+      {role === "owner" ? (
+        <section className="flex flex-col gap-4 rounded-2xl border border-p-danger/30 bg-p-danger/[0.03] p-5">
+          <div>
+            <h2 className="font-display text-lg text-text">Danger zone</h2>
+            <p className="text-sm text-text-soft">Export everything this team owns, or delete it for good.</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <a href={`/api/orgs/${org.slug}/export`} className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text hover:bg-surface-2">Export team data (JSON)</a>
+          </div>
+          <div className="border-t border-p-danger/20 pt-4">
+            <DeleteOrg slug={org.slug} name={org.name} />
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

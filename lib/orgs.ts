@@ -343,3 +343,11 @@ export async function memberEmail(userId: string): Promise<string | null> {
   const [row] = await db.select({ email: users.email }).from(users).where(eq(users.id, userId)).limit(1);
   return row?.email ?? null;
 }
+
+
+/** Permanently delete a team and everything it owns. Owner-only (cascades). */
+export async function deleteOrg(orgId: string, actorId: string): Promise<void> {
+  await requireRole(orgId, actorId, "owner");
+  const db = getDb();
+  await db.delete(organizations).where(eq(organizations.id, orgId));
+}
