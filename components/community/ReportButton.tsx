@@ -65,7 +65,7 @@ export function ReportButton({ id }: { id: string }) {
           </div>
           <div className="mt-3 flex justify-end gap-2">
             <button type="button" onClick={() => setOpen(false)} className="rounded-control px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2">Cancel</button>
-            <Button size="sm" onClick={submit} disabled={busy}>Submit</Button>
+            <Button size="sm" onClick={submit} loading={busy}>Submit</Button>
           </div>
         </div>
       ) : null}

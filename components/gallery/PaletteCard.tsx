@@ -26,7 +26,7 @@ export function PaletteCard({ palette }: { palette: Palette }) {
           </div>
         </div>
       </Link>
-      <div className="pointer-events-none absolute right-3 top-3 opacity-0 transition-opacity ease-standard group-hover:opacity-100 group-focus-within:opacity-100">
+      <div className="pointer-events-none absolute right-3 top-3 opacity-0 transition-opacity ease-standard group-hover:opacity-100 group-focus-within:opacity-100 [@media(hover:none)]:opacity-100 [@media(hover:none)]:pointer-events-auto">
         <CopyButton
           value={hexes.join(", ")}
           label="Copy"

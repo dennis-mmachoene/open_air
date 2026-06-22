@@ -51,7 +51,7 @@ export function ProfileForm({ initial }: { initial: { handle: string | null; bio
         <Input value={website} onChange={(e) => setWebsite(e.target.value)} placeholder="https://…" aria-label="Website" />
       </Field>
       <ErrorNote message={error} />
-      <Button type="submit" disabled={busy} className="self-start">{busy ? "Saving…" : "Save profile"}</Button>
+      <Button type="submit" loading={busy} className="self-start">{busy ? "Saving…" : "Save profile"}</Button>
     </form>
   );
 }

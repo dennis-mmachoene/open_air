@@ -28,7 +28,7 @@ export function CopyHex({ swatches }: { swatches: Swatch[] }) {
           style={{ backgroundColor: s.hex }}
           title={`Copy ${s.hex}`}
         >
-          <span className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-0.5 p-3 opacity-0 transition-opacity ease-standard group-hover:opacity-100 group-focus-visible:opacity-100">
+          <span className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-0.5 p-3 opacity-0 transition-opacity ease-standard group-hover:opacity-100 group-focus-visible:opacity-100 [@media(hover:none)]:opacity-100">
             <span className="rounded bg-black/60 px-2 py-0.5 font-mono text-xs text-white">
               {copied === s.hex ? "Copied!" : s.hex}
             </span>

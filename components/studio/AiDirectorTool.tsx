@@ -101,7 +101,7 @@ export function AiDirectorTool() {
               placeholder="e.g. modern, trustworthy fintech for young professionals"
               className="min-w-0 flex-1 rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
             />
-            <Button type="submit" disabled={busy || !brief.trim()} >
+            <Button type="submit" disabled={!brief.trim()} loading={busy} >
               {busy ? "Designing…" : "Create system"}
             </Button>
           </div>

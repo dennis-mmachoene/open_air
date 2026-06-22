@@ -117,7 +117,7 @@ export function PublishForm({ initialColors = "" }: { initialColors?: string }) 
       <ErrorNote message={error} />
 
       <div className="flex items-center gap-3">
-        <Button type="submit" disabled={!valid || busy}>{busy ? "Publishing…" : "Publish"}</Button>
+        <Button type="submit" disabled={!valid} loading={busy}>{busy ? "Publishing…" : "Publish"}</Button>
         <span className="text-xs text-text-muted">You keep ownership; the license tells others how they may use it.</span>
       </div>
     </form>

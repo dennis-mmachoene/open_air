@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui";
 import { deleteOrgAction } from "@/app/orgs/[slug]/_danger-actions";
 
 export function DeleteOrg({ slug, name }: { slug: string; name: string }) {
@@ -20,13 +21,7 @@ export function DeleteOrg({ slug, name }: { slug: string; name: string }) {
           placeholder={name}
           className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-p-danger focus:outline-none"
         />
-        <button
-          type="submit"
-          disabled={!armed}
-          className="rounded-pill bg-p-danger px-4 py-2 text-sm font-medium text-white transition-opacity ease-standard hover:opacity-90 disabled:opacity-40"
-        >
-          Delete team
-        </button>
+        <Button type="submit" variant="dangerSolid" disabled={!armed}>Delete team</Button>
       </div>
     </form>
   );

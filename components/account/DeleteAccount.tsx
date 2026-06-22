@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui";
 import { signOut } from "next-auth/react";
 
 const CONFIRM_WORD = "DELETE";
@@ -56,25 +57,19 @@ export function DeleteAccount() {
         />
       </label>
       <div className="flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={remove}
-          disabled={!armed || busy}
-          className="rounded-pill px-3 py-1 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
-          style={{ backgroundColor: "var(--p-danger)" }}
-        >
+        <Button variant="dangerSolid" size="sm" onClick={remove} disabled={!armed} loading={busy}>
           {busy ? "Deleting…" : "Delete my account"}
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
+          variant="secondary"
+          size="sm"
           onClick={() => {
             setConfirming(false);
             setTyped("");
           }}
-          className="rounded-pill border border-border px-3 py-1 text-sm text-text"
         >
           Cancel
-        </button>
+        </Button>
       </div>
     </div>
   );

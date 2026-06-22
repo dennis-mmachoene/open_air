@@ -32,7 +32,7 @@ export function AcceptInvite({ token }: { token: string }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <Button onClick={accept} disabled={busy}>
+      <Button onClick={accept} loading={busy}>
         {status === "authenticated" ? (busy ? "Joining…" : "Accept invite") : "Sign in to accept"}
       </Button>
       {error ? <p className="text-sm text-p-danger">{error}</p> : null}
