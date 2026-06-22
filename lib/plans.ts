@@ -10,6 +10,8 @@ export interface PlanFeatures {
   gradientStudio: boolean;
   accessibilityCenter: boolean;
   teams: boolean;
+  /** Max members per team the user owns (includes the owner). 0 = cannot create teams. */
+  teamSeats: number;
   api: boolean;
   publish: boolean;
 }
@@ -24,6 +26,7 @@ export const PLAN_FEATURES: Record<Plan, PlanFeatures> = {
     gradientStudio: false,
     accessibilityCenter: false,
     teams: false,
+    teamSeats: 0,
     api: false,
     publish: false,
   },
@@ -35,7 +38,8 @@ export const PLAN_FEATURES: Record<Plan, PlanFeatures> = {
     generator: true,
     gradientStudio: true,
     accessibilityCenter: true,
-    teams: false,
+    teams: true,
+    teamSeats: 5,
     api: true,
     publish: true,
   },
@@ -47,7 +51,8 @@ export const PLAN_FEATURES: Record<Plan, PlanFeatures> = {
     generator: true,
     gradientStudio: true,
     accessibilityCenter: true,
-    teams: false, // team workspaces not built yet — see roadmap
+    teams: true,
+    teamSeats: 25,
     api: true,
     publish: true,
   },

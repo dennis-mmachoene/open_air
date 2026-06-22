@@ -2,6 +2,7 @@ import { randomBytes } from "node:crypto";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { getDb } from "./db";
 import { organizations, organizationMembers, organizationInvites, users } from "./db/schema";
+import { normalizePlan, PLAN_FEATURES } from "./plans";
 
 export const ORG_ROLES = ["owner", "admin", "member"] as const;
 export type OrgRole = (typeof ORG_ROLES)[number];
@@ -33,6 +34,10 @@ export async function createOrg(userId: string, name: string): Promise<Org> {
   const clean = name.trim().slice(0, 60);
   if (clean.length < 2) throw new Error("Team name must be at least 2 characters.");
   const db = getDb();
+  const [creator] = await db.select({ plan: users.plan }).from(users).where(eq(users.id, userId)).limit(1);
+  if (!PLAN_FEATURES[normalizePlan(creator?.plan)].teams) {
+    throw new Error("Creating a team requires a Pro plan.");
+  }
   const [org] = await db
     .insert(organizations)
     .values({ slug: slugify(clean), name: clean, ownerId: userId })
@@ -92,6 +97,29 @@ export async function getMembership(orgId: string, userId: string): Promise<OrgR
     .where(and(eq(organizationMembers.orgId, orgId), eq(organizationMembers.userId, userId)))
     .limit(1);
   return row ? (row.role as OrgRole) : null;
+}
+
+/** The seat cap for a team, derived from its owner's plan. */
+export async function ownerSeatLimit(orgId: string): Promise<number> {
+  const db = getDb();
+  const [row] = await db
+    .select({ plan: users.plan })
+    .from(organizations)
+    .innerJoin(users, eq(users.id, organizations.ownerId))
+    .where(eq(organizations.id, orgId))
+    .limit(1);
+  return PLAN_FEATURES[normalizePlan(row?.plan)].teamSeats;
+}
+
+/** Seats in use = current members + outstanding pending invites. */
+export async function seatUsage(orgId: string): Promise<number> {
+  const db = getDb();
+  const [m] = await db.select({ n: sql<number>`count(*)` }).from(organizationMembers).where(eq(organizationMembers.orgId, orgId));
+  const [i] = await db
+    .select({ n: sql<number>`count(*)` })
+    .from(organizationInvites)
+    .where(and(eq(organizationInvites.orgId, orgId), eq(organizationInvites.status, "pending")));
+  return Number(m.n) + Number(i.n);
 }
 
 /** Resolve membership and assert at least `min` privilege; throws otherwise. */
@@ -170,6 +198,9 @@ export async function inviteMember(
     .where(and(eq(organizationMembers.orgId, orgId), eq(users.email, clean)))
     .limit(1);
   if (existing) throw new Error("That person is already on the team.");
+
+  const [limit, used] = await Promise.all([ownerSeatLimit(orgId), seatUsage(orgId)]);
+  if (used >= limit) throw new Error(`Your team is at its seat limit (${limit}). Upgrade the plan or remove a member to invite more.`);
 
   const token = randomBytes(24).toString("hex");
   const expiresAt = new Date(Date.now() + INVITE_TTL_DAYS * 86400_000);
@@ -281,4 +312,28 @@ export async function renameOrg(orgId: string, actorId: string, name: string): P
   if (clean.length < 2) throw new Error("Team name must be at least 2 characters.");
   const db = getDb();
   await db.update(organizations).set({ name: clean, updatedAt: new Date() }).where(eq(organizations.id, orgId));
+}
+
+
+/** Email addresses of a team's owners + admins (proposal reviewers). */
+export async function listReviewerEmails(orgId: string): Promise<string[]> {
+  const db = getDb();
+  const rows = await db
+    .select({ email: users.email, role: organizationMembers.role })
+    .from(organizationMembers)
+    .innerJoin(users, eq(users.id, organizationMembers.userId))
+    .where(eq(organizationMembers.orgId, orgId));
+  return rows.filter((r) => r.role === "owner" || r.role === "admin").map((r) => r.email).filter(Boolean) as string[];
+}
+
+export async function memberDisplayName(userId: string): Promise<string> {
+  const db = getDb();
+  const [row] = await db.select({ name: users.name, email: users.email }).from(users).where(eq(users.id, userId)).limit(1);
+  return row?.name ?? row?.email ?? "A teammate";
+}
+
+export async function memberEmail(userId: string): Promise<string | null> {
+  const db = getDb();
+  const [row] = await db.select({ email: users.email }).from(users).where(eq(users.id, userId)).limit(1);
+  return row?.email ?? null;
 }

@@ -19,7 +19,6 @@ export function MobileNav() {
   const authed = Boolean(session?.user);
   const items = authed ? APP_NAV : MARKETING_NAV;
   const plan = session?.user?.plan ?? "free";
-  const isAdmin = session?.user?.isAdmin;
   const close = () => setOpen(false);
 
   // Lock scroll, trap focus, Escape to close, restore focus on close.
@@ -189,15 +188,6 @@ export function MobileNav() {
                         className={linkCls("/pricing")}
                       >
                         Upgrade to Pro
-                      </Link>
-                    ) : null}
-                    {isAdmin ? (
-                      <Link
-                        href="/admin"
-                        onClick={close}
-                        className={linkCls("/admin")}
-                      >
-                        Admin console
                       </Link>
                     ) : null}
                     <button

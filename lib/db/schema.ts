@@ -7,6 +7,7 @@ import {
   jsonb,
   pgTable,
   primaryKey,
+  uniqueIndex,
   text,
   timestamp,
   uuid,
@@ -419,5 +420,171 @@ export const organizationInvites = pgTable(
   (t) => [
     index("org_invites_org_idx").on(t.orgId),
     index("org_invites_email_idx").on(t.email),
+  ],
+);
+
+// ---------------------------------------------------------------------------
+// Platform administration — fully isolated from application users.
+// These tables back the System Administrator console (/sys) and never join to
+// the `users` table: platform authority is a separate authentication domain.
+// ---------------------------------------------------------------------------
+
+export const platformAdmins = pgTable(
+  "platform_admins",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    email: text("email").notNull().unique(),
+    name: text("name"),
+    passwordHash: text("password_hash").notNull(),
+    role: text("role").notNull().default("super_admin"),
+    status: text("status").notNull().default("active"), // active | disabled
+    mustChangePassword: boolean("must_change_password").notNull().default(false),
+    totpSecret: text("totp_secret"),
+    totpEnabled: boolean("totp_enabled").notNull().default(false),
+    totpBackupCodes: jsonb("totp_backup_codes").$type<string[]>().notNull().default([]),
+    lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index("platform_admins_email_idx").on(t.email)],
+);
+
+export const platformSessions = pgTable(
+  "platform_sessions",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    tokenHash: text("token_hash").notNull().unique(),
+    adminId: uuid("admin_id")
+      .notNull()
+      .references(() => platformAdmins.id, { onDelete: "cascade" }),
+    ip: text("ip"),
+    userAgent: text("user_agent"),
+    createdAt: createdAt(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+  },
+  (t) => [index("platform_sessions_admin_idx").on(t.adminId)],
+);
+
+/** Short-lived, single-use handle issued after a correct password when the
+ *  admin has 2FA enabled; consumed by the TOTP/backup-code step. */
+export const platformLoginChallenges = pgTable(
+  "platform_login_challenges",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    tokenHash: text("token_hash").notNull().unique(),
+    adminId: uuid("admin_id")
+      .notNull()
+      .references(() => platformAdmins.id, { onDelete: "cascade" }),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index("platform_login_challenges_admin_idx").on(t.adminId)],
+);
+
+export const auditLogs = pgTable(
+  "audit_logs",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    actorAdminId: uuid("actor_admin_id").references(() => platformAdmins.id, { onDelete: "set null" }),
+    actorLabel: text("actor_label"), // denormalized email for display after deletion
+    action: text("action").notNull(),
+    targetType: text("target_type"),
+    targetId: text("target_id"),
+    metadata: jsonb("metadata").$type<Record<string, unknown>>().default({}).notNull(),
+    ip: text("ip"),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index("audit_logs_created_idx").on(t.createdAt),
+    index("audit_logs_action_idx").on(t.action),
+  ],
+);
+
+export const featureFlags = pgTable("feature_flags", {
+  key: text("key").primaryKey(),
+  enabled: boolean("enabled").notNull().default(false),
+  description: text("description"),
+  rolloutPercent: integer("rollout_percent").notNull().default(100),
+  updatedBy: text("updated_by"),
+  updatedAt: updatedAt(),
+});
+
+export const platformSettings = pgTable("platform_settings", {
+  key: text("key").primaryKey(),
+  value: jsonb("value").$type<unknown>(),
+  description: text("description"),
+  updatedBy: text("updated_by"),
+  updatedAt: updatedAt(),
+});
+
+// ---------------------------------------------------------------------------
+// Shared brand kits (Wave 6 Part 2) — team-owned color assets.
+// ---------------------------------------------------------------------------
+
+export const brandKits = pgTable(
+  "brand_kits",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    orgId: uuid("org_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    slug: text("slug").notNull(),
+    name: text("name").notNull(),
+    description: text("description"),
+    createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    uniqueIndex("brand_kits_org_slug_idx").on(t.orgId, t.slug),
+    index("brand_kits_org_idx").on(t.orgId),
+  ],
+);
+
+export const brandKitAssets = pgTable(
+  "brand_kit_assets",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    kitId: uuid("kit_id")
+      .notNull()
+      .references(() => brandKits.id, { onDelete: "cascade" }),
+    type: text("type").notNull().default("color"), // color | palette
+    name: text("name").notNull(),
+    hexes: jsonb("hexes").$type<string[]>().notNull().default([]),
+    notes: text("notes"),
+    position: integer("position").notNull().default(0),
+    createdAt: createdAt(),
+  },
+  (t) => [index("brand_kit_assets_kit_idx").on(t.kitId)],
+);
+
+// ---------------------------------------------------------------------------
+// Brand-kit governance (Wave 6 Part 3) — propose → review → apply.
+// ---------------------------------------------------------------------------
+
+export const brandKitProposals = pgTable(
+  "brand_kit_proposals",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    kitId: uuid("kit_id")
+      .notNull()
+      .references(() => brandKits.id, { onDelete: "cascade" }),
+    proposedBy: uuid("proposed_by")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(), // add_asset | update_asset | delete_asset
+    targetAssetId: uuid("target_asset_id").references(() => brandKitAssets.id, { onDelete: "cascade" }),
+    payload: jsonb("payload").$type<{ name?: string; hexes?: string[]; notes?: string }>().notNull().default({}),
+    note: text("note"),
+    status: text("status").notNull().default("pending"), // pending | approved | rejected
+    reviewedBy: uuid("reviewed_by").references(() => users.id, { onDelete: "set null" }),
+    reviewNote: text("review_note"),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index("brand_kit_proposals_kit_idx").on(t.kitId),
+    index("brand_kit_proposals_status_idx").on(t.status),
   ],
 );

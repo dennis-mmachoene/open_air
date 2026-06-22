@@ -47,6 +47,7 @@ const TIERS: Tier[] = [
       "Gradient studio · Accessibility center",
       "Palette generator · no upgrade prompts",
       "Public API access (key + rate limit)",
+      "Teams: shared brand kits, roles & reviews (up to 5 seats)",
     ],
     cta: "Go Pro",
     featured: true,

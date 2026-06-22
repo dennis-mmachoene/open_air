@@ -57,6 +57,34 @@
       "when": 1782112598720,
       "tag": "0007_wave6_orgs",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1782113496751,
+      "tag": "0008_wave_sysadmin",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1782114367544,
+      "tag": "0009_totp_2fa",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1782114819938,
+      "tag": "0010_brand_kits",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1782115338804,
+      "tag": "0011_kit_proposals",
+      "breakpoints": true
     }
   ]
 }

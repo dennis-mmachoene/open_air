@@ -59,9 +59,15 @@ const EnvSchema = z
     SENTRY_DSN: z.string().url().optional(),
     NEXT_PUBLIC_SENTRY_DSN: z.string().url().optional(),
 
-    // Admin allow-list. Comma-separated email addresses, e.g. "a@x.com,b@x.com".
-    // Granting / revoking admin is a one-line env change — no migration needed.
+    // Admin allow-list (legacy app-level admin; retained for back-compat only).
     ADMIN_EMAILS: z.string().min(1).optional(),
+
+    // System Administrator bootstrap. On first boot (when no platform_admins
+    // exist) a Super Admin is seeded from these. Rotate the password after the
+    // first sign-in. Used only by the isolated /sys console.
+    PLATFORM_BOOTSTRAP_EMAIL: z.string().email().optional(),
+    PLATFORM_BOOTSTRAP_PASSWORD: z.string().min(12).optional(),
+    PLATFORM_BOOTSTRAP_NAME: z.string().min(1).optional(),
   })
   .superRefine((value, ctx) => {
     // Fail the deploy (not the user) if required production config is missing.

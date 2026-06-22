@@ -6,7 +6,6 @@ import Nodemailer from "next-auth/providers/nodemailer";
 import { getDb } from "./db";
 import { accounts, sessions, users, verificationTokens } from "./db/schema";
 import { env } from "./env";
-import { isAdminEmail } from "./admin";
 
 const db = env.DATABASE_URL ? getDb() : undefined;
 
@@ -53,7 +52,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = user.id;
         const plan = (user as { plan?: string }).plan;
         session.user.plan = plan === "pro" || plan === "studio" ? plan : "free";
-        session.user.isAdmin = isAdminEmail(session.user.email);
       }
       return session;
     },

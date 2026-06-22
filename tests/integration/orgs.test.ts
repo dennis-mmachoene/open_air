@@ -15,6 +15,8 @@ import {
   updateMemberRole,
   removeMember,
   renameOrg,
+  ownerSeatLimit,
+  seatUsage,
 } from "../../lib/orgs";
 
 let ctx: Awaited<ReturnType<typeof makeTestDb>>;
@@ -119,5 +121,28 @@ describe("roles & removal", () => {
     const org = await createOrg(owner, "Acme");
     await renameOrg(org.id, owner, "Acme Studio");
     expect((await getOrgBySlug(org.slug))!.name).toBe("Acme Studio");
+  });
+});
+
+
+describe("plan gating & seats", () => {
+  it("a free user cannot create a team", async () => {
+    const free = await seedUser(ctx.db); // defaults to free
+    await expect(createOrg(free, "Freebie")).rejects.toThrow();
+  });
+  it("derives the seat cap from the owner's plan and blocks over-invite", async () => {
+    const owner = await seedUser(ctx.db, { plan: "pro" }); // 5 seats
+    const org = await createOrg(owner, "Acme");
+    expect(await ownerSeatLimit(org.id)).toBe(5);
+    expect(await seatUsage(org.id)).toBe(1); // the owner
+    // fill the remaining 4 seats with pending invites
+    for (let i = 0; i < 4; i++) await inviteMember(org.id, owner, `seat${i}@test.dev`);
+    expect(await seatUsage(org.id)).toBe(5);
+    await expect(inviteMember(org.id, owner, "one-too-many@test.dev")).rejects.toThrow(/seat limit/);
+  });
+  it("studio owners get more seats", async () => {
+    const owner = await seedUser(ctx.db, { plan: "studio" });
+    const org = await createOrg(owner, "BigCo");
+    expect(await ownerSeatLimit(org.id)).toBe(25);
   });
 });

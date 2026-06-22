@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/chrome/SiteFooter";
 import { Providers } from "@/components/auth/Providers";
 import { Assistant } from "@/components/assistant/Assistant";
 import { Analytics } from "@/components/analytics/Analytics";
+import { ChromeGate } from "@/components/chrome/ChromeGate";
 import { author, site } from "@/lib/site";
 
 /** Characterful display serif, used with restraint for palette names + headings. */
@@ -81,10 +82,14 @@ export default function RootLayout({
           >
             Skip to content
           </a>
-          <SiteHeader />
+          <ChromeGate>
+            <SiteHeader />
+          </ChromeGate>
           <main id="main" className="flex flex-1 flex-col">{children}</main>
-          <SiteFooter />
-          <Assistant />
+          <ChromeGate>
+            <SiteFooter />
+            <Assistant />
+          </ChromeGate>
           <Analytics />
         </Providers>
       </body>

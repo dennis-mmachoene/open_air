@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { requireUser } from "@/lib/auth-guard";
 import { listOrgsForUser } from "@/lib/orgs";
+import { getEntitlements } from "@/lib/entitlements";
 import { CreateOrgForm } from "@/components/orgs/CreateOrgForm";
+import { UpgradeCard } from "@/components/studio/UpgradeCard";
 
 export const metadata: Metadata = { title: "Teams" };
 export const dynamic = "force-dynamic";
 
 export default async function OrgsPage() {
   const user = await requireUser();
-  const orgs = await listOrgsForUser(user.id);
+  const [orgs, entitlements] = await Promise.all([listOrgsForUser(user.id), getEntitlements(user.id)]);
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-5 py-12 sm:px-8">
@@ -37,7 +39,7 @@ export default async function OrgsPage() {
         </ul>
       )}
 
-      <CreateOrgForm />
+      {entitlements.teams ? <CreateOrgForm /> : <UpgradeCard feature="Teams" />}
     </div>
   );
 }

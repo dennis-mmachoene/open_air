@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { requireUser } from "@/lib/auth-guard";
-import { getOrgBySlug, getMembership, listMembers, listInvites } from "@/lib/orgs";
+import { getOrgBySlug, getMembership, listMembers, listInvites, seatUsage, ownerSeatLimit } from "@/lib/orgs";
 import { InviteForm } from "@/components/orgs/InviteForm";
 import { InviteRow } from "@/components/orgs/InviteRow";
 import { MemberRow } from "@/components/orgs/MemberRow";
@@ -24,10 +25,13 @@ export default async function OrgPage({ params }: { params: Promise<{ slug: stri
   if (!role) notFound(); // non-members can't see the team
 
   const canManage = role === "owner" || role === "admin";
-  const [members, invites] = await Promise.all([
+  const [members, invites, used, limit] = await Promise.all([
     listMembers(org.id),
     canManage ? listInvites(org.id) : Promise.resolve([]),
+    seatUsage(org.id),
+    ownerSeatLimit(org.id),
   ]);
+  const atCap = used >= limit;
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-10 px-5 py-12 sm:px-8">
@@ -60,8 +64,17 @@ export default async function OrgPage({ params }: { params: Promise<{ slug: stri
       {canManage ? (
         <section className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <h2 className="font-display text-xl text-text">Invite teammates</h2>
-            <InviteForm slug={org.slug} />
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h2 className="font-display text-xl text-text">Invite teammates</h2>
+              <span className="text-xs text-text-muted">{used} / {limit} seats used</span>
+            </div>
+            {atCap ? (
+              <p className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-soft">
+                Your team is at its seat limit. <Link href="/pricing" className="underline underline-offset-4">Upgrade the plan</Link> or remove a member to invite more.
+              </p>
+            ) : (
+              <InviteForm slug={org.slug} />
+            )}
           </div>
           {invites.length > 0 ? (
             <div className="flex flex-col gap-2">
@@ -76,8 +89,16 @@ export default async function OrgPage({ params }: { params: Promise<{ slug: stri
         </section>
       ) : null}
 
+      <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-5">
+        <div>
+          <h2 className="font-display text-lg text-text">Brand kits</h2>
+          <p className="text-sm text-text-soft">Your team&apos;s shared colors and palettes.</p>
+        </div>
+        <Link href={`/orgs/${org.slug}/kits`} className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">Open brand kits →</Link>
+      </section>
+
       <section className="rounded-2xl border border-dashed border-border p-5 text-sm text-text-muted">
-        Shared brand kits and a review/approval workflow are coming next for teams.
+        A review / approval workflow for color changes is coming next for teams.
       </section>
     </div>
   );

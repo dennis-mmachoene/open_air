@@ -150,3 +150,38 @@ export function orgInviteEmail(
     ),
   };
 }
+
+export function kitProposalEmail(
+  to: string,
+  opts: { orgName: string; kitName: string; proposerName: string; summary: string; reviewUrl: string },
+): Mail {
+  return {
+    to,
+    subject: `New brand-kit proposal in ${opts.orgName}`,
+    text: `${opts.proposerName} proposed a change to "${opts.kitName}": ${opts.summary}. Review: ${opts.reviewUrl}`,
+    html: shell(
+      "A change is awaiting review",
+      `<p style="margin:0 0 12px"><strong>${opts.proposerName}</strong> proposed a change to <strong>${opts.kitName}</strong> in the team <strong>${opts.orgName}</strong>.</p>
+       <p style="margin:0 0 16px;color:#57534e">${opts.summary}</p>
+       <p style="margin:0 0 8px">${button(opts.reviewUrl, "Review proposal")}</p>`,
+    ),
+  };
+}
+
+export function kitDecisionEmail(
+  to: string,
+  opts: { orgName: string; kitName: string; approved: boolean; reviewerName: string; note?: string | null; kitUrl: string },
+): Mail {
+  const verb = opts.approved ? "approved" : "declined";
+  return {
+    to,
+    subject: `Your proposal was ${verb}`,
+    text: `${opts.reviewerName} ${verb} your proposal for "${opts.kitName}" in ${opts.orgName}.${opts.note ? ` Note: ${opts.note}` : ""} ${opts.kitUrl}`,
+    html: shell(
+      `Your proposal was ${verb}`,
+      `<p style="margin:0 0 12px"><strong>${opts.reviewerName}</strong> ${verb} your proposed change to <strong>${opts.kitName}</strong> in <strong>${opts.orgName}</strong>.</p>
+       ${opts.note ? `<p style="margin:0 0 16px;color:#57534e">“${opts.note}”</p>` : ""}
+       <p style="margin:0 0 8px">${button(opts.kitUrl, "Open brand kit")}</p>`,
+    ),
+  };
+}

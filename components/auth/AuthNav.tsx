@@ -130,11 +130,6 @@ export function AuthNav() {
                   Upgrade to Pro
                 </MenuLink>
               ) : null}
-              {user.isAdmin ? (
-                <MenuLink href="/admin" onClick={() => setOpen(false)}>
-                  Admin console
-                </MenuLink>
-              ) : null}
             </div>
 
             <div className="border-t border-border py-1">
