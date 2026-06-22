@@ -25,7 +25,7 @@ export default async function SysDashboard() {
     <SysShell admin={admin} active="/sys">
       <div className="flex flex-col gap-6">
         {admin.mustChangePassword ? (
-          <div className="rounded-xl border border-amber-600/40 bg-amber-600/5 px-4 py-3 text-sm text-amber-700 dark:text-amber-400">
+          <div className="rounded-control border border-amber-600/40 bg-amber-600/5 px-4 py-3 text-sm text-amber-700 dark:text-amber-400">
             Your password was set by bootstrap or reset. <Link href="/sys/password" className="font-medium underline">Set a new password →</Link>
           </div>
         ) : null}
@@ -45,8 +45,8 @@ export default async function SysDashboard() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <SectionCard title="System health">
             <div className="flex flex-col gap-2">
-              <span className={`inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium ${health.status === "ok" ? "border-green-600/40 text-green-700 dark:text-green-400" : "border-amber-600/40 text-amber-700 dark:text-amber-400"}`}>
-                <span className={`h-2 w-2 rounded-full ${health.status === "ok" ? "bg-green-600" : "bg-amber-600"}`} />
+              <span className={`inline-flex w-fit items-center gap-2 rounded-pill border px-3 py-1 text-sm font-medium ${health.status === "ok" ? "border-green-600/40 text-green-700 dark:text-green-400" : "border-amber-600/40 text-amber-700 dark:text-amber-400"}`}>
+                <span className={`h-2 w-2 rounded-pill ${health.status === "ok" ? "bg-green-600" : "bg-amber-600"}`} />
                 {health.status === "ok" ? "All systems operational" : "Degraded"}
               </span>
               <ul className="mt-1 flex flex-col gap-1 text-sm">

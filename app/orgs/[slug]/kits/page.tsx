@@ -30,7 +30,7 @@ export default async function KitsPage({ params, searchParams }: { params: Promi
         <p className="text-lg text-text-soft">Your team&apos;s canonical colors and palettes — shared with every member.</p>
       </header>
 
-      {error ? <p className="rounded-lg border border-p-danger/40 bg-p-danger/5 px-3 py-2 text-sm text-p-danger">{error}</p> : null}
+      {error ? <p className="rounded-control border border-p-danger/40 bg-p-danger/5 px-3 py-2 text-sm text-p-danger">{error}</p> : null}
 
       {kits.length === 0 ? (
         <p className="text-text-soft">No brand kits yet.{canManage ? " Create one below." : ""}</p>
@@ -38,11 +38,11 @@ export default async function KitsPage({ params, searchParams }: { params: Promi
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {kits.map((k) => (
             <li key={k.id}>
-              <Link href={`/orgs/${slug}/kits/${k.slug}`} className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4 transition-colors hover:border-text">
+              <Link href={`/orgs/${slug}/kits/${k.slug}`} className="flex flex-col gap-3 rounded-card border border-border bg-surface p-4 transition-colors hover:border-text">
                 <div className="flex items-center justify-between gap-2">
                   <span className="truncate font-display text-lg text-text">{k.name}</span>
                   <span className="flex shrink-0 items-center gap-2 text-xs text-text-muted">
-                    {pending[k.id] ? <span className="rounded-full bg-amber-600/15 px-2 py-0.5 font-medium text-amber-700 dark:text-amber-400">{pending[k.id]} pending</span> : null}
+                    {pending[k.id] ? <span className="rounded-pill bg-amber-600/15 px-2 py-0.5 font-medium text-amber-700 dark:text-amber-400">{pending[k.id]} pending</span> : null}
                     {k.assetCount} {k.assetCount === 1 ? "asset" : "assets"}
                   </span>
                 </div>
@@ -54,12 +54,12 @@ export default async function KitsPage({ params, searchParams }: { params: Promi
       )}
 
       {canManage ? (
-        <form action={createKitAction} className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5">
+        <form action={createKitAction} className="flex flex-col gap-3 rounded-card border border-border bg-surface p-5">
           <input type="hidden" name="slug" value={slug} />
           <h2 className="text-sm font-medium text-text">Create a brand kit</h2>
-          <input name="name" placeholder="Kit name (e.g. Core brand)" required className="rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-          <input name="description" placeholder="Description (optional)" className="rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-          <button className="w-fit rounded-full bg-text px-5 py-2 text-sm font-medium text-canvas hover:opacity-90">Create kit</button>
+          <input name="name" placeholder="Kit name (e.g. Core brand)" required className="rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+          <input name="description" placeholder="Description (optional)" className="rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+          <button className="w-fit rounded-pill bg-text px-5 py-2 text-sm font-medium text-canvas hover:opacity-90">Create kit</button>
         </form>
       ) : null}
     </div>

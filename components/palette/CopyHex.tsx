@@ -18,7 +18,7 @@ export function CopyHex({ swatches }: { swatches: Swatch[] }) {
   }
 
   return (
-    <div className="flex h-64 overflow-hidden rounded-2xl border border-border sm:h-80">
+    <div className="flex h-64 overflow-hidden rounded-card border border-border sm:h-80">
       {swatches.map((s) => (
         <button
           key={`${s.hex}-${s.position}`}

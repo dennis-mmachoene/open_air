@@ -27,12 +27,12 @@ export default async function OrgsPage() {
         <ul className="flex flex-col gap-2">
           {orgs.map((o) => (
             <li key={o.id}>
-              <Link href={`/orgs/${o.slug}`} className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4 transition-colors hover:border-text">
+              <Link href={`/orgs/${o.slug}`} className="flex items-center justify-between gap-3 rounded-card border border-border bg-surface p-4 transition-colors hover:border-text">
                 <div className="min-w-0">
                   <p className="truncate font-display text-lg text-text">{o.name}</p>
                   <p className="text-xs text-text-muted">{o.memberCount} {o.memberCount === 1 ? "member" : "members"}</p>
                 </div>
-                <span className="rounded-full border border-border px-2.5 py-0.5 text-xs capitalize text-text-soft">{o.role}</span>
+                <span className="rounded-pill border border-border px-2.5 py-0.5 text-xs capitalize text-text-soft">{o.role}</span>
               </Link>
             </li>
           ))}

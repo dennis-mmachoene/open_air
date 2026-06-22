@@ -37,7 +37,7 @@ export default async function SysFlagsPage({ searchParams }: { searchParams: Pro
                     <input type="hidden" name="description" value={f.description ?? ""} />
                     <input type="hidden" name="rolloutPercent" value={f.rolloutPercent} />
                     <input type="hidden" name="enabled" value={f.enabled ? "0" : "1"} />
-                    <button className={f.enabled ? "rounded-full bg-green-600 px-3 py-1.5 text-xs font-medium text-white" : "rounded-full border border-border px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2"}>
+                    <button className={f.enabled ? "rounded-pill bg-green-600 px-3 py-1.5 text-xs font-medium text-white" : "rounded-pill border border-border px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2"}>
                       {f.enabled ? "Enabled" : "Disabled"}
                     </button>
                   </form>
@@ -54,12 +54,12 @@ export default async function SysFlagsPage({ searchParams }: { searchParams: Pro
         <SectionCard title="Create / update a flag">
           <form action={upsertFlagAction} className="flex flex-col gap-2">
             <div className="flex flex-wrap gap-2">
-              <input name="key" placeholder="flag_key" required className="min-w-0 flex-1 rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-              <input name="rolloutPercent" type="number" min="0" max="100" defaultValue={100} className="w-24 rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+              <input name="key" placeholder="flag_key" required className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+              <input name="rolloutPercent" type="number" min="0" max="100" defaultValue={100} className="w-24 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
               <input type="hidden" name="enabled" value="1" />
-              <button className="rounded-full bg-text px-4 py-2 text-sm font-medium text-canvas hover:opacity-90">Save (enabled)</button>
+              <button className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas hover:opacity-90">Save (enabled)</button>
             </div>
-            <input name="description" placeholder="Description (optional)" className="rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+            <input name="description" placeholder="Description (optional)" className="rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
           </form>
         </SectionCard>
       </div>

@@ -50,7 +50,7 @@ export function FilterBar({ facets }: { facets: Facet[] }) {
             value={q}
             onChange={(e) => onSearch(e.target.value)}
             placeholder="Search palettes…"
-            className="w-full max-w-xs rounded-full border border-border bg-surface px-4 py-1.5 text-sm text-text outline-none placeholder:text-text-muted focus-visible:border-text"
+            className="w-full max-w-xs rounded-pill border border-border bg-surface px-4 py-1.5 text-sm text-text outline-none placeholder:text-text-muted focus-visible:border-text"
           />
           {hasFilters ? (
             <button
@@ -76,7 +76,7 @@ export function FilterBar({ facets }: { facets: Facet[] }) {
                     type="button"
                     onClick={() => toggle(facet.kind, value)}
                     className={clsx(
-                      "shrink-0 rounded-full border px-3 py-1 text-sm transition-colors",
+                      "shrink-0 rounded-pill border px-3 py-1 text-sm transition-colors",
                       active
                         ? "border-text bg-text text-canvas"
                         : "border-border text-text-soft hover:border-text hover:text-text",

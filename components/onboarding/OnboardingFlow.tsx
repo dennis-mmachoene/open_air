@@ -68,7 +68,7 @@ export function OnboardingFlow({
           {[0, 1].map((i) => (
             <span
               key={i}
-              className={`h-1 flex-1 rounded-full transition-colors ${
+              className={`h-1 flex-1 rounded-pill transition-colors ${
                 i <= step ? "bg-text" : "bg-border"
               }`}
             />
@@ -102,7 +102,7 @@ export function OnboardingFlow({
                 key={uc.id}
                 type="button"
                 onClick={() => choose(uc.id)}
-                className="group flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4 text-left transition-colors hover:border-text"
+                className="group flex flex-col gap-3 rounded-card border border-border bg-surface p-4 text-left transition-colors hover:border-text"
               >
                 <Strata
                   hexes={(uc.palettes[0]?.hexes ?? []).slice(0, 6)}
@@ -146,7 +146,7 @@ export function OnboardingFlow({
                   onClick={() => togglePick(p.slug)}
                   aria-pressed={selected}
                   disabled={atLimit}
-                  className={`flex flex-col gap-3 rounded-2xl border bg-surface p-3 text-left transition-all ${
+                  className={`flex flex-col gap-3 rounded-card border bg-surface p-3 text-left transition-all ${
                     selected
                       ? "border-text ring-2 ring-text"
                       : "border-border hover:border-text"
@@ -159,7 +159,7 @@ export function OnboardingFlow({
                       <p className="truncate text-xs text-text-muted">{p.tagline}</p>
                     </div>
                     <span
-                      className={`mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full border text-[11px] ${
+                      className={`mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-pill border text-[11px] ${
                         selected
                           ? "border-text bg-text text-canvas"
                           : "border-border-strong text-transparent"
@@ -179,7 +179,7 @@ export function OnboardingFlow({
               type="button"
               onClick={() => finish(picks)}
               disabled={pending}
-              className="rounded-full bg-text px-6 py-2.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90 disabled:opacity-50"
+              className="rounded-pill bg-text px-6 py-2.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90 disabled:opacity-50"
             >
               {pending
                 ? "Setting up…"

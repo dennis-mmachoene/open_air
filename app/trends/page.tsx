@@ -20,7 +20,7 @@ export const revalidate = 86400;
 function Bars({ title, data }: { title: string; data: { label: string; count: number; share: number }[] }) {
   const max = data[0]?.share ?? 1;
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5">
+    <div className="flex flex-col gap-3 rounded-card border border-border bg-surface p-5">
       <h3 className="font-display text-lg text-text">{title}</h3>
       <ul className="flex flex-col gap-2.5">
         {data.map((d) => (
@@ -29,8 +29,8 @@ function Bars({ title, data }: { title: string; data: { label: string; count: nu
               <span className="text-text">{d.label}</span>
               <span className="text-text-muted">{Math.round(d.share * 100)}%</span>
             </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-surface-2">
-              <div className="h-full rounded-full bg-text" style={{ width: `${(d.share / max) * 100}%` }} />
+            <div className="h-2 w-full overflow-hidden rounded-pill bg-surface-2">
+              <div className="h-full rounded-pill bg-text" style={{ width: `${(d.share / max) * 100}%` }} />
             </div>
           </li>
         ))}

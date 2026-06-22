@@ -50,7 +50,7 @@ export function ReportButton({ id }: { id: string }) {
         Report
       </button>
       {open ? (
-        <div className="absolute right-0 z-10 mt-2 w-60 rounded-xl border border-border bg-canvas p-3 shadow-xl">
+        <div className="absolute right-0 z-10 mt-2 w-60 rounded-control border border-border bg-canvas p-3 shadow-xl">
           <p className="mb-2 text-xs font-medium text-text">Why are you reporting this?</p>
           <div className="flex flex-col gap-1">
             {REASONS.map((r) => (
@@ -61,8 +61,8 @@ export function ReportButton({ id }: { id: string }) {
             ))}
           </div>
           <div className="mt-3 flex justify-end gap-2">
-            <button type="button" onClick={() => setOpen(false)} className="rounded-lg px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2">Cancel</button>
-            <button type="button" onClick={submit} disabled={busy} className="rounded-lg bg-text px-3 py-1.5 text-xs font-medium text-canvas hover:opacity-90 disabled:opacity-50">Submit</button>
+            <button type="button" onClick={() => setOpen(false)} className="rounded-control px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2">Cancel</button>
+            <button type="button" onClick={submit} disabled={busy} className="rounded-control bg-text px-3 py-1.5 text-xs font-medium text-canvas hover:opacity-90 disabled:opacity-50">Submit</button>
           </div>
         </div>
       ) : null}

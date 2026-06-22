@@ -10,7 +10,7 @@ const GRADE_STYLES: Record<string, string> = {
 
 export function AccessibilityReport({ pairings }: { pairings: Pairing[] }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-border">
+    <div className="overflow-hidden rounded-card border border-border">
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-border text-left text-text-muted">
@@ -26,7 +26,7 @@ export function AccessibilityReport({ pairings }: { pairings: Pairing[] }) {
               <td className="px-4 py-3 text-text">{p.label}</td>
               <td className="px-4 py-3">
                 <span
-                  className="inline-flex items-center rounded-md px-2 py-1 font-mono text-xs"
+                  className="inline-flex items-center rounded-control px-2 py-1 font-mono text-xs"
                   style={{ backgroundColor: p.bg, color: p.fg }}
                 >
                   Aa
@@ -36,7 +36,7 @@ export function AccessibilityReport({ pairings }: { pairings: Pairing[] }) {
               <td className="px-4 py-3">
                 <span
                   className={clsx(
-                    "inline-flex rounded-full px-2 py-0.5 text-xs font-medium",
+                    "inline-flex rounded-pill px-2 py-0.5 text-xs font-medium",
                     GRADE_STYLES[p.grade] ?? "bg-surface-2 text-text",
                   )}
                 >

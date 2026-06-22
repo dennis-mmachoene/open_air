@@ -93,14 +93,14 @@ export function Comments({
           placeholder={status === "authenticated" ? "Add a comment…" : "Sign in to comment"}
           rows={3}
           maxLength={1000}
-          className="w-full resize-y rounded-xl border border-border bg-surface px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-text focus:outline-none"
+          className="w-full resize-y rounded-control border border-border bg-surface px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-text focus:outline-none"
         />
         <div className="flex items-center justify-between">
           {error ? <p className="text-xs text-p-danger">{error}</p> : <span />}
           <button
             type="submit"
             disabled={busy || !body.trim()}
-            className="rounded-full bg-text px-4 py-1.5 text-sm font-medium text-canvas hover:opacity-90 disabled:opacity-50"
+            className="rounded-pill bg-text px-4 py-1.5 text-sm font-medium text-canvas hover:opacity-90 disabled:opacity-50"
           >
             {status === "authenticated" ? "Post" : "Sign in"}
           </button>

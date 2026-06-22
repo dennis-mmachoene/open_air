@@ -55,7 +55,7 @@ export function SaveButton({ slug }: { slug: string }) {
         onClick={onClick}
         aria-pressed={saved}
         className={clsx(
-          "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+          "inline-flex items-center gap-2 rounded-pill border px-4 py-2 text-sm font-medium transition-colors",
           saved
             ? "border-text bg-text text-canvas"
             : "border-border text-text hover:bg-surface-2",

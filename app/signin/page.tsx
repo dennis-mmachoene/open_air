@@ -17,7 +17,7 @@ export default function SignInPage() {
       </div>
 
       {!authEnabled ? (
-        <div className="rounded-xl border border-border bg-surface-2 p-4 text-sm text-text-soft">
+        <div className="rounded-control border border-border bg-surface-2 p-4 text-sm text-text-soft">
           Sign-in isn&apos;t configured yet. Add a database URL and at least one
           auth provider (Google or email) to <code className="font-mono">.env.local</code>.
         </div>
@@ -32,7 +32,7 @@ export default function SignInPage() {
             >
               <button
                 type="submit"
-                className="w-full rounded-lg border border-border px-4 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+                className="w-full rounded-control border border-border px-4 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-2"
               >
                 Continue with Google
               </button>
@@ -55,11 +55,11 @@ export default function SignInPage() {
                 name="email"
                 required
                 placeholder="you@example.com"
-                className="w-full rounded-lg border border-border bg-surface px-3 py-2.5 text-sm text-text outline-none focus-visible:border-text"
+                className="w-full rounded-control border border-border bg-surface px-3 py-2.5 text-sm text-text outline-none focus-visible:border-text"
               />
               <button
                 type="submit"
-                className="w-full rounded-lg bg-text px-4 py-2.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+                className="w-full rounded-control bg-text px-4 py-2.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
               >
                 Email me a sign-in link
               </button>

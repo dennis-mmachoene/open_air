@@ -45,20 +45,20 @@ export function GradientTool({ palettes }: { palettes: Pal[] }) {
         <select
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
-          className="rounded-full border border-border bg-surface px-3 py-1.5 text-sm text-text outline-none focus-visible:border-text"
+          className="rounded-pill border border-border bg-surface px-3 py-1.5 text-sm text-text outline-none focus-visible:border-text"
         >
           {palettes.map((p) => (
             <option key={p.slug} value={p.slug}>{p.name}</option>
           ))}
         </select>
-        <div className="inline-flex rounded-full border border-border bg-surface p-0.5">
+        <div className="inline-flex rounded-pill border border-border bg-surface p-0.5">
           {(["linear", "radial", "conic"] as GradType[]).map((t) => (
             <button
               key={t}
               type="button"
               onClick={() => setType(t)}
               className={clsx(
-                "rounded-full px-3 py-1 text-sm capitalize transition-colors",
+                "rounded-pill px-3 py-1 text-sm capitalize transition-colors",
                 t === type ? "bg-text text-canvas" : "text-text-soft hover:text-text",
               )}
             >
@@ -81,17 +81,17 @@ export function GradientTool({ palettes }: { palettes: Pal[] }) {
         ) : null}
       </div>
 
-      <div className="h-64 w-full rounded-2xl border border-border" style={{ background: css }} />
+      <div className="h-64 w-full rounded-card border border-border" style={{ background: css }} />
 
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <span className="text-xs uppercase tracking-wide text-text-muted">CSS</span>
           <div className="flex gap-2">
-            <CopyButton value={cssRule} label="Copy CSS" copiedLabel="Copied" className="rounded-full border border-border px-3 py-1 text-text hover:bg-surface-2" />
-            <CopyButton value={buildSvg(hexes)} label="Copy SVG" copiedLabel="Copied" className="rounded-full border border-border px-3 py-1 text-text hover:bg-surface-2" />
+            <CopyButton value={cssRule} label="Copy CSS" copiedLabel="Copied" className="rounded-pill border border-border px-3 py-1 text-text hover:bg-surface-2" />
+            <CopyButton value={buildSvg(hexes)} label="Copy SVG" copiedLabel="Copied" className="rounded-pill border border-border px-3 py-1 text-text hover:bg-surface-2" />
           </div>
         </div>
-        <pre className="overflow-auto rounded-xl border border-border bg-surface-2 p-4 font-mono text-xs text-text">
+        <pre className="overflow-auto rounded-control border border-border bg-surface-2 p-4 font-mono text-xs text-text">
           <code>{cssRule}</code>
         </pre>
         <p className="text-xs text-text-muted">

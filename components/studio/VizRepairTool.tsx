@@ -11,7 +11,7 @@ const CVD: Condition[] = ["deuteranopia", "protanopia", "tritanopia"];
 
 function Swatches({ colors }: { colors: string[] }) {
   return (
-    <div className="flex overflow-hidden rounded-lg border border-border">
+    <div className="flex overflow-hidden rounded-control border border-border">
       {colors.map((c, i) => (
         <div key={i} className="h-12 flex-1" style={{ backgroundColor: c }} title={c} />
       ))}
@@ -23,7 +23,7 @@ function SafeBadge({ safe, minDistance }: { safe: boolean; minDistance: number }
   return (
     <span
       className={clsx(
-        "rounded-full border px-2 py-0.5 text-xs font-medium",
+        "rounded-pill border px-2 py-0.5 text-xs font-medium",
         safe ? "border-green-600/40 text-green-700 dark:text-green-400" : "border-amber-600/40 text-amber-700 dark:text-amber-400",
       )}
     >
@@ -59,7 +59,7 @@ export function VizRepairTool() {
           onChange={(e) => setInput(e.target.value)}
           rows={3}
           spellCheck={false}
-          className="rounded-lg border border-border bg-surface px-3 py-2 font-mono text-sm text-text outline-none focus-visible:border-text"
+          className="rounded-control border border-border bg-surface px-3 py-2 font-mono text-sm text-text outline-none focus-visible:border-text"
         />
       </label>
 
@@ -123,14 +123,14 @@ export function VizRepairTool() {
               </ul>
             </div>
 
-            <section className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4">
+            <section className="flex flex-col gap-2 rounded-card border border-border bg-surface p-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-text">Repaired palette</span>
-                <button type="button" onClick={copy} className="rounded-full bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90">
+                <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90">
                   {copied ? "Copied" : "Copy JSON"}
                 </button>
               </div>
-              <pre className="overflow-auto rounded-lg bg-canvas p-3 text-xs text-text-soft"><code>{toCssVars(result.output, "series")}</code></pre>
+              <pre className="overflow-auto rounded-control bg-canvas p-3 text-xs text-text-soft"><code>{toCssVars(result.output, "series")}</code></pre>
             </section>
           </div>
         )

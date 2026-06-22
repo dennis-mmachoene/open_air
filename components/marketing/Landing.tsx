@@ -98,13 +98,13 @@ export function Landing() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/gallery"
-            className="rounded-full bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+            className="rounded-pill bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
           >
             Explore the gallery
           </Link>
           <Link
             href="/pricing"
-            className="rounded-full border border-border px-6 py-3 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+            className="rounded-pill border border-border px-6 py-3 text-sm font-medium text-text transition-colors hover:bg-surface-2"
           >
             See pricing
           </Link>
@@ -134,7 +134,7 @@ export function Landing() {
       <section className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((f) => (
-            <div key={f.title} className="flex flex-col gap-3 rounded-2xl border border-border p-5">
+            <div key={f.title} className="flex flex-col gap-3 rounded-card border border-border p-5">
               <svg
                 width="24"
                 height="24"
@@ -169,7 +169,7 @@ export function Landing() {
           </p>
           <Link
             href="/studio"
-            className="mt-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+            className="mt-2 rounded-pill border border-border px-5 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-2"
           >
             Open the Showroom
           </Link>
@@ -185,7 +185,7 @@ export function Landing() {
           {TIERS.map((t) => (
             <div
               key={t.name}
-              className={`flex flex-col gap-2 rounded-2xl border p-5 ${
+              className={`flex flex-col gap-2 rounded-card border p-5 ${
                 t.featured ? "border-text" : "border-border"
               }`}
             >
@@ -217,20 +217,20 @@ export function Landing() {
 
       {/* CTA */}
       <section className="mx-auto mb-20 w-full max-w-5xl px-5 sm:px-8">
-        <div className="flex flex-col items-center gap-4 rounded-3xl border border-border bg-surface-2/40 px-6 py-14 text-center">
+        <div className="flex flex-col items-center gap-4 rounded-card border border-border bg-surface-2/40 px-6 py-14 text-center">
           <h2 className="font-display text-3xl tracking-tight text-text">
             Start exploring color.
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/gallery"
-              className="rounded-full bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+              className="rounded-pill bg-text px-6 py-3 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
             >
               Browse the gallery
             </Link>
             <Link
               href="/pricing"
-              className="rounded-full border border-border px-6 py-3 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+              className="rounded-pill border border-border px-6 py-3 text-sm font-medium text-text transition-colors hover:bg-surface-2"
             >
               See pricing
             </Link>

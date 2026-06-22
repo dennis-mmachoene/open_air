@@ -76,7 +76,7 @@ export const dataviz: Specimen[] = [
     render: () => (
       <div className="grid grid-cols-2 gap-3">
         {[["Sessions", "12.4k", "c1"], ["Signups", "842", "c3"]].map(([l, v, c]) => (
-          <div key={l} className="rounded-lg border border-p-border p-2">
+          <div key={l} className="rounded-control border border-p-border p-2">
             <p className="text-xs text-p-text-muted">{l}</p>
             <p className="text-lg font-semibold text-p-text">{v}</p>
             <svg viewBox="0 0 80 16" className="mt-1 h-4 w-full">

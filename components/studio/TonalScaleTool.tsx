@@ -63,7 +63,7 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
               value={normalized ?? "#4f46e5"}
               onChange={(e) => setHex(e.target.value)}
               aria-label="Pick base color"
-              className="h-10 w-12 cursor-pointer rounded-lg border border-border bg-surface p-1"
+              className="h-10 w-12 cursor-pointer rounded-control border border-border bg-surface p-1"
             />
             <input
               value={hex}
@@ -71,7 +71,7 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
               spellCheck={false}
               aria-label="Base color hex"
               className={clsx(
-                "w-32 rounded-lg border bg-surface px-3 py-2 font-mono text-sm text-text outline-none",
+                "w-32 rounded-control border bg-surface px-3 py-2 font-mono text-sm text-text outline-none",
                 valid ? "border-border focus-visible:border-text" : "border-p-danger",
               )}
             />
@@ -84,7 +84,7 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
             onChange={(e) => setName(e.target.value)}
             maxLength={32}
             aria-label="Token name prefix"
-            className="w-40 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
+            className="w-40 rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
           />
         </label>
         {scale ? (
@@ -100,7 +100,7 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
       {scale ? (
         <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
           {/* The ramp */}
-          <div className="overflow-hidden rounded-2xl border border-border">
+          <div className="overflow-hidden rounded-card border border-border">
             {scale.swatches.map((s) => {
               const isSel = s.stop === selected;
               const isNearest = s.stop === scale.nearestStop;
@@ -117,7 +117,7 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
                     <span className="w-8 font-mono text-sm font-medium">{s.stop}</span>
                     {isNearest ? (
                       <span
-                        className="rounded-full border px-1.5 text-[10px] uppercase tracking-wide"
+                        className="rounded-pill border px-1.5 text-[10px] uppercase tracking-wide"
                         style={{ borderColor: s.onColor }}
                       >
                         base
@@ -127,7 +127,7 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
                   <span className="flex items-center gap-3">
                     <span className="font-mono text-sm">{s.hex}</span>
                     <span className="hidden text-xs sm:inline">{s.onContrast}:1</span>
-                    <span className="rounded-full border px-1.5 py-0.5 text-[10px] font-medium" style={{ borderColor: s.onColor }}>
+                    <span className="rounded-pill border px-1.5 py-0.5 text-[10px] font-medium" style={{ borderColor: s.onColor }}>
                       {s.aaa ? "AAA" : s.aa ? "AA" : "—"}
                     </span>
                     {isSel ? <span aria-hidden="true">●</span> : null}
@@ -140,11 +140,11 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
           {/* Detail + export */}
           <div className="flex flex-col gap-6">
             {selectedSwatch ? (
-              <div className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
+              <div className="flex flex-col gap-3 rounded-card border border-border bg-surface p-4">
                 <div className="flex items-center justify-between">
                   <h3 className="font-display text-lg text-text">{name || "brand"}-{selectedSwatch.stop}</h3>
                   <span
-                    className="rounded-md px-2 py-0.5 font-mono text-xs"
+                    className="rounded-control px-2 py-0.5 font-mono text-xs"
                     style={{ backgroundColor: selectedSwatch.hex, color: selectedSwatch.onColor }}
                   >
                     Aa
@@ -171,16 +171,16 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
               </div>
             ) : null}
 
-            <div className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4">
+            <div className="flex flex-col gap-2 rounded-card border border-border bg-surface p-4">
               <div className="flex items-center justify-between">
-                <div className="inline-flex rounded-full border border-border p-0.5 text-xs">
+                <div className="inline-flex rounded-pill border border-border p-0.5 text-xs">
                   {(["css", "tailwind", "json"] as Format[]).map((f) => (
                     <button
                       key={f}
                       type="button"
                       onClick={() => setFormat(f)}
                       className={clsx(
-                        "rounded-full px-2.5 py-1 capitalize transition-colors",
+                        "rounded-pill px-2.5 py-1 capitalize transition-colors",
                         f === format ? "bg-text text-canvas" : "text-text-soft hover:text-text",
                       )}
                     >
@@ -191,12 +191,12 @@ export function TonalScaleTool({ initial = "#4f46e5" }: { initial?: string }) {
                 <button
                   type="button"
                   onClick={copy}
-                  className="rounded-full bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90"
+                  className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90"
                 >
                   {copied ? "Copied" : "Copy"}
                 </button>
               </div>
-              <pre className="max-h-72 overflow-auto rounded-lg bg-canvas p-3 text-xs leading-relaxed text-text-soft">
+              <pre className="max-h-72 overflow-auto rounded-control bg-canvas p-3 text-xs leading-relaxed text-text-soft">
                 <code>{exportText}</code>
               </pre>
             </div>

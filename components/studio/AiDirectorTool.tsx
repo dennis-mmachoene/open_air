@@ -98,9 +98,9 @@ export function AiDirectorTool() {
               value={brief}
               onChange={(e) => setBrief(e.target.value)}
               placeholder="e.g. modern, trustworthy fintech for young professionals"
-              className="min-w-0 flex-1 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
+              className="min-w-0 flex-1 rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
             />
-            <button type="submit" disabled={busy || !brief.trim()} className="rounded-lg bg-text px-4 py-2 text-sm font-medium text-canvas disabled:opacity-40">
+            <button type="submit" disabled={busy || !brief.trim()} className="rounded-control bg-text px-4 py-2 text-sm font-medium text-canvas disabled:opacity-40">
               {busy ? "Designing…" : "Create system"}
             </button>
           </div>
@@ -108,7 +108,7 @@ export function AiDirectorTool() {
         {!base ? (
           <div className="flex flex-wrap gap-1.5">
             {SAMPLES.map((s) => (
-              <button key={s} type="button" onClick={() => { setBrief(s); call({ brief: s }); }} className="rounded-full border border-border px-2.5 py-1 text-xs text-text-soft transition-colors hover:border-text hover:text-text">
+              <button key={s} type="button" onClick={() => { setBrief(s); call({ brief: s }); }} className="rounded-pill border border-border px-2.5 py-1 text-xs text-text-soft transition-colors hover:border-text hover:text-text">
                 {s}
               </button>
             ))}
@@ -120,15 +120,15 @@ export function AiDirectorTool() {
       {base && tokens ? (
         <>
           {/* Result header */}
-          <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-surface p-4">
-            <div className="h-14 w-14 shrink-0 rounded-xl" style={{ backgroundColor: base }} />
+          <div className="flex flex-wrap items-center gap-4 rounded-card border border-border bg-surface p-4">
+            <div className="h-14 w-14 shrink-0 rounded-control" style={{ backgroundColor: base }} />
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-mono text-sm text-text">{base}</span>
-                <span className="rounded-full border border-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-text-muted">
+                <span className="rounded-pill border border-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-text-muted">
                   {source === "ai" ? "AI" : "Engine"}
                 </span>
-                <span className={clsx("rounded-full border px-2 py-0.5 text-xs font-medium", score >= 80 ? "border-green-600/40 text-green-700 dark:text-green-400" : score >= 60 ? "border-amber-600/40 text-amber-700 dark:text-amber-400" : "border-p-danger text-p-danger")}>
+                <span className={clsx("rounded-pill border px-2 py-0.5 text-xs font-medium", score >= 80 ? "border-green-600/40 text-green-700 dark:text-green-400" : score >= 60 ? "border-amber-600/40 text-amber-700 dark:text-amber-400" : "border-p-danger text-p-danger")}>
                   a11y {score}
                 </span>
               </div>
@@ -141,7 +141,7 @@ export function AiDirectorTool() {
             <span className="text-sm text-text-soft">Refine</span>
             <div className="flex flex-wrap gap-1.5">
               {ADJUSTMENTS.map((a) => (
-                <button key={a} type="button" onClick={() => chip(a)} className="rounded-full border border-border px-2.5 py-1 text-xs text-text-soft transition-colors hover:border-text hover:text-text">
+                <button key={a} type="button" onClick={() => chip(a)} className="rounded-pill border border-border px-2.5 py-1 text-xs text-text-soft transition-colors hover:border-text hover:text-text">
                   {ADJUSTMENT_LABELS[a]}
                 </button>
               ))}
@@ -158,9 +158,9 @@ export function AiDirectorTool() {
                 value={refineText}
                 onChange={(e) => setRefineText(e.target.value)}
                 placeholder="or describe a change: 'more trustworthy', 'better for finance'…"
-                className="min-w-0 flex-1 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
+                className="min-w-0 flex-1 rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
               />
-              <button type="submit" disabled={busy || !refineText.trim()} className="rounded-lg border border-border px-3 py-2 text-sm text-text disabled:opacity-40">
+              <button type="submit" disabled={busy || !refineText.trim()} className="rounded-control border border-border px-3 py-2 text-sm text-text disabled:opacity-40">
                 {busy ? "…" : "Apply"}
               </button>
             </form>
@@ -173,7 +173,7 @@ export function AiDirectorTool() {
                 <span className="text-xs font-medium uppercase tracking-wide text-text-muted">{g.name}</span>
                 <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
                   {g.tokens.map((t) => (
-                    <div key={t.name} className="overflow-hidden rounded-lg border border-border">
+                    <div key={t.name} className="overflow-hidden rounded-control border border-border">
                       <div className="flex h-12 items-center justify-center text-xs font-medium" style={{ backgroundColor: t.light, color: t.on ? t.on.light : "#0b0b0c" }}>
                         {t.on ? "Aa" : ""}
                       </div>
@@ -186,13 +186,13 @@ export function AiDirectorTool() {
           </div>
 
           {/* Export + deep links */}
-          <section className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4">
+          <section className="flex flex-col gap-2 rounded-card border border-border bg-surface p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex flex-wrap gap-3 text-sm">
                 <Link href={`/studio/tokens`} className="text-text underline underline-offset-4">Open in token tool</Link>
                 <Link href={`/studio/stress`} className="text-text-soft underline underline-offset-4 hover:text-text">Stress test</Link>
               </div>
-              <button type="button" onClick={copy} className="rounded-full bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90">
+              <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90">
                 {copied ? "Copied" : "Copy CSS"}
               </button>
             </div>

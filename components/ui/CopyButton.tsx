@@ -35,7 +35,7 @@ export function CopyButton({
       title={title ?? label}
       aria-label={title ?? label}
       className={clsx(
-        "inline-flex items-center gap-1.5 rounded-full text-sm transition-colors",
+        "inline-flex items-center gap-1.5 rounded-pill text-sm transition-colors",
         className,
       )}
     >

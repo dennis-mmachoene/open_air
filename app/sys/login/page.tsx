@@ -16,7 +16,7 @@ export default async function SysLoginPage({ searchParams }: { searchParams: Pro
     <div className="flex min-h-screen items-center justify-center bg-canvas px-5 text-text">
       <div className="flex w-full max-w-sm flex-col gap-6">
         <div className="flex flex-col items-center gap-2 text-center">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-text text-sm font-bold text-canvas">SA</span>
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-control bg-text text-sm font-bold text-canvas">SA</span>
           <h1 className="font-display text-2xl text-text">System Administrator</h1>
           <p className="text-sm text-text-muted">
             {totpStep ? "Enter the 6-digit code from your authenticator app." : "Restricted platform console. Authorized personnel only."}
@@ -32,9 +32,9 @@ export default async function SysLoginPage({ searchParams }: { searchParams: Pro
               placeholder="123456 or backup code"
               autoFocus
               required
-              className="rounded-xl border border-border bg-canvas px-3 py-2.5 text-center text-lg tracking-[0.3em] text-text focus:border-text focus:outline-none"
+              className="rounded-control border border-border bg-canvas px-3 py-2.5 text-center text-lg tracking-[0.3em] text-text focus:border-text focus:outline-none"
             />
-            <button type="submit" className="rounded-full bg-text px-5 py-2.5 text-sm font-medium text-canvas hover:opacity-90">Verify</button>
+            <button type="submit" className="rounded-pill bg-text px-5 py-2.5 text-sm font-medium text-canvas hover:opacity-90">Verify</button>
             <a href="/sys/login" className="text-center text-xs text-text-muted underline-offset-4 hover:underline">← Start over</a>
           </form>
         ) : (

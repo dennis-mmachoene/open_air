@@ -77,7 +77,7 @@ export default async function PublishedPalettePage({ params }: { params: Promise
             {canRemix ? (
               <Link
                 href={remixHref}
-                className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+                className="inline-flex items-center gap-2 rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                   <path d="M16 3h5v5M21 3l-7 7M8 21H3v-5M3 21l7-7" />
@@ -99,7 +99,7 @@ export default async function PublishedPalettePage({ params }: { params: Promise
         </section>
       ) : null}
 
-      <dl className="grid grid-cols-2 gap-4 rounded-2xl border border-border bg-surface p-5 text-sm sm:grid-cols-4">
+      <dl className="grid grid-cols-2 gap-4 rounded-card border border-border bg-surface p-5 text-sm sm:grid-cols-4">
         <div><dt className="text-text-muted">Accessibility</dt><dd className="text-text">{p.a11yScore}/100</dd></div>
         {p.harmony ? <div><dt className="text-text-muted">Harmony</dt><dd className="text-text">{p.harmony}</dd></div> : null}
         <div><dt className="text-text-muted">License</dt><dd className="text-text">{license}</dd></div>
@@ -109,7 +109,7 @@ export default async function PublishedPalettePage({ params }: { params: Promise
       {p.tags.length ? (
         <div className="flex flex-wrap gap-2">
           {p.tags.map((t) => (
-            <span key={t} className="rounded-full border border-border px-3 py-1 text-sm text-text-soft">{t}</span>
+            <span key={t} className="rounded-pill border border-border px-3 py-1 text-sm text-text-soft">{t}</span>
           ))}
         </div>
       ) : null}

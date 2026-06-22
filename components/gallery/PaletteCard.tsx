@@ -11,7 +11,7 @@ export function PaletteCard({ palette }: { palette: Palette }) {
     <div className="group relative">
       <Link
         href={`/p/${palette.slug}`}
-        className="block rounded-2xl border border-border bg-surface transition-shadow hover:shadow-lg focus-visible:shadow-lg"
+        className="block rounded-card border border-border bg-surface transition-shadow hover:shadow-lg focus-visible:shadow-lg"
       >
         <Strata
           hexes={hexes}

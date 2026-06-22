@@ -14,7 +14,7 @@ export function LoginForm() {
           type="email"
           autoComplete="username"
           required
-          className="rounded-xl border border-border bg-canvas px-3 py-2.5 text-text focus:border-text focus:outline-none"
+          className="rounded-control border border-border bg-canvas px-3 py-2.5 text-text focus:border-text focus:outline-none"
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">
@@ -24,13 +24,13 @@ export function LoginForm() {
           type="password"
           autoComplete="current-password"
           required
-          className="rounded-xl border border-border bg-canvas px-3 py-2.5 text-text focus:border-text focus:outline-none"
+          className="rounded-control border border-border bg-canvas px-3 py-2.5 text-text focus:border-text focus:outline-none"
         />
       </label>
       <button
         type="submit"
         disabled={pending}
-        className="mt-2 rounded-full bg-text px-5 py-2.5 text-sm font-medium text-canvas hover:opacity-90 disabled:opacity-50"
+        className="mt-2 rounded-pill bg-text px-5 py-2.5 text-sm font-medium text-canvas hover:opacity-90 disabled:opacity-50"
       >
         {pending ? "Signing in…" : "Sign in"}
       </button>

@@ -70,7 +70,7 @@ export function Assistant() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? "Close color assistant" : "Open color assistant"}
-        className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-text text-canvas shadow-lg transition-transform hover:scale-105"
+        className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-pill bg-text text-canvas shadow-lg transition-transform hover:scale-105"
       >
         {open ? (
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -86,9 +86,9 @@ export function Assistant() {
 
       {/* Panel */}
       {open ? (
-        <div className="fixed bottom-20 right-5 z-50 flex max-h-[70vh] w-[min(92vw,22rem)] flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl">
+        <div className="fixed bottom-20 right-5 z-50 flex max-h-[70vh] w-[min(92vw,22rem)] flex-col overflow-hidden rounded-card border border-border bg-surface shadow-2xl">
           <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-text text-canvas">
+            <span className="flex h-7 w-7 items-center justify-center rounded-pill bg-text text-canvas">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8L12 2z" /></svg>
             </span>
             <div>
@@ -98,14 +98,14 @@ export function Assistant() {
           </div>
 
           <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-3">
-            <span className="inline-block max-w-[85%] rounded-2xl rounded-bl-sm bg-surface-2 px-3 py-2 text-sm text-text">
+            <span className="inline-block max-w-[85%] rounded-card rounded-bl-sm bg-surface-2 px-3 py-2 text-sm text-text">
               {greeting}
             </span>
             {messages.map((m, i) => (
               <div key={i} className={clsx("flex flex-col gap-2", m.role === "user" && "items-end")}>
                 <span
                   className={clsx(
-                    "max-w-[85%] rounded-2xl px-3 py-2 text-sm",
+                    "max-w-[85%] rounded-card px-3 py-2 text-sm",
                     m.role === "user"
                       ? "rounded-br-sm bg-text text-canvas"
                       : "rounded-bl-sm bg-surface-2 text-text",
@@ -119,7 +119,7 @@ export function Assistant() {
                       <Link
                         key={p.slug}
                         href={authed ? `/p/${p.slug}` : "/signin"}
-                        className="flex items-center gap-2 rounded-lg border border-border p-1.5 transition-colors hover:bg-surface-2"
+                        className="flex items-center gap-2 rounded-control border border-border p-1.5 transition-colors hover:bg-surface-2"
                       >
                         <Strata hexes={p.hexes} className="h-7 w-16 shrink-0" />
                         <span className="truncate text-sm text-text">{p.name}</span>
@@ -130,10 +130,10 @@ export function Assistant() {
               </div>
             ))}
             {busy ? (
-              <span className="inline-flex gap-1 rounded-2xl rounded-bl-sm bg-surface-2 px-3 py-2">
-                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-text-muted" />
-                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-text-muted [animation-delay:0.15s]" />
-                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-text-muted [animation-delay:0.3s]" />
+              <span className="inline-flex gap-1 rounded-card rounded-bl-sm bg-surface-2 px-3 py-2">
+                <span className="h-1.5 w-1.5 animate-bounce rounded-pill bg-text-muted" />
+                <span className="h-1.5 w-1.5 animate-bounce rounded-pill bg-text-muted [animation-delay:0.15s]" />
+                <span className="h-1.5 w-1.5 animate-bounce rounded-pill bg-text-muted [animation-delay:0.3s]" />
               </span>
             ) : null}
 
@@ -144,7 +144,7 @@ export function Assistant() {
                     key={p}
                     type="button"
                     onClick={() => send(p)}
-                    className="rounded-full border border-border px-2.5 py-1 text-xs text-text-soft transition-colors hover:border-text hover:text-text"
+                    className="rounded-pill border border-border px-2.5 py-1 text-xs text-text-soft transition-colors hover:border-text hover:text-text"
                   >
                     {p}
                   </button>
@@ -164,12 +164,12 @@ export function Assistant() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Describe what you need…"
-              className="min-w-0 flex-1 rounded-full border border-border bg-bg px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
+              className="min-w-0 flex-1 rounded-pill border border-border bg-bg px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
             />
             <button
               type="submit"
               disabled={busy || !input.trim()}
-              className="rounded-full bg-text px-4 py-2 text-sm font-medium text-canvas disabled:opacity-40"
+              className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas disabled:opacity-40"
             >
               Ask
             </button>

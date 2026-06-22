@@ -19,13 +19,13 @@ export default async function SysAuditPage({ searchParams }: { searchParams: Pro
         </div>
 
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <Link href="/sys/audit" className={!action ? "rounded-full bg-text px-3 py-1 text-canvas" : "rounded-full border border-border px-3 py-1 text-text-soft hover:bg-surface-2"}>All</Link>
+          <Link href="/sys/audit" className={!action ? "rounded-pill bg-text px-3 py-1 text-canvas" : "rounded-pill border border-border px-3 py-1 text-text-soft hover:bg-surface-2"}>All</Link>
           {actions.map((a) => (
-            <Link key={a} href={`/sys/audit?action=${encodeURIComponent(a)}`} className={action === a ? "rounded-full bg-text px-3 py-1 text-canvas" : "rounded-full border border-border px-3 py-1 text-text-soft hover:bg-surface-2"}>{a}</Link>
+            <Link key={a} href={`/sys/audit?action=${encodeURIComponent(a)}`} className={action === a ? "rounded-pill bg-text px-3 py-1 text-canvas" : "rounded-pill border border-border px-3 py-1 text-text-soft hover:bg-surface-2"}>{a}</Link>
           ))}
         </div>
 
-        <div className="overflow-x-auto rounded-2xl border border-border">
+        <div className="overflow-x-auto rounded-card border border-border">
           <table className="w-full min-w-[760px] text-sm">
             <thead className="border-b border-border bg-surface-2 text-left text-text-soft">
               <tr>

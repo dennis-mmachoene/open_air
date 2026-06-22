@@ -60,13 +60,13 @@ export function GeneratorTool() {
   return (
     <div className="grid gap-8 lg:grid-cols-[320px_1fr]">
       {/* Controls */}
-      <div className="flex flex-col gap-5 rounded-2xl border border-border p-5">
+      <div className="flex flex-col gap-5 rounded-card border border-border p-5">
         <label className="flex flex-col gap-1">
           <span className="text-xs uppercase tracking-wide text-text-muted">Name</span>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
+            className="rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
           />
         </label>
 
@@ -90,7 +90,7 @@ export function GeneratorTool() {
           <select
             value={harmony}
             onChange={(e) => setHarmony(e.target.value as (typeof HARMONY_OPTIONS)[number])}
-            className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
+            className="rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
           >
             {HARMONY_OPTIONS.map((h) => (
               <option key={h} value={h}>{h}</option>
@@ -116,7 +116,7 @@ export function GeneratorTool() {
         <button
           type="button"
           onClick={save}
-          className="rounded-full bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+          className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
         >
           Save palette
         </button>
@@ -132,7 +132,7 @@ export function GeneratorTool() {
               {ROLE_KEYS.map(([label, key]) => (
                 <div key={key} className="flex items-center gap-2">
                   <span
-                    className="h-6 w-6 rounded-md border border-border"
+                    className="h-6 w-6 rounded-control border border-border"
                     style={{ backgroundColor: palette.roles.light[key] }}
                   />
                   <span className="text-xs text-text-soft">{label}</span>
@@ -140,7 +140,7 @@ export function GeneratorTool() {
               ))}
             </div>
             <p className="text-text-soft">{palette.why.rationale}</p>
-            <div className="rounded-2xl border border-border p-5">
+            <div className="rounded-card border border-border p-5">
               <h3 className="mb-3 font-display text-lg text-text">Export</h3>
               <ExportPanel
                 roles={palette.roles.light}

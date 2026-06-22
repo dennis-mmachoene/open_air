@@ -19,7 +19,7 @@ export default function LegalIndexPage() {
           The agreements and policies that govern Open Air. Last updated {LEGAL_EFFECTIVE_DATE}.
         </p>
       </header>
-      <ul className="flex flex-col divide-y divide-border rounded-2xl border border-border">
+      <ul className="flex flex-col divide-y divide-border rounded-card border border-border">
         {LEGAL_DOCS.map((d) => (
           <li key={d.slug}>
             <Link

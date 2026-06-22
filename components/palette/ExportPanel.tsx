@@ -52,7 +52,7 @@ export function ExportPanel({
               type="button"
               onClick={() => setFormat(f)}
               className={clsx(
-                "rounded-full px-3 py-1 text-sm transition-colors",
+                "rounded-pill px-3 py-1 text-sm transition-colors",
                 f === format ? "bg-text text-canvas" : "text-text-soft hover:text-text",
               )}
             >
@@ -64,13 +64,13 @@ export function ExportPanel({
       </div>
 
       {locked ? (
-        <div className="flex flex-col items-start gap-3 rounded-xl border border-border bg-surface-2 p-5">
+        <div className="flex flex-col items-start gap-3 rounded-control border border-border bg-surface-2 p-5">
           <p className="text-sm text-text-soft">
             {format} export is a Pro feature.
           </p>
           <Link
             href="/pricing"
-            className="rounded-full bg-text px-4 py-2 text-sm font-medium text-canvas"
+            className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas"
           >
             Go Pro
           </Link>
@@ -82,19 +82,19 @@ export function ExportPanel({
               value={code}
               label="Copy"
               copiedLabel="Copied"
-              className="rounded-full border border-border px-3 py-1 text-text hover:bg-surface-2"
+              className="rounded-pill border border-border px-3 py-1 text-text hover:bg-surface-2"
             />
             <button
               type="button"
               onClick={() =>
                 download(`${base}.${FILE_EXT[format]}`, code, "text/plain")
               }
-              className="rounded-full border border-border px-3 py-1 text-sm text-text hover:bg-surface-2"
+              className="rounded-pill border border-border px-3 py-1 text-sm text-text hover:bg-surface-2"
             >
               Download
             </button>
           </div>
-          <pre className="max-h-72 overflow-auto rounded-xl border border-border bg-surface-2 p-4 font-mono text-xs leading-relaxed text-text">
+          <pre className="max-h-72 overflow-auto rounded-control border border-border bg-surface-2 p-4 font-mono text-xs leading-relaxed text-text">
             <code>{code}</code>
           </pre>
         </>
@@ -114,13 +114,13 @@ export function ExportPanel({
                   "application/octet-stream",
                 )
               }
-              className="rounded-full border border-border px-3 py-1 text-sm text-text hover:bg-surface-2"
+              className="rounded-pill border border-border px-3 py-1 text-sm text-text hover:bg-surface-2"
             >
               .ase (Adobe)
             </button>
             <a
               href={`/api/export/png/${slug}`}
-              className="rounded-full border border-border px-3 py-1 text-sm text-text hover:bg-surface-2"
+              className="rounded-pill border border-border px-3 py-1 text-sm text-text hover:bg-surface-2"
             >
               .png sheet
             </a>

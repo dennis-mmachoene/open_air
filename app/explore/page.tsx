@@ -20,7 +20,7 @@ export default async function ExplorePage({ searchParams }: { searchParams: Prom
   const tab = (id: Tab, label: string) => (
     <Link
       href={`/explore?sort=${id}`}
-      className={active === id ? "rounded-full bg-text px-3 py-1 text-canvas" : "rounded-full px-3 py-1 text-text-soft hover:text-text"}
+      className={active === id ? "rounded-pill bg-text px-3 py-1 text-canvas" : "rounded-pill px-3 py-1 text-text-soft hover:text-text"}
     >
       {label}
     </Link>
@@ -35,17 +35,17 @@ export default async function ExplorePage({ searchParams }: { searchParams: Prom
           <p className="max-w-xl text-lg text-text-soft">Palettes published by the Open Air community.</p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="inline-flex rounded-full border border-border p-0.5 text-sm">
+          <div className="inline-flex rounded-pill border border-border p-0.5 text-sm">
             {tab("new", "New")}
             {tab("top", "Top")}
             {tab("featured", "Staff picks")}
           </div>
-          <Link href="/publish" className="rounded-full bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90">Publish</Link>
+          <Link href="/publish" className="rounded-pill bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90">Publish</Link>
         </div>
       </header>
 
       {feed.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-border p-12 text-center text-text-soft">
+        <div className="rounded-card border border-dashed border-border p-12 text-center text-text-soft">
           {active === "featured" ? (
             <>No staff picks yet — check back soon.</>
           ) : (

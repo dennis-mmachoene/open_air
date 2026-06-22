@@ -90,7 +90,7 @@ export default async function DashboardPage() {
           <h2 className="font-display text-2xl text-text">Generated palettes</h2>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {generated.map((g) => (
-              <div key={g.id} className="overflow-hidden rounded-2xl border border-border">
+              <div key={g.id} className="overflow-hidden rounded-card border border-border">
                 <Strata hexes={g.swatches.map((s) => s.hex)} className="h-28 rounded-b-none" />
                 <div className="p-3">
                   <p className="truncate font-display text-text">{g.name}</p>

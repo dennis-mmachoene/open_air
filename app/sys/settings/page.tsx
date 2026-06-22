@@ -45,11 +45,11 @@ export default async function SysSettingsPage({ searchParams }: { searchParams: 
         <SectionCard title="Set a value">
           <form action={setSettingAction} className="flex flex-col gap-2">
             <div className="flex flex-wrap gap-2">
-              <input name="key" placeholder="setting_key" required className="min-w-0 flex-1 rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-              <input name="value" placeholder='Value (JSON: true, 42, "text", {…})' required className="min-w-0 flex-[2] rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
-              <button className="rounded-full bg-text px-4 py-2 text-sm font-medium text-canvas hover:opacity-90">Save</button>
+              <input name="key" placeholder="setting_key" required className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+              <input name="value" placeholder='Value (JSON: true, 42, "text", {…})' required className="min-w-0 flex-[2] rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+              <button className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas hover:opacity-90">Save</button>
             </div>
-            <input name="description" placeholder="Description (optional)" className="rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
+            <input name="description" placeholder="Description (optional)" className="rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-text focus:outline-none" />
           </form>
         </SectionCard>
       </div>

@@ -131,14 +131,14 @@ export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-center gap-3">
         <span className="text-sm text-text-soft">Billed</span>
-        <div className="inline-flex rounded-full border border-border bg-surface p-0.5">
+        <div className="inline-flex rounded-pill border border-border bg-surface p-0.5">
           {(["monthly", "yearly"] as Interval[]).map((iv) => (
             <button
               key={iv}
               type="button"
               onClick={() => setInterval(iv)}
               className={clsx(
-                "rounded-full px-3 py-1 text-sm capitalize transition-colors",
+                "rounded-pill px-3 py-1 text-sm capitalize transition-colors",
                 iv === interval ? "bg-text text-canvas" : "text-text-soft hover:text-text",
               )}
             >
@@ -157,7 +157,7 @@ export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
             <div
               key={tier.plan}
               className={clsx(
-                "flex flex-col gap-5 rounded-2xl border p-6",
+                "flex flex-col gap-5 rounded-card border p-6",
                 tier.featured ? "border-text shadow-lg" : "border-border",
                 isCurrent && "ring-2 ring-text",
               )}
@@ -166,11 +166,11 @@ export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
                 <div className="flex items-center justify-between">
                   <h2 className="font-display text-xl text-text">{tier.name}</h2>
                   {isCurrent ? (
-                    <span className="rounded-full bg-text px-2.5 py-0.5 text-xs font-medium text-canvas">
+                    <span className="rounded-pill bg-text px-2.5 py-0.5 text-xs font-medium text-canvas">
                       Current
                     </span>
                   ) : tier.featured ? (
-                    <span className="rounded-full bg-surface-2 px-2.5 py-0.5 text-xs font-medium text-text">
+                    <span className="rounded-pill bg-surface-2 px-2.5 py-0.5 text-xs font-medium text-text">
                       Most popular
                     </span>
                   ) : null}
@@ -188,7 +188,7 @@ export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
               <ul className="flex flex-1 flex-col gap-2.5 text-sm text-text-soft">
                 {tier.features.map((f) => (
                   <li key={f} className="flex gap-2">
-                    <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-text" />
+                    <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-pill bg-text" />
                     {f}
                   </li>
                 ))}
@@ -199,7 +199,7 @@ export function PricingTable({ billingEnabled }: { billingEnabled: boolean }) {
                 onClick={a.onClick}
                 disabled={a.disabled}
                 className={clsx(
-                  "rounded-full px-4 py-2.5 text-center text-sm font-medium transition-colors disabled:opacity-50",
+                  "rounded-pill px-4 py-2.5 text-center text-sm font-medium transition-colors disabled:opacity-50",
                   tier.featured && !a.disabled
                     ? "bg-text text-canvas hover:opacity-90"
                     : "border border-border text-text hover:bg-surface-2",

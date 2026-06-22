@@ -120,11 +120,11 @@ export function ExtractTool() {
           const f = e.dataTransfer.files[0];
           if (f?.type.startsWith("image/")) onFile(f);
         }}
-        className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border bg-surface-2/40 px-6 py-12 text-center"
+        className="flex flex-col items-center justify-center gap-3 rounded-card border border-dashed border-border bg-surface-2/40 px-6 py-12 text-center"
       >
         {imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={imageUrl} alt="Uploaded" className="max-h-48 rounded-lg object-contain" />
+          <img src={imageUrl} alt="Uploaded" className="max-h-48 rounded-control object-contain" />
         ) : (
           <p className="text-text-soft">Drop an image here, or choose a file.</p>
         )}
@@ -141,7 +141,7 @@ export function ExtractTool() {
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+          className="rounded-pill border border-border bg-surface px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
         >
           {imageUrl ? "Choose another image" : "Choose image"}
         </button>
@@ -166,14 +166,14 @@ export function ExtractTool() {
             <button
               type="button"
               onClick={save}
-              className="rounded-full bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+              className="rounded-pill bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
             >
               Save palette
             </button>
             {saveMsg ? <span className="text-sm text-text-soft">{saveMsg}</span> : null}
           </div>
 
-          <div className="rounded-2xl border border-border p-5">
+          <div className="rounded-card border border-border p-5">
             <h3 className="mb-3 font-display text-lg text-text">Export</h3>
             <ExportPanel
               roles={palette.roles.light}

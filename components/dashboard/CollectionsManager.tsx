@@ -75,12 +75,12 @@ export function CollectionsManager({ initial }: { initial: Collection[] }) {
           maxLength={60}
           placeholder="e.g. Client X, My brand"
           aria-label="New collection name"
-          className="min-w-0 flex-1 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
+          className="min-w-0 flex-1 rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
         />
         <button
           type="submit"
           disabled={!name.trim() || busy}
-          className="rounded-lg bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity hover:opacity-90 disabled:opacity-40"
+          className="rounded-control bg-text px-4 py-2 text-sm font-medium text-canvas transition-opacity hover:opacity-90 disabled:opacity-40"
         >
           {busy ? "Working…" : "Create"}
         </button>
@@ -91,7 +91,7 @@ export function CollectionsManager({ initial }: { initial: Collection[] }) {
       {initial.length === 0 ? (
         <p className="text-text-soft">No collections yet.</p>
       ) : (
-        <ul className="flex flex-col divide-y divide-border rounded-xl border border-border">
+        <ul className="flex flex-col divide-y divide-border rounded-control border border-border">
           {initial.map((c) => (
             <li key={c.id} className="flex items-center justify-between px-4 py-3">
               <span className="text-text">

@@ -17,7 +17,7 @@ export function Strata({
       className={clsx(
         "flex overflow-hidden",
         vertical ? "flex-col" : "flex-row",
-        rounded && "rounded-xl",
+        rounded && "rounded-control",
         className,
       )}
       aria-hidden="true"

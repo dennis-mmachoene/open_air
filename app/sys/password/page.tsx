@@ -17,9 +17,9 @@ export default async function SysPasswordPage({ searchParams }: { searchParams: 
         </div>
         <ErrorNote message={error} />
         <form action={changePasswordAction} className="flex flex-col gap-3">
-          <input name="password" type="password" placeholder="New password" autoComplete="new-password" required className="rounded-xl border border-border bg-surface px-3 py-2.5 text-sm text-text focus:border-text focus:outline-none" />
-          <input name="confirm" type="password" placeholder="Confirm new password" autoComplete="new-password" required className="rounded-xl border border-border bg-surface px-3 py-2.5 text-sm text-text focus:border-text focus:outline-none" />
-          <button type="submit" className="rounded-full bg-text px-5 py-2.5 text-sm font-medium text-canvas hover:opacity-90">Save password</button>
+          <input name="password" type="password" placeholder="New password" autoComplete="new-password" required className="rounded-control border border-border bg-surface px-3 py-2.5 text-sm text-text focus:border-text focus:outline-none" />
+          <input name="confirm" type="password" placeholder="Confirm new password" autoComplete="new-password" required className="rounded-control border border-border bg-surface px-3 py-2.5 text-sm text-text focus:border-text focus:outline-none" />
+          <button type="submit" className="rounded-pill bg-text px-5 py-2.5 text-sm font-medium text-canvas hover:opacity-90">Save password</button>
         </form>
       </div>
     </div>

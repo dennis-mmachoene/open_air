@@ -18,12 +18,12 @@ export function DeleteOrg({ slug, name }: { slug: string; name: string }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={name}
-          className="min-w-0 flex-1 rounded-xl border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-p-danger focus:outline-none"
+          className="min-w-0 flex-1 rounded-control border border-border bg-canvas px-3 py-2 text-sm text-text focus:border-p-danger focus:outline-none"
         />
         <button
           type="submit"
           disabled={!armed}
-          className="rounded-full bg-p-danger px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-40"
+          className="rounded-pill bg-p-danger px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-40"
         >
           Delete team
         </button>

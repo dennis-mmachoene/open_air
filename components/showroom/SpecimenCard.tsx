@@ -25,7 +25,7 @@ export function SpecimenCard({
         {title}
       </div>
       <div
-        className="rounded-xl border"
+        className="rounded-control border"
         style={{
           borderColor: "var(--p-border)",
           backgroundColor: "var(--p-surface)",

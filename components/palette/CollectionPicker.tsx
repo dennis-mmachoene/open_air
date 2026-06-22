@@ -125,17 +125,17 @@ export function CollectionPicker({ slug }: { slug: string }) {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
+        className="inline-flex items-center gap-2 rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2"
       >
         Add to collection
         {inCount > 0 ? (
-          <span className="rounded-full bg-text px-1.5 text-xs font-medium text-canvas">
+          <span className="rounded-pill bg-text px-1.5 text-xs font-medium text-canvas">
             {inCount}
           </span>
         ) : null}
       </button>
       {open ? (
-        <div className="absolute z-20 mt-2 w-64 rounded-xl border border-border bg-surface p-2 shadow-lg">
+        <div className="absolute z-20 mt-2 w-64 rounded-control border border-border bg-surface p-2 shadow-lg">
           <div className="max-h-48 overflow-auto">
             {collections.length === 0 ? (
               <p className="px-2 py-3 text-sm text-text-muted">
@@ -145,7 +145,7 @@ export function CollectionPicker({ slug }: { slug: string }) {
               collections.map((c) => (
                 <label
                   key={c.id}
-                  className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-text hover:bg-surface-2"
+                  className="flex cursor-pointer items-center gap-2 rounded-control px-2 py-1.5 text-sm text-text hover:bg-surface-2"
                 >
                   <input
                     type="checkbox"
@@ -177,13 +177,13 @@ export function CollectionPicker({ slug }: { slug: string }) {
               maxLength={60}
               placeholder="New collection"
               aria-label="New collection name"
-              className="min-w-0 flex-1 rounded-lg border border-border bg-bg px-2 py-1 text-sm text-text outline-none"
+              className="min-w-0 flex-1 rounded-control border border-border bg-bg px-2 py-1 text-sm text-text outline-none"
             />
             <button
               type="button"
               onClick={create}
               disabled={!name.trim() || creating}
-              className="rounded-lg bg-text px-2.5 py-1 text-sm text-canvas disabled:opacity-40"
+              className="rounded-control bg-text px-2.5 py-1 text-sm text-canvas disabled:opacity-40"
             >
               {creating ? "…" : "Add"}
             </button>

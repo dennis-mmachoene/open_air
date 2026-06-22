@@ -53,7 +53,7 @@ export function RepairTool() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               rows={7}
-              className="rounded-lg border border-border bg-surface px-3 py-2 font-mono text-sm text-text outline-none focus-visible:border-text"
+              className="rounded-control border border-border bg-surface px-3 py-2 font-mono text-sm text-text outline-none focus-visible:border-text"
             />
           </label>
           <div className="flex flex-col gap-1.5">
@@ -67,7 +67,7 @@ export function RepairTool() {
                   title={c}
                   aria-label={`Use ${c} as background`}
                   className={clsx(
-                    "h-7 w-7 rounded-md border",
+                    "h-7 w-7 rounded-control border",
                     c === bg ? "ring-2 ring-text" : "border-border",
                   )}
                   style={{ backgroundColor: c }}
@@ -86,7 +86,7 @@ export function RepairTool() {
                 ? "Every colour clears WCAG AA on this background."
                 : `${failing} of ${rows.length} colours fail AA on this background — repaired variants below preserve each hue.`}
           </p>
-          <div className="overflow-hidden rounded-2xl border border-border">
+          <div className="overflow-hidden rounded-card border border-border">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border text-left text-text-muted">

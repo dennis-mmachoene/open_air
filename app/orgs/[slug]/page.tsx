@@ -42,10 +42,10 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-text-muted">Team</p>
           <h1 className="font-display text-4xl text-text">{org.name}</h1>
         </div>
-        <span className="rounded-full border border-border px-3 py-1 text-sm capitalize text-text-soft">You&apos;re {role === "admin" ? "an" : "the"} {role}</span>
+        <span className="rounded-pill border border-border px-3 py-1 text-sm capitalize text-text-soft">You&apos;re {role === "admin" ? "an" : "the"} {role}</span>
       </header>
 
-      {error ? <p className="rounded-lg border border-p-danger/40 bg-p-danger/5 px-3 py-2 text-sm text-p-danger">{error}</p> : null}
+      {error ? <p className="rounded-control border border-p-danger/40 bg-p-danger/5 px-3 py-2 text-sm text-p-danger">{error}</p> : null}
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-xl text-text">Members <span className="text-text-muted">({members.length})</span></h2>
@@ -73,7 +73,7 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
               <span className="text-xs text-text-muted">{used} / {limit} seats used</span>
             </div>
             {atCap ? (
-              <p className="rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-soft">
+              <p className="rounded-control border border-border bg-surface px-3 py-2 text-sm text-text-soft">
                 Your team is at its seat limit. <Link href="/pricing" className="underline underline-offset-4">Upgrade the plan</Link> or remove a member to invite more.
               </p>
             ) : (
@@ -93,42 +93,42 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
         </section>
       ) : null}
 
-      <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-5">
+      <section className="flex flex-wrap items-center justify-between gap-3 rounded-card border border-border bg-surface p-5">
         <div>
           <h2 className="font-display text-lg text-text">Brand kits</h2>
           <p className="text-sm text-text-soft">Your team&apos;s shared colors and palettes.</p>
         </div>
-        <Link href={`/orgs/${org.slug}/kits`} className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">Open brand kits →</Link>
+        <Link href={`/orgs/${org.slug}/kits`} className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">Open brand kits →</Link>
       </section>
 
       {canManage ? (
-        <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-5">
+        <section className="flex flex-wrap items-center justify-between gap-3 rounded-card border border-border bg-surface p-5">
           <div>
             <h2 className="font-display text-lg text-text">Verified domains</h2>
             <p className="text-sm text-text-soft">Auto-join teammates by company email domain.</p>
           </div>
-          <Link href={`/orgs/${org.slug}/domains`} className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">Manage domains →</Link>
+          <Link href={`/orgs/${org.slug}/domains`} className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">Manage domains →</Link>
         </section>
       ) : null}
 
       {canManage ? (
-        <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-5">
+        <section className="flex flex-wrap items-center justify-between gap-3 rounded-card border border-border bg-surface p-5">
           <div>
             <h2 className="font-display text-lg text-text">Audit log</h2>
             <p className="text-sm text-text-soft">Every membership and brand-kit change, with CSV/JSON export.</p>
           </div>
-          <Link href={`/orgs/${org.slug}/audit`} className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">View audit log →</Link>
+          <Link href={`/orgs/${org.slug}/audit`} className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2">View audit log →</Link>
         </section>
       ) : null}
 
       {role === "owner" ? (
-        <section className="flex flex-col gap-4 rounded-2xl border border-p-danger/30 bg-p-danger/[0.03] p-5">
+        <section className="flex flex-col gap-4 rounded-card border border-p-danger/30 bg-p-danger/[0.03] p-5">
           <div>
             <h2 className="font-display text-lg text-text">Danger zone</h2>
             <p className="text-sm text-text-soft">Export everything this team owns, or delete it for good.</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <a href={`/api/orgs/${org.slug}/export`} className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text hover:bg-surface-2">Export team data (JSON)</a>
+            <a href={`/api/orgs/${org.slug}/export`} className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text hover:bg-surface-2">Export team data (JSON)</a>
           </div>
           <div className="border-t border-p-danger/20 pt-4">
             <DeleteOrg slug={org.slug} name={org.name} />

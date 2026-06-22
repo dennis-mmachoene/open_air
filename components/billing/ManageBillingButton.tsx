@@ -21,7 +21,7 @@ export function ManageBillingButton() {
       type="button"
       onClick={open}
       disabled={busy}
-      className="rounded-full border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2 disabled:opacity-50"
+      className="rounded-pill border border-border px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-surface-2 disabled:opacity-50"
     >
       {busy ? "Opening…" : "Manage subscription"}
     </button>

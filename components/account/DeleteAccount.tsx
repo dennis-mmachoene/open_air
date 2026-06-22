@@ -36,7 +36,7 @@ export function DeleteAccount() {
   }
 
   return (
-    <div className="flex max-w-md flex-col gap-3 rounded-xl border border-border bg-surface p-4">
+    <div className="flex max-w-md flex-col gap-3 rounded-control border border-border bg-surface p-4">
       <p className="text-sm font-medium text-text">Delete your account permanently?</p>
       <p className="text-sm text-text-soft">
         This immediately and irreversibly removes your profile, saved palettes,
@@ -52,7 +52,7 @@ export function DeleteAccount() {
           autoFocus
           placeholder={CONFIRM_WORD}
           aria-label={`Type ${CONFIRM_WORD} to confirm account deletion`}
-          className="rounded-lg border border-border bg-canvas px-3 py-2 font-mono text-text outline-none focus-visible:border-p-danger"
+          className="rounded-control border border-border bg-canvas px-3 py-2 font-mono text-text outline-none focus-visible:border-p-danger"
         />
       </label>
       <div className="flex flex-wrap items-center gap-2">
@@ -60,7 +60,7 @@ export function DeleteAccount() {
           type="button"
           onClick={remove}
           disabled={!armed || busy}
-          className="rounded-full px-3 py-1 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
+          className="rounded-pill px-3 py-1 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-40"
           style={{ backgroundColor: "var(--p-danger)" }}
         >
           {busy ? "Deleting…" : "Delete my account"}
@@ -71,7 +71,7 @@ export function DeleteAccount() {
             setConfirming(false);
             setTyped("");
           }}
-          className="rounded-full border border-border px-3 py-1 text-sm text-text"
+          className="rounded-pill border border-border px-3 py-1 text-sm text-text"
         >
           Cancel
         </button>

@@ -28,7 +28,7 @@ export default async function SysCommunityPage() {
           ) : (
             <ul className="flex flex-col gap-3">
               {reports.map((r) => (
-                <li key={r.id} className="flex flex-wrap items-center gap-3 rounded-xl border border-border p-3">
+                <li key={r.id} className="flex flex-wrap items-center gap-3 rounded-control border border-border p-3">
                   <Strata hexes={r.hexes} className="h-9 w-16 flex-none" />
                   <div className="min-w-0 flex-1">
                     <Link href={`/s/${r.slug}`} className="truncate text-sm text-text hover:underline">{r.name}</Link>
@@ -36,11 +36,11 @@ export default async function SysCommunityPage() {
                   </div>
                   <form action={resolveReportsAction}>
                     <input type="hidden" name="id" value={r.publishedId} />
-                    <button className="rounded-lg border border-border px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2">Dismiss</button>
+                    <button className="rounded-control border border-border px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2">Dismiss</button>
                   </form>
                   <form action={removePaletteAction}>
                     <input type="hidden" name="id" value={r.publishedId} />
-                    <button className="rounded-lg bg-p-danger px-3 py-1.5 text-xs font-medium text-white">Remove</button>
+                    <button className="rounded-control bg-p-danger px-3 py-1.5 text-xs font-medium text-white">Remove</button>
                   </form>
                 </li>
               ))}
@@ -56,13 +56,13 @@ export default async function SysCommunityPage() {
               {recent.map((p) => {
                 const on = featuredIds.has(p.id);
                 return (
-                  <li key={p.id} className="flex items-center gap-3 rounded-xl border border-border p-3">
+                  <li key={p.id} className="flex items-center gap-3 rounded-control border border-border p-3">
                     <Strata hexes={p.hexes} className="h-9 w-16 flex-none" />
                     <Link href={`/s/${p.slug}`} className="min-w-0 flex-1 truncate text-sm text-text hover:underline">{p.name}</Link>
                     <form action={setFeaturedAction}>
                       <input type="hidden" name="id" value={p.id} />
                       <input type="hidden" name="on" value={on ? "0" : "1"} />
-                      <button className={on ? "rounded-lg bg-text px-3 py-1.5 text-xs font-medium text-canvas" : "rounded-lg border border-border px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2"}>{on ? "★ Featured" : "Feature"}</button>
+                      <button className={on ? "rounded-control bg-text px-3 py-1.5 text-xs font-medium text-canvas" : "rounded-control border border-border px-3 py-1.5 text-xs text-text-soft hover:bg-surface-2"}>{on ? "★ Featured" : "Feature"}</button>
                     </form>
                   </li>
                 );

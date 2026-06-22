@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { clsx } from "@/lib/cn";
+import { PlanBadge } from "@/components/ui";
 
 const PLAN_LABEL: Record<string, string> = { pro: "Pro", studio: "Studio" };
 
@@ -32,7 +33,7 @@ export function AuthNav() {
   }, [open]);
 
   if (status === "loading") {
-    return <span className="h-8 w-24 animate-pulse rounded-full bg-surface-2" />;
+    return <span className="h-8 w-24 animate-pulse rounded-pill bg-surface-2" />;
   }
 
   // ---- Signed out: marketing CTAs ----
@@ -41,13 +42,13 @@ export function AuthNav() {
       <div className="flex items-center gap-2">
         <Link
           href="/signin"
-          className="hidden rounded-full px-3 py-1.5 text-sm text-text-soft transition-colors hover:text-text sm:inline-flex"
+          className="hidden rounded-pill px-3 py-1.5 text-sm text-text-soft transition-colors hover:text-text sm:inline-flex"
         >
           Sign in
         </Link>
         <Link
           href="/pricing"
-          className="rounded-full bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+          className="rounded-pill bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
         >
           Go Pro
         </Link>
@@ -67,16 +68,13 @@ export function AuthNav() {
   return (
     <div className="flex items-center gap-2">
       {planLabel ? (
-        <span
-          className="hidden rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-text sm:inline-flex"
-          title={`You're on the ${planLabel} plan`}
-        >
-          {planLabel}
+        <span className="hidden sm:inline-flex" title={`You're on the ${planLabel} plan`}>
+          <PlanBadge plan={plan} />
         </span>
       ) : (
         <Link
           href="/pricing"
-          className="rounded-full bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+          className="rounded-pill bg-text px-4 py-1.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
         >
           Go Pro
         </Link>
@@ -90,7 +88,7 @@ export function AuthNav() {
           aria-expanded={open}
           aria-label="Account menu"
           className={clsx(
-            "flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium transition-shadow",
+            "flex h-8 w-8 items-center justify-center rounded-pill text-xs font-medium transition-shadow",
             "bg-text text-canvas",
             open && "ring-2 ring-text ring-offset-2 ring-offset-canvas",
           )}
@@ -101,7 +99,7 @@ export function AuthNav() {
         {open ? (
           <div
             role="menu"
-            className="absolute right-0 top-10 z-50 w-60 overflow-hidden rounded-xl border border-border bg-surface shadow-lg"
+            className="absolute right-0 top-10 z-50 w-60 overflow-hidden rounded-card border border-border bg-surface shadow-overlay"
           >
             <div className="border-b border-border px-4 py-3">
               <p className="truncate text-sm font-medium text-text">
@@ -110,7 +108,7 @@ export function AuthNav() {
               {user.email ? (
                 <p className="truncate text-xs text-text-muted">{user.email}</p>
               ) : null}
-              <span className="mt-2 inline-flex rounded-full border border-border px-2 py-0.5 text-[11px] font-medium capitalize text-text-soft">
+              <span className="mt-2 inline-flex rounded-pill border border-border px-2 py-0.5 text-[11px] font-medium capitalize text-text-soft">
                 {planLabel ?? "Free"} plan
               </span>
             </div>

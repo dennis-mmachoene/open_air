@@ -31,14 +31,14 @@ function Segmented<T extends string>({
   options: [T, string][];
 }) {
   return (
-    <div className="inline-flex rounded-full border border-border bg-surface p-0.5">
+    <div className="inline-flex rounded-pill border border-border bg-surface p-0.5">
       {options.map(([v, label]) => (
         <button
           key={v}
           type="button"
           onClick={() => onChange(v)}
           className={clsx(
-            "rounded-full px-3 py-1 text-sm transition-colors",
+            "rounded-pill px-3 py-1 text-sm transition-colors",
             v === value ? "bg-text text-canvas" : "text-text-soft hover:text-text",
           )}
         >
@@ -91,7 +91,7 @@ export function Showroom({
             value={slug}
             onChange={(e) => setSlug(e.target.value)}
             aria-label="Palette"
-            className="rounded-full border border-border bg-surface px-3 py-1.5 text-sm text-text outline-none focus-visible:border-text"
+            className="rounded-pill border border-border bg-surface px-3 py-1.5 text-sm text-text outline-none focus-visible:border-text"
           >
             {palettes.map((p) => (
               <option key={p.slug} value={p.slug}>
@@ -123,7 +123,7 @@ export function Showroom({
               type="button"
               onClick={() => setFilter(g)}
               className={clsx(
-                "rounded-full border px-3 py-1 text-sm transition-colors",
+                "rounded-pill border px-3 py-1 text-sm transition-colors",
                 filter === g
                   ? "border-text bg-text text-canvas"
                   : "border-border text-text-soft hover:border-text hover:text-text",
@@ -140,7 +140,7 @@ export function Showroom({
         data-showroom
         data-density={density}
         style={style}
-        className="rounded-2xl border p-5 sm:p-7"
+        className="rounded-card border p-5 sm:p-7"
       >
         {shownGroups.map((group) => (
           <section key={group} className="mb-10 last:mb-0">
@@ -164,13 +164,13 @@ export function Showroom({
 
         {preview ? (
           <div
-            className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-4 text-sm"
+            className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-control border p-4 text-sm"
             style={{ borderColor: "var(--p-border)", color: "var(--p-text-soft)" }}
           >
             <span>This is a preview. The full Showroom — every specimen and screen — is a Pro feature.</span>
             <Link
               href="/pricing"
-              className="rounded-full px-4 py-1.5 text-sm font-medium"
+              className="rounded-pill px-4 py-1.5 text-sm font-medium"
               style={{ backgroundColor: "var(--p-primary)", color: "var(--p-on-primary)" }}
             >
               Go Pro

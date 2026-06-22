@@ -20,7 +20,7 @@ export default async function BookmarksPage() {
       </header>
 
       {saved.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-border p-12 text-center text-text-soft">
+        <div className="rounded-card border border-dashed border-border p-12 text-center text-text-soft">
           Nothing saved yet. <Link href="/explore" className="underline underline-offset-4">Explore community palettes</Link> and tap Save.
         </div>
       ) : (

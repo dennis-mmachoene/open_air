@@ -39,7 +39,7 @@ export function OutputCheckTool({ initial = "#16a34a" }: { initial?: string }) {
             value={normalized ?? "#16a34a"}
             onChange={(e) => setHex(e.target.value)}
             aria-label="Pick a color"
-            className="h-10 w-12 cursor-pointer rounded-lg border border-border bg-surface p-1"
+            className="h-10 w-12 cursor-pointer rounded-control border border-border bg-surface p-1"
           />
           <input
             value={hex}
@@ -47,7 +47,7 @@ export function OutputCheckTool({ initial = "#16a34a" }: { initial?: string }) {
             spellCheck={false}
             aria-label="Color hex"
             className={clsx(
-              "w-32 rounded-lg border bg-surface px-3 py-2 font-mono text-sm text-text outline-none",
+              "w-32 rounded-control border bg-surface px-3 py-2 font-mono text-sm text-text outline-none",
               valid ? "border-border focus-visible:border-text" : "border-p-danger",
             )}
           />
@@ -57,12 +57,12 @@ export function OutputCheckTool({ initial = "#16a34a" }: { initial?: string }) {
       {gamut && print ? (
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Wide gamut */}
-          <section className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5">
+          <section className="flex flex-col gap-4 rounded-card border border-border bg-surface p-5">
             <div className="flex items-center justify-between">
               <h2 className="font-display text-lg text-text">Wide gamut</h2>
               <span
                 className={clsx(
-                  "rounded-full border px-2 py-0.5 text-xs font-medium",
+                  "rounded-pill border px-2 py-0.5 text-xs font-medium",
                   gamut.widerOnP3 ? "border-border text-text-soft" : "border-border text-text-muted",
                 )}
               >
@@ -72,11 +72,11 @@ export function OutputCheckTool({ initial = "#16a34a" }: { initial?: string }) {
 
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
-                <div className="h-16 rounded-lg" style={{ backgroundColor: gamut.srgbMaxHex }} />
+                <div className="h-16 rounded-control" style={{ backgroundColor: gamut.srgbMaxHex }} />
                 <p className="text-xs text-text-muted">sRGB max · chroma {gamut.srgbMaxChroma}</p>
               </div>
               <div className="flex flex-col gap-1">
-                <div className="h-16 rounded-lg" style={{ backgroundColor: gamut.p3MaxCss }} />
+                <div className="h-16 rounded-control" style={{ backgroundColor: gamut.p3MaxCss }} />
                 <p className="text-xs text-text-muted">P3 max · chroma {gamut.p3MaxChroma}</p>
               </div>
             </div>
@@ -90,12 +90,12 @@ export function OutputCheckTool({ initial = "#16a34a" }: { initial?: string }) {
           </section>
 
           {/* Print */}
-          <section className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5">
+          <section className="flex flex-col gap-4 rounded-card border border-border bg-surface p-5">
             <div className="flex items-center justify-between">
               <h2 className="font-display text-lg text-text">Print (CMYK estimate)</h2>
               <span
                 className={clsx(
-                  "rounded-full border px-2 py-0.5 text-xs font-medium",
+                  "rounded-pill border px-2 py-0.5 text-xs font-medium",
                   print.printable ? "border-border text-text-soft" : "border-p-danger text-p-danger",
                 )}
               >
@@ -105,18 +105,18 @@ export function OutputCheckTool({ initial = "#16a34a" }: { initial?: string }) {
 
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
-                <div className="h-16 rounded-lg" style={{ backgroundColor: gamut.srgbHex }} />
+                <div className="h-16 rounded-control" style={{ backgroundColor: gamut.srgbHex }} />
                 <p className="text-xs text-text-muted">On screen</p>
               </div>
               <div className="flex flex-col gap-1">
-                <div className="h-16 rounded-lg" style={{ backgroundColor: print.previewHex }} />
+                <div className="h-16 rounded-control" style={{ backgroundColor: print.previewHex }} />
                 <p className="text-xs text-text-muted">Estimated in print</p>
               </div>
             </div>
 
             <dl className="grid grid-cols-4 gap-2 text-center text-sm">
               {(["c", "m", "y", "k"] as const).map((ch) => (
-                <div key={ch} className="rounded-lg border border-border py-2">
+                <div key={ch} className="rounded-control border border-border py-2">
                   <dt className="text-xs uppercase text-text-muted">{ch}</dt>
                   <dd className="font-mono text-text">{print.cmyk[ch]}%</dd>
                 </div>

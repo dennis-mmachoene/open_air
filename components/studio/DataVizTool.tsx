@@ -58,14 +58,14 @@ export function DataVizTool() {
     <div className="flex flex-col gap-8">
       {/* Type + controls */}
       <div className="flex flex-col gap-4">
-        <div className="inline-flex w-fit rounded-full border border-border p-0.5 text-sm">
+        <div className="inline-flex w-fit rounded-pill border border-border p-0.5 text-sm">
           {(["categorical", "sequential", "diverging"] as Kind[]).map((k) => (
             <button
               key={k}
               type="button"
               onClick={() => setKind(k)}
               className={clsx(
-                "rounded-full px-3 py-1 capitalize transition-colors",
+                "rounded-pill px-3 py-1 capitalize transition-colors",
                 k === kind ? "bg-text text-canvas" : "text-text-soft hover:text-text",
               )}
             >
@@ -78,14 +78,14 @@ export function DataVizTool() {
           {kind === "categorical" ? (
             <div className="flex flex-col gap-1 text-sm text-text-soft">
               Categories
-              <div className="inline-flex rounded-full border border-border p-0.5">
+              <div className="inline-flex rounded-pill border border-border p-0.5">
                 {[5, 8, 12, 20].map((n) => (
                   <button
                     key={n}
                     type="button"
                     onClick={() => setCount(n)}
                     className={clsx(
-                      "rounded-full px-3 py-1 text-sm transition-colors",
+                      "rounded-pill px-3 py-1 text-sm transition-colors",
                       n === count ? "bg-text text-canvas" : "text-text-soft hover:text-text",
                     )}
                   >
@@ -131,7 +131,7 @@ export function DataVizTool() {
 
       {/* Preview */}
       <div className="flex flex-col gap-3">
-        <div className="flex overflow-hidden rounded-xl border border-border">
+        <div className="flex overflow-hidden rounded-control border border-border">
           {colors.map((c, i) => (
             <div key={i} className="h-16 flex-1" style={{ backgroundColor: c }} title={c} />
           ))}
@@ -143,7 +143,7 @@ export function DataVizTool() {
             <div className="flex flex-wrap items-center gap-2 text-sm">
               <span
                 className={clsx(
-                  "rounded-full border px-2 py-0.5 text-xs font-medium",
+                  "rounded-pill border px-2 py-0.5 text-xs font-medium",
                   report.safe ? "border-green-600/40 text-green-700 dark:text-green-400" : "border-amber-600/40 text-amber-700 dark:text-amber-400",
                 )}
               >
@@ -181,16 +181,16 @@ export function DataVizTool() {
       </div>
 
       {/* Export */}
-      <section className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4">
+      <section className="flex flex-col gap-2 rounded-card border border-border bg-surface p-4">
         <div className="flex items-center justify-between">
-          <div className="inline-flex rounded-full border border-border p-0.5 text-xs">
+          <div className="inline-flex rounded-pill border border-border p-0.5 text-xs">
             {(["css", "js", "json"] as Format[]).map((f) => (
               <button
                 key={f}
                 type="button"
                 onClick={() => setFormat(f)}
                 className={clsx(
-                  "rounded-full px-2.5 py-1 uppercase transition-colors",
+                  "rounded-pill px-2.5 py-1 uppercase transition-colors",
                   f === format ? "bg-text text-canvas" : "text-text-soft hover:text-text",
                 )}
               >
@@ -198,11 +198,11 @@ export function DataVizTool() {
               </button>
             ))}
           </div>
-          <button type="button" onClick={copy} className="rounded-full bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90">
+          <button type="button" onClick={copy} className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90">
             {copied ? "Copied" : "Copy"}
           </button>
         </div>
-        <pre className="max-h-64 overflow-auto rounded-lg bg-canvas p-3 text-xs leading-relaxed text-text-soft">
+        <pre className="max-h-64 overflow-auto rounded-control bg-canvas p-3 text-xs leading-relaxed text-text-soft">
           <code>{exportText}</code>
         </pre>
       </section>

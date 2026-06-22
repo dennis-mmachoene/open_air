@@ -28,13 +28,13 @@ export default async function StatusPage() {
         <h1 className="font-display text-4xl text-text">System status</h1>
         <div className="flex flex-wrap items-center gap-3">
           <span
-            className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium ${
+            className={`inline-flex items-center gap-2 rounded-pill border px-3 py-1 text-sm font-medium ${
               ok
                 ? "border-green-600/40 text-green-700 dark:text-green-400"
                 : "border-amber-600/40 text-amber-700 dark:text-amber-400"
             }`}
           >
-            <span className={`h-2 w-2 rounded-full ${ok ? "bg-green-600" : "bg-amber-600"}`} />
+            <span className={`h-2 w-2 rounded-pill ${ok ? "bg-green-600" : "bg-amber-600"}`} />
             {ok ? "All systems operational" : "Some systems degraded"}
           </span>
           <span className="text-xs text-text-muted">
@@ -43,12 +43,12 @@ export default async function StatusPage() {
         </div>
       </header>
 
-      <ul className="mt-8 divide-y divide-border rounded-2xl border border-border bg-surface">
+      <ul className="mt-8 divide-y divide-border rounded-card border border-border bg-surface">
         {report.checks.map((c) => (
           <li key={c.name} className="flex items-center justify-between gap-3 px-5 py-4">
             <span className="flex items-center gap-3">
               <span
-                className={`h-2.5 w-2.5 rounded-full ${
+                className={`h-2.5 w-2.5 rounded-pill ${
                   c.ok ? "bg-green-600" : c.critical ? "bg-red-600" : "bg-text-muted"
                 }`}
               />

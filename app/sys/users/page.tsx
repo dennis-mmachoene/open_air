@@ -20,11 +20,11 @@ export default async function SysUsersPage({ searchParams }: { searchParams: Pro
           <p className="text-sm text-text-muted">Application accounts. Override a plan to comp or correct billing.</p>
         </div>
         <form className="flex max-w-sm gap-2" action="/sys/users">
-          <input name="q" defaultValue={q} placeholder="Search email or name" className="min-w-0 flex-1 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text" />
-          <button className="rounded-lg bg-text px-4 py-2 text-sm font-medium text-canvas">Search</button>
+          <input name="q" defaultValue={q} placeholder="Search email or name" className="min-w-0 flex-1 rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text" />
+          <button className="rounded-control bg-text px-4 py-2 text-sm font-medium text-canvas">Search</button>
         </form>
 
-        <div className="overflow-x-auto rounded-2xl border border-border">
+        <div className="overflow-x-auto rounded-card border border-border">
           <table className="w-full min-w-[680px] text-sm">
             <thead className="border-b border-border bg-surface-2 text-left text-text-soft">
               <tr>
@@ -45,12 +45,12 @@ export default async function SysUsersPage({ searchParams }: { searchParams: Pro
                   <td className="px-4 py-2">
                     <form action={setUserPlanAction} className="flex items-center gap-1">
                       <input type="hidden" name="userId" value={u.id} />
-                      <select name="plan" defaultValue={u.plan} className="rounded-lg border border-border bg-canvas px-2 py-1 text-xs text-text focus:border-text focus:outline-none">
+                      <select name="plan" defaultValue={u.plan} className="rounded-control border border-border bg-canvas px-2 py-1 text-xs text-text focus:border-text focus:outline-none">
                         <option value="free">free</option>
                         <option value="pro">pro</option>
                         <option value="studio">studio</option>
                       </select>
-                      <button className="rounded-lg border border-border px-2.5 py-1 text-xs text-text-soft hover:bg-surface-2">Apply</button>
+                      <button className="rounded-control border border-border px-2.5 py-1 text-xs text-text-soft hover:bg-surface-2">Apply</button>
                     </form>
                   </td>
                 </tr>

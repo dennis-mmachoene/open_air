@@ -86,12 +86,12 @@ export function MemberRow({
           value={role}
           onChange={(e) => changeRole(e.target.value)}
           disabled={busy}
-          className="rounded-lg border border-border bg-canvas px-2 py-1 text-xs capitalize text-text focus:border-text focus:outline-none"
+          className="rounded-control border border-border bg-canvas px-2 py-1 text-xs capitalize text-text focus:border-text focus:outline-none"
         >
           {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
         </select>
       ) : (
-        <span className="rounded-full border border-border px-2.5 py-0.5 text-xs capitalize text-text-soft">{role}</span>
+        <span className="rounded-pill border border-border px-2.5 py-0.5 text-xs capitalize text-text-soft">{role}</span>
       )}
       {canManage && !isSelf ? (
         <button type="button" onClick={remove} disabled={busy} className="text-xs text-text-muted hover:text-p-danger disabled:opacity-50">Remove</button>

@@ -33,25 +33,25 @@ export default async function OrgAuditPage({ params, searchParams }: { params: P
             <p className="text-sm text-text-muted">{total} recorded {total === 1 ? "event" : "events"} for this team.</p>
           </div>
           <div className="flex items-center gap-2">
-            <a href={`/api/orgs/${slug}/audit/export?format=csv`} className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-text hover:bg-surface-2">Export CSV</a>
-            <a href={`/api/orgs/${slug}/audit/export?format=json`} className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-text hover:bg-surface-2">Export JSON</a>
+            <a href={`/api/orgs/${slug}/audit/export?format=csv`} className="rounded-pill border border-border px-3 py-1.5 text-xs font-medium text-text hover:bg-surface-2">Export CSV</a>
+            <a href={`/api/orgs/${slug}/audit/export?format=json`} className="rounded-pill border border-border px-3 py-1.5 text-xs font-medium text-text hover:bg-surface-2">Export JSON</a>
           </div>
         </div>
       </header>
 
       {actions.length > 0 ? (
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <Link href={`/orgs/${slug}/audit`} className={!action ? "rounded-full bg-text px-3 py-1 text-canvas" : "rounded-full border border-border px-3 py-1 text-text-soft hover:bg-surface-2"}>All</Link>
+          <Link href={`/orgs/${slug}/audit`} className={!action ? "rounded-pill bg-text px-3 py-1 text-canvas" : "rounded-pill border border-border px-3 py-1 text-text-soft hover:bg-surface-2"}>All</Link>
           {actions.map((a) => (
-            <Link key={a} href={`/orgs/${slug}/audit?action=${encodeURIComponent(a)}`} className={action === a ? "rounded-full bg-text px-3 py-1 text-canvas" : "rounded-full border border-border px-3 py-1 text-text-soft hover:bg-surface-2"}>{a}</Link>
+            <Link key={a} href={`/orgs/${slug}/audit?action=${encodeURIComponent(a)}`} className={action === a ? "rounded-pill bg-text px-3 py-1 text-canvas" : "rounded-pill border border-border px-3 py-1 text-text-soft hover:bg-surface-2"}>{a}</Link>
           ))}
         </div>
       ) : null}
 
       {rows.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-border p-10 text-center text-text-soft">No activity recorded yet.</p>
+        <p className="rounded-card border border-dashed border-border p-10 text-center text-text-soft">No activity recorded yet.</p>
       ) : (
-        <div className="overflow-x-auto rounded-2xl border border-border">
+        <div className="overflow-x-auto rounded-card border border-border">
           <table className="w-full min-w-[640px] text-sm">
             <thead className="border-b border-border bg-surface-2 text-left text-text-soft">
               <tr>

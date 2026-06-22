@@ -32,16 +32,16 @@ export function GradientCheckTool() {
           <label key={label} className="flex flex-col gap-1 text-sm text-text-soft">
             {label}
             <div className="flex items-center gap-2">
-              <input type="color" value={norm(val) ?? "#000000"} onChange={(e) => set(e.target.value)} aria-label={`${label} color`} className="h-10 w-12 cursor-pointer rounded-lg border border-border bg-surface p-1" />
-              <input value={val} onChange={(e) => set(e.target.value)} spellCheck={false} className="w-28 rounded-lg border border-border bg-surface px-3 py-2 font-mono text-sm text-text outline-none focus-visible:border-text" />
+              <input type="color" value={norm(val) ?? "#000000"} onChange={(e) => set(e.target.value)} aria-label={`${label} color`} className="h-10 w-12 cursor-pointer rounded-control border border-border bg-surface p-1" />
+              <input value={val} onChange={(e) => set(e.target.value)} spellCheck={false} className="w-28 rounded-control border border-border bg-surface px-3 py-2 font-mono text-sm text-text outline-none focus-visible:border-text" />
             </div>
           </label>
         ))}
         <div className="flex flex-col gap-1 text-sm text-text-soft">
           Text
-          <div className="inline-flex rounded-full border border-border p-0.5 text-xs">
+          <div className="inline-flex rounded-pill border border-border p-0.5 text-xs">
             {(["auto", "#ffffff", "#0b0b0c"] as const).map((v) => (
-              <button key={v} type="button" onClick={() => setText(v)} className={clsx("rounded-full px-2.5 py-1 transition-colors", v === text ? "bg-text text-canvas" : "text-text-soft hover:text-text")}>
+              <button key={v} type="button" onClick={() => setText(v)} className={clsx("rounded-pill px-2.5 py-1 transition-colors", v === text ? "bg-text text-canvas" : "text-text-soft hover:text-text")}>
                 {v === "auto" ? "Auto" : v === "#ffffff" ? "White" : "Black"}
               </button>
             ))}
@@ -49,9 +49,9 @@ export function GradientCheckTool() {
         </div>
         <div className="flex flex-col gap-1 text-sm text-text-soft">
           Interpolation
-          <div className="inline-flex rounded-full border border-border p-0.5 text-xs">
+          <div className="inline-flex rounded-pill border border-border p-0.5 text-xs">
             {(["oklch", "oklab", "srgb"] as GradientSpace[]).map((v) => (
-              <button key={v} type="button" onClick={() => setSpace(v)} className={clsx("rounded-full px-2.5 py-1 uppercase transition-colors", v === space ? "bg-text text-canvas" : "text-text-soft hover:text-text")}>
+              <button key={v} type="button" onClick={() => setSpace(v)} className={clsx("rounded-pill px-2.5 py-1 uppercase transition-colors", v === space ? "bg-text text-canvas" : "text-text-soft hover:text-text")}>
                 {v}
               </button>
             ))}
@@ -62,7 +62,7 @@ export function GradientCheckTool() {
       {data ? (
         <>
           {/* Gradient with sampled text */}
-          <div className="relative flex h-24 items-center overflow-hidden rounded-xl border border-border" style={{ background: data.css }}>
+          <div className="relative flex h-24 items-center overflow-hidden rounded-control border border-border" style={{ background: data.css }}>
             {[0.1, 0.3, 0.5, 0.7, 0.9].map((p) => {
               const stop = data.scan.stops.reduce((a, b) => (Math.abs(b.t - p) < Math.abs(a.t - p) ? b : a));
               return (
@@ -74,14 +74,14 @@ export function GradientCheckTool() {
           </div>
 
           {/* Safe-region bar */}
-          <div className="flex h-3 overflow-hidden rounded-full">
+          <div className="flex h-3 overflow-hidden rounded-pill">
             {data.scan.stops.map((s, i) => (
               <span key={i} className="flex-1" style={{ backgroundColor: s.pass ? "var(--p-success, #16a34a)" : "var(--p-danger, #dc2626)" }} title={`${Math.round(s.t * 100)}%: ${s.ratio}:1`} />
             ))}
           </div>
 
           <div className="flex flex-wrap items-center gap-4 text-sm">
-            <span className={clsx("rounded-full border px-2 py-0.5 text-xs font-medium", data.scan.passRatio === 1 ? "border-green-600/40 text-green-700 dark:text-green-400" : data.scan.passRatio === 0 ? "border-p-danger text-p-danger" : "border-amber-600/40 text-amber-700 dark:text-amber-400")}>
+            <span className={clsx("rounded-pill border px-2 py-0.5 text-xs font-medium", data.scan.passRatio === 1 ? "border-green-600/40 text-green-700 dark:text-green-400" : data.scan.passRatio === 0 ? "border-p-danger text-p-danger" : "border-amber-600/40 text-amber-700 dark:text-amber-400")}>
               {Math.round(data.scan.passRatio * 100)}% readable
             </span>
             <span className="text-text-soft">

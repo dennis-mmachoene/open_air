@@ -20,7 +20,7 @@ export function CopyHexList({ hexes }: { hexes: string[] }) {
           key={`${hex}-${i}`}
           type="button"
           onClick={() => copy(hex)}
-          className="flex items-center gap-2 rounded-lg border border-border bg-surface px-2.5 py-1.5 font-mono text-xs text-text transition-colors hover:bg-surface-2"
+          className="flex items-center gap-2 rounded-control border border-border bg-surface px-2.5 py-1.5 font-mono text-xs text-text transition-colors hover:bg-surface-2"
         >
           <span className="h-4 w-4 rounded" style={{ backgroundColor: hex }} />
           {copied === hex ? "Copied" : hex}

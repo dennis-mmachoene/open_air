@@ -92,7 +92,7 @@ export function SemanticTokensTool({ initial = "#4f46e5" }: { initial?: string }
               value={normalized ?? "#4f46e5"}
               onChange={(e) => setHex(e.target.value)}
               aria-label="Pick brand color"
-              className="h-10 w-12 cursor-pointer rounded-lg border border-border bg-surface p-1"
+              className="h-10 w-12 cursor-pointer rounded-control border border-border bg-surface p-1"
             />
             <input
               value={hex}
@@ -100,7 +100,7 @@ export function SemanticTokensTool({ initial = "#4f46e5" }: { initial?: string }
               spellCheck={false}
               aria-label="Brand color hex"
               className={clsx(
-                "w-32 rounded-lg border bg-surface px-3 py-2 font-mono text-sm text-text outline-none",
+                "w-32 rounded-control border bg-surface px-3 py-2 font-mono text-sm text-text outline-none",
                 valid ? "border-border focus-visible:border-text" : "border-p-danger",
               )}
             />
@@ -113,17 +113,17 @@ export function SemanticTokensTool({ initial = "#4f46e5" }: { initial?: string }
             onChange={(e) => setName(e.target.value)}
             maxLength={32}
             aria-label="Token name prefix"
-            className="w-40 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
+            className="w-40 rounded-control border border-border bg-surface px-3 py-2 text-sm text-text outline-none focus-visible:border-text"
           />
         </label>
-        <div className="inline-flex rounded-full border border-border p-0.5 text-sm">
+        <div className="inline-flex rounded-pill border border-border p-0.5 text-sm">
           {(["light", "dark"] as Mode[]).map((m) => (
             <button
               key={m}
               type="button"
               onClick={() => setMode(m)}
               className={clsx(
-                "rounded-full px-3 py-1 capitalize transition-colors",
+                "rounded-pill px-3 py-1 capitalize transition-colors",
                 m === mode ? "bg-text text-canvas" : "text-text-soft hover:text-text",
               )}
             >
@@ -143,7 +143,7 @@ export function SemanticTokensTool({ initial = "#4f46e5" }: { initial?: string }
                 <h2 className="font-display text-lg text-text">{g.name}</h2>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                   {g.tokens.map((t) => (
-                    <div key={t.name} className="overflow-hidden rounded-xl border border-border">
+                    <div key={t.name} className="overflow-hidden rounded-control border border-border">
                       <div
                         className="flex h-16 items-center justify-center text-sm font-medium"
                         style={{
@@ -161,7 +161,7 @@ export function SemanticTokensTool({ initial = "#4f46e5" }: { initial?: string }
                         {t.aa ? (
                           <span
                             className={clsx(
-                              "rounded-full border px-1.5 py-0.5 text-[10px] font-medium",
+                              "rounded-pill border px-1.5 py-0.5 text-[10px] font-medium",
                               t.aa[mode] ? "border-border text-text-soft" : "border-p-danger text-p-danger",
                             )}
                           >
@@ -229,16 +229,16 @@ export function SemanticTokensTool({ initial = "#4f46e5" }: { initial?: string }
           ) : null}
 
           {/* Export */}
-          <section className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4">
+          <section className="flex flex-col gap-2 rounded-card border border-border bg-surface p-4">
             <div className="flex items-center justify-between">
-              <div className="inline-flex rounded-full border border-border p-0.5 text-xs">
+              <div className="inline-flex rounded-pill border border-border p-0.5 text-xs">
                 {(["css", "tailwind", "json"] as Format[]).map((f) => (
                   <button
                     key={f}
                     type="button"
                     onClick={() => setFormat(f)}
                     className={clsx(
-                      "rounded-full px-2.5 py-1 capitalize transition-colors",
+                      "rounded-pill px-2.5 py-1 capitalize transition-colors",
                       f === format ? "bg-text text-canvas" : "text-text-soft hover:text-text",
                     )}
                   >
@@ -249,12 +249,12 @@ export function SemanticTokensTool({ initial = "#4f46e5" }: { initial?: string }
               <button
                 type="button"
                 onClick={copy}
-                className="rounded-full bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90"
+                className="rounded-pill bg-text px-3 py-1 text-xs font-medium text-canvas transition-opacity hover:opacity-90"
               >
                 {copied ? "Copied" : "Copy"}
               </button>
             </div>
-            <pre className="max-h-80 overflow-auto rounded-lg bg-canvas p-3 text-xs leading-relaxed text-text-soft">
+            <pre className="max-h-80 overflow-auto rounded-control bg-canvas p-3 text-xs leading-relaxed text-text-soft">
               <code>{exportText}</code>
             </pre>
           </section>

@@ -57,7 +57,7 @@ export function AccessibilityCenter({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="overflow-hidden rounded-2xl border border-border">
+      <div className="overflow-hidden rounded-card border border-border">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-border text-left text-text-muted">
@@ -75,7 +75,7 @@ export function AccessibilityCenter({
                 <td className="px-4 py-2.5 text-text">{r.label}</td>
                 <td className="px-4 py-2.5">
                   <span
-                    className="inline-flex items-center rounded-md px-2 py-1 font-mono text-xs"
+                    className="inline-flex items-center rounded-control px-2 py-1 font-mono text-xs"
                     style={{ backgroundColor: r.bg, color: r.fg }}
                   >
                     Aa
@@ -103,7 +103,7 @@ export function AccessibilityCenter({
           ].map((row) => (
             <div key={row.label} className="flex items-center gap-3">
               <span className="w-44 shrink-0 text-xs text-text-muted">{row.label}</span>
-              <div className="flex h-7 flex-1 overflow-hidden rounded-md border border-border">
+              <div className="flex h-7 flex-1 overflow-hidden rounded-control border border-border">
                 {row.colors.map((c, i) => (
                   <div key={i} className="flex-1" style={{ backgroundColor: c }} />
                 ))}

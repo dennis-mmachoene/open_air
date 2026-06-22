@@ -65,7 +65,7 @@ export function NowShowing({ palettes }: { palettes: Palette[] }) {
                 onClick={() => setIndex(i)}
                 aria-label={`Show ${p.name}`}
                 aria-current={i === index}
-                className="h-1.5 rounded-full transition-all"
+                className="h-1.5 rounded-pill transition-all"
                 style={{
                   width: i === index ? 28 : 10,
                   backgroundColor:

@@ -15,7 +15,7 @@ export function UsageMeter({
 }) {
   if (limit === null) {
     return (
-      <div className="flex items-center justify-between rounded-2xl border border-border bg-surface px-5 py-4">
+      <div className="flex items-center justify-between rounded-card border border-border bg-surface px-5 py-4">
         <span className="text-sm text-text">Saved palettes</span>
         <span className="text-sm text-text-soft">
           Unlimited · <span className="capitalize text-text">{plan}</span>
@@ -29,16 +29,16 @@ export function UsageMeter({
   const near = !atLimit && used >= limit - 1;
 
   return (
-    <div className="flex flex-col gap-2 rounded-2xl border border-border bg-surface px-5 py-4">
+    <div className="flex flex-col gap-2 rounded-card border border-border bg-surface px-5 py-4">
       <div className="flex items-center justify-between">
         <span className="text-sm text-text">Saved palettes</span>
         <span className="text-sm tabular-nums text-text-soft">
           {used} / {limit}
         </span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-surface-2">
+      <div className="h-2 w-full overflow-hidden rounded-pill bg-surface-2">
         <div
-          className={`h-full rounded-full transition-all ${atLimit ? "bg-amber-500" : "bg-text"}`}
+          className={`h-full rounded-pill transition-all ${atLimit ? "bg-amber-500" : "bg-text"}`}
           style={{ width: `${pct}%` }}
         />
       </div>

@@ -22,9 +22,9 @@ export default async function ApiKeysPage() {
       {entitlements.api ? (
         <>
           <ApiKeys />
-          <div className="flex flex-col gap-2 rounded-2xl border border-border p-5">
+          <div className="flex flex-col gap-2 rounded-card border border-border p-5">
             <h2 className="text-sm font-medium text-text">Example request</h2>
-            <pre className="overflow-auto rounded-lg bg-surface-2 p-3 font-mono text-xs text-text">
+            <pre className="overflow-auto rounded-control bg-surface-2 p-3 font-mono text-xs text-text">
               <code>{`curl https://openair.app/api/v1/palettes?mood=Calm \\
   -H "Authorization: Bearer oa_your_key"`}</code>
             </pre>
